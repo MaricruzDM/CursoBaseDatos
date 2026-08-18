@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de Bases de Datos - Guía de Estudio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-container">
+            <div class="nav-brand">&#128218; Curso de Bases de Datos</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="unidad1.html">U1</a></li>
+                <li><a href="unidad2.html">U2</a></li>
+                <li><a href="unidad3.html">U3</a></li>
+                <li><a href="unidad4.html">U4</a></li>
+                <li><a href="unidad5.html">U5</a></li>
+                <li><a href="unidad6.html">U6</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="hero">
+            <h1>&#127919; Curso de Bases de Datos</h1>
+            <p>Guía de estudio paso a paso con ejemplos prácticos, analogías y definiciones claras para comprender los fundamentos de las bases de datos relacionales.</p>
+        </section>
+
+        <section>
+            <h2>&#128204; Sobre esta guía</h2>
+            <p>Esta guía está diseñada para darte una base sólida antes de cursar la materia de Bases de Datos. Cada unidad incluye:</p>
+            <ul>
+                <li><strong>Definiciones claras</strong> - Conceptos explicados de forma sencilla</li>
+                <li><strong>Analogías de la vida real</strong> - Para que los conceptos abstractos tengan sentido</li>
+                <li><strong>Ejemplos prácticos</strong> - Con tablas, diagramas y código SQL</li>
+                <li><strong>Progresión lógica</strong> - Cada unidad construye sobre la anterior</li>
+            </ul>
+
+            <div class="info-box">
+                <h4>&#128161; Recomendación de lectura</h4>
+                <p>Lee las unidades en orden. La unidad 1 establece el vocabulario que usarás en todo el curso. Si ya conoces algún tema, puedes saltar directamente al que necesites reforzar.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>&#128218; Contenido del Curso</h2>
+            <div class="units-grid">
+                <div class="unit-card">
+                    <span class="unit-number">1</span>
+                    <h3>Introducción y Conceptos Asociados</h3>
+                    <p>Definiciones fundamentales: dato, información, campo, registro, archivo. Evolución histórica de las bases de datos y las Reglas de Codd.</p>
+                    <a href="unidad1.html" class="card-link">Comenzar Unidad 1 &rarr;</a>
+                </div>
+
+                <div class="unit-card">
+                    <span class="unit-number">2</span>
+                    <h3>El Modelo Relacional</h3>
+                    <p>Elementos del modelo: tablas, tuplas, atributos, dominios. Tipos de llaves, integridad de datos (constraints) e índices.</p>
+                    <a href="unidad2.html" class="card-link">Comenzar Unidad 2 &rarr;</a>
+                </div>
+
+                <div class="unit-card">
+                    <span class="unit-number">3</span>
+                    <h3>Modelado Lógico de una BD</h3>
+                    <p>Diagramas Entidad-Relación, entidades y relaciones, modelo lógico vs físico, diccionario de datos, normalización y herramientas CASE.</p>
+                    <a href="unidad3.html" class="card-link">Comenzar Unidad 3 &rarr;</a>
+                </div>
+
+                <div class="unit-card">
+                    <span class="unit-number">4</span>
+                    <h3>Álgebra Relacional</h3>
+                    <p>Fundamento teórico del SQL: operadores de conjuntos (unión, intersección, diferencia) y operadores relacionales (selección, proyección, join).</p>
+                    <a href="unidad4.html" class="card-link">Comenzar Unidad 4 &rarr;</a>
+                </div>
+
+                <div class="unit-card">
+                    <span class="unit-number">5</span>
+                    <h3>RDBMS</h3>
+                    <p>Sistemas Manejadores de Bases de Datos: qué son, cuáles existen, sus componentes, arquitecturas y el rol del DBA.</p>
+                    <a href="unidad5.html" class="card-link">Comenzar Unidad 5 &rarr;</a>
+                </div>
+
+                <div class="unit-card">
+                    <span class="unit-number">6</span>
+                    <h3>Introducción a SQL</h3>
+                    <p>Lenguaje de consultas: crear bases de datos y tablas, consultar información (SELECT), insertar, actualizar y eliminar datos.</p>
+                    <a href="unidad6.html" class="card-link">Comenzar Unidad 6 &rarr;</a>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>&#127793; Antes de empezar</h2>
+            <div class="analogy-box">
+                <h4>&#128300; ¿Qué es una base de datos en pocas palabras?</h4>
+                <p>Imagina una <strong>biblioteca</strong>. Los libros son los datos, los estantes son las tablas, las etiquetas del lomo son los índices y el sistema de catálogo (Dewey) es el modelo que organiza todo. Una base de datos es exactamente eso: un sistema organizado para guardar, buscar y gestionar información de forma eficiente.</p>
+            </div>
+
+            <h3>Prerrequisitos sugeridos</h3>
+            <ul>
+                <li>Saber usar una computadora y navegar archivos</li>
+                <li>Haber usado alguna hoja de cálculo (Excel, Google Sheets) - te ayudará con la analogía de tablas</li>
+                <li>Lógica básica (verdadero/falso, AND, OR) - no necesitas ser experto</li>
+                <li>Ganas de aprender y paciencia para los conceptos nuevos</li>
+            </ul>
+
+            <div class="info-box">
+                <h4>&#128187; Para practicar SQL (Unidad 6)</h4>
+                <p>Cuando llegues a la unidad de SQL, puedes practicar gratis en:</p>
+                <ul>
+                    <li><a href="https://www.db-fiddle.com/" target="_blank">DB Fiddle</a> - Ejecuta SQL directo en el navegador</li>
+                    <li><a href="https://sqliteonline.com/" target="_blank">SQLite Online</a> - Editor online de SQLite</li>
+                    <li><a href="https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_all" target="_blank">W3Schools SQL Editor</a> - Con base de datos de ejemplo precargada</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>Guía de estudio de Bases de Datos | Creada como material de apoyo para preparación del curso</p>
+    </footer>
+</body>
+</html>

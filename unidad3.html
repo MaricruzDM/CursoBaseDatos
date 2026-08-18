@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 3 - Modelado Lógico de una Base de Datos | Curso de Bases de Datos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-brand">&#128218; Curso de Bases de Datos</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="unidad1.html">U1</a></li>
+                <li><a href="unidad2.html">U2</a></li>
+                <li><a href="unidad3.html"><strong>U3</strong></a></li>
+                <li><a href="unidad4.html">U4</a></li>
+                <li><a href="unidad5.html">U5</a></li>
+                <li><a href="unidad6.html">U6</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <h1>Unidad 3: Modelado Lógico de una Base de Datos</h1>
+
+        <div class="toc">
+            <h4>&#128203; Contenido de esta unidad</h4>
+            <ol>
+                <li><a href="#er">Diagrama Entidad-Relación</a></li>
+                <li><a href="#entidades">Las entidades y el manejo de relaciones</a></li>
+                <li><a href="#logico-fisico">Modelo lógico y físico</a></li>
+                <li><a href="#diccionario">El diccionario de datos</a></li>
+                <li><a href="#normalizacion">Normalización (1FN, 2FN, 3FN)</a></li>
+                <li><a href="#case">Herramientas CASE</a></li>
+            </ol>
+        </div>
+
+        <p>Antes de escribir una sola línea de SQL, necesitas <strong>diseñar</strong> tu base de datos. El modelado es como crear los planos de una casa antes de construirla. En esta unidad aprenderás a planificar la estructura de tus datos de forma visual y organizada.</p>
+
+        <div class="analogy-box">
+            <h4>&#127968; Analogía: Construir una casa</h4>
+            <p>No empiezas a pegar ladrillos sin planos. Primero un arquitecto dibuja el diseño (modelo conceptual), luego un ingeniero calcula las estructuras (modelo lógico), y finalmente el maestro de obra lo construye (modelo físico). Con las bases de datos es igual.</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 3.1: DIAGRAMA ENTIDAD-RELACIÓN -->
+        <!-- ============================================ -->
+        <h2 id="er">3.1 Diagrama Entidad-Relación (ER)</h2>
+
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>El <strong>Diagrama Entidad-Relación (DER)</strong> es una representación gráfica que muestra las entidades (cosas del mundo real), sus atributos (características) y las relaciones entre ellas. Fue propuesto por Peter Chen en 1976.</p>
+        </div>
+
+        <h3>Componentes del diagrama ER</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Componente</th>
+                    <th>Símbolo</th>
+                    <th>Descripción</th>
+                    <th>Ejemplo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Entidad</strong></td>
+                    <td>Rectángulo</td>
+                    <td>Objeto del mundo real sobre el que se almacena información</td>
+                    <td>ALUMNO, MATERIA, PROFESOR</td>
+                </tr>
+                <tr>
+                    <td><strong>Atributo</strong></td>
+                    <td>Óvalo/Elipse</td>
+                    <td>Característica de una entidad</td>
+                    <td>Nombre, Edad, Matrícula</td>
+                </tr>
+                <tr>
+                    <td><strong>Relación</strong></td>
+                    <td>Rombo/Diamante</td>
+                    <td>Asociación entre dos o más entidades</td>
+                    <td>"cursa", "imparte", "pertenece"</td>
+                </tr>
+                <tr>
+                    <td><strong>Llave primaria</strong></td>
+                    <td>Atributo subrayado</td>
+                    <td>Atributo que identifica de forma única</td>
+                    <td><u>Matrícula</u>, <u>RFC</u></td>
+                </tr>
+                <tr>
+                    <td><strong>Línea</strong></td>
+                    <td>Línea recta</td>
+                    <td>Conecta entidades con relaciones y atributos</td>
+                    <td>&mdash;</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo: Diagrama ER de una escuela (representación textual)</h4>
+<pre><code>
+    ┌──────────┐          ┌──────────┐          ┌──────────┐
+    │  ALUMNO  │──────────│  cursa   │──────────│ MATERIA  │
+    └──────────┘          └──────────┘          └──────────┘
+         │                                           │
+    Atributos:                                  Atributos:
+    - Matricula (PK)                            - ClaveMateria (PK)
+    - Nombre                                    - NombreMateria
+    - Apellido                                  - Creditos
+    - FechaNac                                  - Semestre
+    - CarreraID (FK)
+
+    ┌──────────┐          ┌──────────┐          ┌──────────┐
+    │ PROFESOR │──────────│ imparte  │──────────│ MATERIA  │
+    └──────────┘          └──────────┘          └──────────┘
+         │
+    Atributos:
+    - NumEmpleado (PK)
+    - Nombre
+    - Especialidad
+</code></pre>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 3.2: ENTIDADES Y RELACIONES -->
+        <!-- ============================================ -->
+        <h2 id="entidades">3.2 Las Entidades y el Manejo de Relaciones</h2>
+
+        <h3>Tipos de Entidades</h3>
+
+        <div class="concept-box">
+            <h4>&#128196; Entidad fuerte</h4>
+            <p>Existe por sí misma, no depende de otra entidad para existir. Tiene su propia llave primaria.</p>
+            <p><strong>Ejemplo:</strong> ALUMNO, PROFESOR, MATERIA</p>
+        </div>
+
+        <div class="concept-box">
+            <h4>&#128196; Entidad débil</h4>
+            <p>No puede existir sin una entidad fuerte asociada. Su llave primaria incluye la llave de la entidad fuerte de la que depende.</p>
+            <p><strong>Ejemplo:</strong> DEPENDIENTE (no existe sin EMPLEADO), DETALLE_FACTURA (no existe sin FACTURA)</p>
+        </div>
+
+        <h3>Cardinalidad de las Relaciones</h3>
+
+        <p>La <strong>cardinalidad</strong> indica cuántas instancias de una entidad pueden asociarse con instancias de otra. Es fundamental para diseñar correctamente las tablas.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Cardinalidad</th>
+                    <th>Símbolo</th>
+                    <th>Significado</th>
+                    <th>Ejemplo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Uno a Uno (1:1)</strong></td>
+                    <td>1 &mdash; 1</td>
+                    <td>Cada registro de A se asocia con máximo uno de B, y viceversa</td>
+                    <td>PERSONA ↔ PASAPORTE (una persona tiene un pasaporte)</td>
+                </tr>
+                <tr>
+                    <td><strong>Uno a Muchos (1:N)</strong></td>
+                    <td>1 &mdash; *</td>
+                    <td>Un registro de A se asocia con muchos de B, pero cada B solo con uno de A</td>
+                    <td>DEPARTAMENTO → EMPLEADOS (un depto. tiene muchos empleados)</td>
+                </tr>
+                <tr>
+                    <td><strong>Muchos a Muchos (M:N)</strong></td>
+                    <td>* &mdash; *</td>
+                    <td>Múltiples registros de A se asocian con múltiples de B</td>
+                    <td>ALUMNO ↔ MATERIA (un alumno cursa muchas materias, una materia tiene muchos alumnos)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogías de cardinalidad</h4>
+            <ul>
+                <li><strong>1:1</strong> &mdash; Como una persona y su INE: cada quien tiene exactamente una.</li>
+                <li><strong>1:N</strong> &mdash; Como una madre y sus hijos: una madre puede tener varios hijos, pero cada hijo tiene solo una madre biológica.</li>
+                <li><strong>M:N</strong> &mdash; Como estudiantes y clubes: un estudiante puede estar en varios clubes, y un club tiene varios estudiantes.</li>
+            </ul>
+        </div>
+
+        <div class="warning-box">
+            <h4>&#9888;&#65039; Importante: Resolver relaciones M:N</h4>
+            <p>Las relaciones muchos a muchos <strong>no se pueden implementar directamente</strong> en una base de datos relacional. Se resuelven creando una <strong>tabla intermedia</strong> (tabla puente o tabla de unión) que contiene las llaves foráneas de ambas tablas.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo: Resolver una relación M:N</h4>
+            <p><strong>Problema:</strong> ALUMNO cursa MATERIA (muchos a muchos)</p>
+            <p><strong>Solución:</strong> Crear tabla intermedia INSCRIPCION</p>
+<pre><code>
+  ALUMNO              INSCRIPCION              MATERIA
+  ──────              ───────────              ───────
+  Matricula (PK) ←── Matricula (FK, PK)       ClaveMateria (PK)
+  Nombre              ClaveMateria (FK, PK) ──→ NombreMateria
+  Apellido            Calificacion             Creditos
+                      Periodo
+</code></pre>
+            <p>La tabla INSCRIPCION tiene una <strong>llave compuesta</strong> (Matricula + ClaveMateria) y puede guardar datos propios de la relación (como Calificación y Periodo).</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 3.3: MODELO LÓGICO Y FÍSICO -->
+        <!-- ============================================ -->
+        <h2 id="logico-fisico">3.3 Modelo Lógico y Físico</h2>
+
+        <p>El diseño de una base de datos pasa por tres niveles de abstracción, cada uno con un propósito diferente:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nivel</th>
+                    <th>¿Qué describe?</th>
+                    <th>¿Quién lo hace?</th>
+                    <th>Herramienta</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Modelo Conceptual</strong></td>
+                    <td>QUÉ datos necesitamos (entidades, relaciones, sin detalles técnicos)</td>
+                    <td>Analista + cliente</td>
+                    <td>Diagrama ER básico</td>
+                </tr>
+                <tr>
+                    <td><strong>Modelo Lógico</strong></td>
+                    <td>CÓMO se organizan los datos (tablas, columnas, tipos de dato, llaves, relaciones)</td>
+                    <td>Diseñador de BD</td>
+                    <td>Diagrama ER detallado / Modelo relacional</td>
+                </tr>
+                <tr>
+                    <td><strong>Modelo Físico</strong></td>
+                    <td>DÓNDE y cómo se almacenan (índices, particiones, espacios en disco, motor de BD específico)</td>
+                    <td>DBA</td>
+                    <td>Scripts SQL, configuración del DBMS</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo de los tres niveles para "Alumno"</h4>
+            <p><strong>Conceptual:</strong> "Necesitamos almacenar información de alumnos: su nombre, matrícula y qué carrera estudian."</p>
+            <p><strong>Lógico:</strong></p>
+<pre><code>Tabla: ALUMNOS
+  - Matricula: VARCHAR(10), PK
+  - Nombre: VARCHAR(50), NOT NULL
+  - Apellido: VARCHAR(50), NOT NULL
+  - CarreraID: INT, FK → CARRERAS.CarreraID
+</code></pre>
+            <p><strong>Físico:</strong></p>
+<pre><code><span class="keyword">CREATE TABLE</span> Alumnos (
+    Matricula <span class="keyword">VARCHAR</span>(<span class="number">10</span>) <span class="keyword">NOT NULL</span>,
+    Nombre <span class="keyword">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT NULL</span>,
+    Apellido <span class="keyword">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT NULL</span>,
+    CarreraID <span class="keyword">INT NOT NULL</span>,
+    <span class="keyword">CONSTRAINT</span> PK_Alumnos <span class="keyword">PRIMARY KEY</span> (Matricula),
+    <span class="keyword">CONSTRAINT</span> FK_Carrera <span class="keyword">FOREIGN KEY</span> (CarreraID)
+        <span class="keyword">REFERENCES</span> Carreras(CarreraID)
+) <span class="keyword">ENGINE</span>=InnoDB;
+
+<span class="keyword">CREATE INDEX</span> idx_carrera <span class="keyword">ON</span> Alumnos(CarreraID);
+</code></pre>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía: Niveles de diseño de una casa</h4>
+            <ul>
+                <li><strong>Conceptual:</strong> "Quiero una casa con 3 recámaras, 2 baños y jardín" (el cliente dice qué necesita)</li>
+                <li><strong>Lógico:</strong> Plano arquitectónico con medidas, distribución, dónde van las ventanas (el arquitecto diseña)</li>
+                <li><strong>Físico:</strong> Plano estructural con tipo de cimentación, calibre de varillas, grosor de muros (el ingeniero detalla la construcción)</li>
+            </ul>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 3.4: DICCIONARIO DE DATOS -->
+        <!-- ============================================ -->
+        <h2 id="diccionario">3.4 El Diccionario de Datos como Herramienta de Documentación</h2>
+
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>El <strong>diccionario de datos</strong> es un documento que describe de forma detallada cada elemento de la base de datos: tablas, columnas, tipos de dato, restricciones, relaciones y reglas de negocio. Es la "documentación técnica" de tu BD.</p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>Es como el <strong>manual de usuario de un equipo electrónico</strong>. Así como el manual te dice qué hace cada botón, el voltaje que necesita y las especificaciones, el diccionario de datos te dice qué significa cada campo, qué valores acepta y cómo se relaciona con otros.</p>
+        </div>
+
+        <h3>¿Qué contiene un diccionario de datos?</h3>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo: Diccionario de datos para tabla ALUMNOS</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Campo</th>
+                        <th>Tipo de Dato</th>
+                        <th>Tamaño</th>
+                        <th>Restricción</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Matricula</td>
+                        <td>VARCHAR</td>
+                        <td>10</td>
+                        <td>PK, NOT NULL</td>
+                        <td>Identificador único del alumno. Formato: AXXXX</td>
+                    </tr>
+                    <tr>
+                        <td>Nombre</td>
+                        <td>VARCHAR</td>
+                        <td>50</td>
+                        <td>NOT NULL</td>
+                        <td>Nombre(s) del alumno</td>
+                    </tr>
+                    <tr>
+                        <td>Apellido</td>
+                        <td>VARCHAR</td>
+                        <td>50</td>
+                        <td>NOT NULL</td>
+                        <td>Apellido paterno del alumno</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>VARCHAR</td>
+                        <td>100</td>
+                        <td>UNIQUE</td>
+                        <td>Correo electrónico institucional</td>
+                    </tr>
+                    <tr>
+                        <td>FechaNac</td>
+                        <td>DATE</td>
+                        <td>-</td>
+                        <td>NOT NULL</td>
+                        <td>Fecha de nacimiento (AAAA-MM-DD)</td>
+                    </tr>
+                    <tr>
+                        <td>CarreraID</td>
+                        <td>INT</td>
+                        <td>-</td>
+                        <td>FK, NOT NULL</td>
+                        <td>Referencia a la tabla CARRERAS</td>
+                    </tr>
+                    <tr>
+                        <td>Activo</td>
+                        <td>BOOLEAN</td>
+                        <td>-</td>
+                        <td>DEFAULT TRUE</td>
+                        <td>Indica si el alumno está activo o dado de baja</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="info-box">
+            <h4>&#128161; ¿Por qué es importante?</h4>
+            <ul>
+                <li>Facilita la comunicación entre desarrolladores y analistas</li>
+                <li>Sirve como referencia cuando alguien nuevo se integra al proyecto</li>
+                <li>Ayuda a mantener consistencia cuando la BD crece</li>
+                <li>Es requisito en muchas metodologías de desarrollo</li>
+            </ul>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 3.5: NORMALIZACIÓN -->
+        <!-- ============================================ -->
+        <h2 id="normalizacion">3.5 Normalización (1FN, 2FN y 3FN)</h2>
+
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>La <strong>normalización</strong> es un proceso de organización de tablas que busca eliminar la <strong>redundancia</strong> (datos repetidos) y las <strong>anomalías</strong> (problemas al insertar, actualizar o borrar datos). Se aplica en etapas progresivas llamadas "formas normales".</p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>Es como <strong>organizar un clóset desordenado</strong>. Primero sacas todo y lo pones en orden (1FN). Luego separas la ropa por tipo: camisas en un cajón, pantalones en otro (2FN). Finalmente, dentro de cada cajón organizas por color o uso (3FN). Cada paso reduce el desorden y hace más fácil encontrar las cosas.</p>
+        </div>
+
+        <h3>¿Por qué normalizar?</h3>
+        <p>Sin normalización, puedes tener estos problemas (anomalías):</p>
+        <ul>
+            <li><strong>Anomalía de inserción:</strong> No puedes agregar un dato sin agregar información innecesaria</li>
+            <li><strong>Anomalía de actualización:</strong> Si un dato está repetido en 100 filas, debes actualizar las 100</li>
+            <li><strong>Anomalía de eliminación:</strong> Al borrar un registro, pierdes información que no querías perder</li>
+        </ul>
+
+        <!-- 1FN -->
+        <h3>Primera Forma Normal (1FN)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Regla</h4>
+            <p>Una tabla está en <strong>1FN</strong> si:</p>
+            <ol>
+                <li>Todos los atributos contienen <strong>valores atómicos</strong> (indivisibles, un solo valor por celda)</li>
+                <li>No hay <strong>grupos repetitivos</strong> (columnas que se repiten como Telefono1, Telefono2, Telefono3)</li>
+                <li>Existe una <strong>llave primaria</strong></li>
+            </ol>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo: Aplicar 1FN</h4>
+            <p><strong>&#10008; ANTES (viola 1FN):</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matricula</th>
+                        <th>Nombre</th>
+                        <th>Telefonos</th>
+                        <th>Materias</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A001</td>
+                        <td>Pedro García</td>
+                        <td>555-1234, 555-5678</td>
+                        <td>Matemáticas, Física, Programación</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Problemas: "Telefonos" y "Materias" tienen múltiples valores en una celda.</p>
+
+            <p><strong>&#10004; DESPUÉS (en 1FN):</strong> Se separa en tablas independientes.</p>
+            <p>Tabla ALUMNOS:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matricula (PK)</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A001</td>
+                        <td>Pedro García</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Tabla TELEFONOS:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matricula (FK)</th>
+                        <th>Telefono</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A001</td>
+                        <td>555-1234</td>
+                    </tr>
+                    <tr>
+                        <td>A001</td>
+                        <td>555-5678</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Tabla INSCRIPCIONES:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matricula (FK)</th>
+                        <th>Materia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A001</td>
+                        <td>Matemáticas</td>
+                    </tr>
+                    <tr>
+                        <td>A001</td>
+                        <td>Física</td>
+                    </tr>
+                    <tr>
+                        <td>A001</td>
+                        <td>Programación</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 2FN -->
+        <h3>Segunda Forma Normal (2FN)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Regla</h4>
+            <p>Una tabla está en <strong>2FN</strong> si:</p>
+            <ol>
+                <li>Ya está en 1FN</li>
+                <li>Todos los atributos no-clave dependen de <strong>toda</strong> la llave primaria, no solo de una parte de ella (aplica especialmente a llaves compuestas)</li>
+            </ol>
+            <p><em>Dicho de otro modo:</em> No hay <strong>dependencias parciales</strong>.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo: Aplicar 2FN</h4>
+            <p><strong>&#10008; ANTES (viola 2FN):</strong> Tabla INSCRIPCIONES con llave compuesta</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matricula (PK)</th>
+                        <th>MateriaID (PK)</th>
+                        <th>NombreAlumno</th>
+                        <th>NombreMateria</th>
+                        <th>Calificacion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A001</td>
+                        <td>MAT101</td>
+                        <td>Pedro García</td>
+                        <td>Matemáticas I</td>
+                        <td>85</td>
+                    </tr>
+                    <tr>
+                        <td>A001</td>
+                        <td>FIS201</td>
+                        <td>Pedro García</td>
+                        <td>Física I</td>
+                        <td>90</td>
+                    </tr>
+                    <tr>
+                        <td>A002</td>
+                        <td>MAT101</td>
+                        <td>María López</td>
+                        <td>Matemáticas I</td>
+                        <td>92</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>Problema:</strong></p>
+            <ul>
+                <li>"NombreAlumno" depende SOLO de Matricula (no de MateriaID) → dependencia parcial</li>
+                <li>"NombreMateria" depende SOLO de MateriaID (no de Matricula) → dependencia parcial</li>
+                <li>"Calificacion" depende de AMBAS (Matricula + MateriaID) → correcto</li>
+            </ul>
+
+            <p><strong>&#10004; DESPUÉS (en 2FN):</strong> Separar en 3 tablas</p>
+            <p>Tabla ALUMNOS: Matricula (PK), NombreAlumno</p>
+            <p>Tabla MATERIAS: MateriaID (PK), NombreMateria</p>
+            <p>Tabla INSCRIPCIONES: Matricula (PK,FK), MateriaID (PK,FK), Calificacion</p>
+        </div>
+
+        <div class="info-box">
+            <h4>&#128161; Truco para recordar 2FN</h4>
+            <p>Si tu tabla tiene una llave primaria de <strong>una sola columna</strong>, y ya está en 1FN, automáticamente está en 2FN. Las dependencias parciales solo ocurren con <strong>llaves compuestas</strong>.</p>
+        </div>
+
+        <!-- 3FN -->
+        <h3>Tercera Forma Normal (3FN)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Regla</h4>
+            <p>Una tabla está en <strong>3FN</strong> si:</p>
+            <ol>
+                <li>Ya está en 2FN</li>
+                <li>No existen <strong>dependencias transitivas</strong>: ningún atributo no-clave depende de otro atributo no-clave</li>
+            </ol>
+            <p><em>Dicho de otro modo:</em> Cada atributo no-clave depende <strong>directamente</strong> de la llave primaria y de nada más.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo: Aplicar 3FN</h4>
+            <p><strong>&#10008; ANTES (viola 3FN):</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matricula (PK)</th>
+                        <th>Nombre</th>
+                        <th>CarreraID</th>
+                        <th>NombreCarrera</th>
+                        <th>Coordinador</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A001</td>
+                        <td>Pedro</td>
+                        <td>1</td>
+                        <td>Sistemas</td>
+                        <td>Dr. Ramírez</td>
+                    </tr>
+                    <tr>
+                        <td>A002</td>
+                        <td>María</td>
+                        <td>1</td>
+                        <td>Sistemas</td>
+                        <td>Dr. Ramírez</td>
+                    </tr>
+                    <tr>
+                        <td>A003</td>
+                        <td>Juan</td>
+                        <td>2</td>
+                        <td>Industrial</td>
+                        <td>Dra. Flores</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>Problema:</strong> "NombreCarrera" y "Coordinador" no dependen de Matricula directamente. Dependen de CarreraID (que no es la PK). Esto es una <strong>dependencia transitiva</strong>:</p>
+            <p><code>Matricula → CarreraID → NombreCarrera, Coordinador</code></p>
+
+            <p><strong>&#10004; DESPUÉS (en 3FN):</strong></p>
+            <p>Tabla ALUMNOS:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matricula (PK)</th>
+                        <th>Nombre</th>
+                        <th>CarreraID (FK)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>A001</td><td>Pedro</td><td>1</td></tr>
+                    <tr><td>A002</td><td>María</td><td>1</td></tr>
+                    <tr><td>A003</td><td>Juan</td><td>2</td></tr>
+                </tbody>
+            </table>
+            <p>Tabla CARRERAS:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>CarreraID (PK)</th>
+                        <th>NombreCarrera</th>
+                        <th>Coordinador</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Sistemas</td><td>Dr. Ramírez</td></tr>
+                    <tr><td>2</td><td>Industrial</td><td>Dra. Flores</td></tr>
+                </tbody>
+            </table>
+            <p>Ahora "NombreCarrera" y "Coordinador" dependen directamente de su propia PK (CarreraID). Sin redundancia.</p>
+        </div>
+
+        <!-- Resumen Normalización -->
+        <h3>Resumen rápido de normalización</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Forma Normal</th>
+                    <th>Requisito principal</th>
+                    <th>Elimina</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1FN</strong></td>
+                    <td>Valores atómicos, sin grupos repetitivos</td>
+                    <td>Datos multivaluados en una celda</td>
+                </tr>
+                <tr>
+                    <td><strong>2FN</strong></td>
+                    <td>Sin dependencias parciales</td>
+                    <td>Atributos que dependen solo de parte de la PK</td>
+                </tr>
+                <tr>
+                    <td><strong>3FN</strong></td>
+                    <td>Sin dependencias transitivas</td>
+                    <td>Atributos no-clave que dependen de otros no-clave</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box">
+            <h4>&#128161; Frase para recordar (del informático Bill Kent)</h4>
+            <p><em>"Cada atributo no-clave debe proporcionar un hecho sobre <strong>la llave</strong> (1FN), <strong>toda la llave</strong> (2FN), y <strong>nada más que la llave</strong> (3FN)."</em></p>
+            <p>Esta frase resume todo el proceso de normalización.</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 3.6: HERRAMIENTAS CASE -->
+        <!-- ============================================ -->
+        <h2 id="case">3.6 Herramientas CASE</h2>
+
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p><strong>CASE</strong> (Computer-Aided Software Engineering) son herramientas de software que asisten en el diseño, modelado y generación de código para bases de datos. Permiten crear diagramas ER de forma visual y generar automáticamente los scripts SQL.</p>
+        </div>
+
+        <h3>¿Qué hacen las herramientas CASE para BD?</h3>
+        <ul>
+            <li>Crear <strong>diagramas ER</strong> de forma visual (arrastrando entidades y conectando relaciones)</li>
+            <li><strong>Generar SQL</strong> automáticamente a partir del diagrama (forward engineering)</li>
+            <li>Crear el <strong>diagrama a partir de una BD existente</strong> (reverse engineering)</li>
+            <li>Validar el modelo (verificar integridad, detectar errores de diseño)</li>
+            <li>Generar <strong>documentación</strong> y diccionarios de datos</li>
+        </ul>
+
+        <h3>Herramientas CASE populares</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Herramienta</th>
+                    <th>Tipo</th>
+                    <th>Notas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>MySQL Workbench</strong></td>
+                    <td>Gratuita</td>
+                    <td>Modelado visual, genera SQL para MySQL. Ideal para aprender.</td>
+                </tr>
+                <tr>
+                    <td><strong>draw.io / diagrams.net</strong></td>
+                    <td>Gratuita (web)</td>
+                    <td>Para diagramas ER simples. No genera SQL pero es fácil de usar.</td>
+                </tr>
+                <tr>
+                    <td><strong>Lucidchart</strong></td>
+                    <td>Freemium (web)</td>
+                    <td>Diagramas ER colaborativos en la nube.</td>
+                </tr>
+                <tr>
+                    <td><strong>ERDPlus</strong></td>
+                    <td>Gratuita (web)</td>
+                    <td>Específica para diagramas ER educativos. Genera SQL básico.</td>
+                </tr>
+                <tr>
+                    <td><strong>Oracle SQL Developer Data Modeler</strong></td>
+                    <td>Gratuita</td>
+                    <td>Profesional, soporta modelo conceptual, lógico y físico.</td>
+                </tr>
+                <tr>
+                    <td><strong>Erwin Data Modeler</strong></td>
+                    <td>Comercial</td>
+                    <td>Estándar de la industria para proyectos grandes.</td>
+                </tr>
+                <tr>
+                    <td><strong>dbdiagram.io</strong></td>
+                    <td>Freemium (web)</td>
+                    <td>Escribes la estructura en texto y genera el diagrama visual.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box">
+            <h4>&#128161; Recomendación para el curso</h4>
+            <p>Si estás empezando, usa <strong>ERDPlus</strong> (erdplus.com) para crear tus diagramas ER de práctica. Es gratuito, online y está diseñado para estudiantes. Para trabajo más profesional, <strong>MySQL Workbench</strong> es la mejor opción gratuita con funcionalidad completa.</p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>Las herramientas CASE son como <strong>AutoCAD para los arquitectos</strong>. Puedes dibujar planos a mano en papel, pero un software te permite hacerlo más rápido, detectar errores, y generar automáticamente las especificaciones técnicas. No reemplazan tu conocimiento de diseño, pero lo hacen mucho más productivo.</p>
+        </div>
+
+        <!-- Navegación entre páginas -->
+        <div class="page-nav">
+            <a href="unidad2.html">&larr; Unidad 2: Modelo Relacional</a>
+            <a href="unidad4.html">Unidad 4: Álgebra Relacional &rarr;</a>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>Unidad 3 - Modelado Lógico | <a href="index.html">Volver al índice</a></p>
+    </footer>
+</body>
+</html>

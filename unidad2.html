@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 2 - El Modelo Relacional | Curso de Bases de Datos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-brand">&#128218; Curso de Bases de Datos</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="unidad1.html">U1</a></li>
+                <li><a href="unidad2.html"><strong>U2</strong></a></li>
+                <li><a href="unidad3.html">U3</a></li>
+                <li><a href="unidad4.html">U4</a></li>
+                <li><a href="unidad5.html">U5</a></li>
+                <li><a href="unidad6.html">U6</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <h1>Unidad 2: El Modelo Relacional</h1>
+
+        <div class="toc">
+            <h4>&#128203; Contenido de esta unidad</h4>
+            <ol>
+                <li><a href="#elementos">Elementos del modelo relacional</a></li>
+                <li><a href="#llaves">Tipos de llaves</a></li>
+                <li><a href="#integridad">Integridad de la información (Constraints)</a></li>
+                <li><a href="#indices">Índices</a></li>
+            </ol>
+        </div>
+
+        <p>El modelo relacional es la forma en que la mayoría de las bases de datos modernas organizan la información. Fue propuesto por Edgar F. Codd en 1970 y se basa en un concepto matemático: las <strong>relaciones</strong> (que en la práctica son tablas).</p>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía principal</h4>
+            <p>Piensa en una <strong>hoja de cálculo de Excel</strong>. Cada hoja es una tabla, cada columna tiene un encabezado (atributo), cada fila es un dato completo (registro), y todo el archivo Excel con múltiples hojas es tu base de datos. El modelo relacional formaliza estas ideas con reglas estrictas.</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 2.1: ELEMENTOS DEL MODELO -->
+        <!-- ============================================ -->
+        <h2 id="elementos">2.1 Elementos del Modelo Relacional</h2>
+
+        <p>El modelo relacional tiene su propia terminología formal (matemática) y su equivalente práctico. Aquí aprenderás ambos:</p>
+
+        <!-- RELACIÓN / TABLA -->
+        <h3>Relación / Tabla</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>Una <strong>relación</strong> (término formal) o <strong>tabla</strong> (término práctico) es una estructura bidimensional compuesta por filas y columnas que almacena datos sobre una entidad específica. Cada tabla tiene un nombre único dentro de la base de datos.</p>
+        </div>
+
+        <div class="info-box">
+            <h4>&#128161; Reglas de una relación</h4>
+            <ul>
+                <li>Cada tabla tiene un <strong>nombre único</strong></li>
+                <li>Cada fila es <strong>única</strong> (no hay filas duplicadas exactas)</li>
+                <li>El orden de las filas <strong>no importa</strong></li>
+                <li>El orden de las columnas <strong>no importa</strong></li>
+                <li>Cada celda contiene un <strong>solo valor</strong> (atómico)</li>
+            </ul>
+        </div>
+
+        <!-- TUPLA / RENGLÓN -->
+        <h3>Tupla / Renglón / Fila</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>Una <strong>tupla</strong> (término formal) o <strong>renglón/fila</strong> (término práctico) es una instancia individual dentro de una relación. Representa un elemento completo de la entidad que la tabla describe.</p>
+        </div>
+
+        <!-- ATRIBUTO / COLUMNA -->
+        <h3>Atributo / Columna</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>Un <strong>atributo</strong> (término formal) o <strong>columna</strong> (término práctico) es una propiedad o característica que describe a la entidad. Cada atributo tiene un nombre y un tipo de dato asociado.</p>
+        </div>
+
+        <!-- DOMINIO -->
+        <h3>Dominio</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>El <strong>dominio</strong> es el conjunto de valores válidos que puede tomar un atributo. Define qué tipo de datos y qué rango de valores son aceptables para esa columna.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplos de dominios</h4>
+            <ul>
+                <li><strong>Dominio de "Edad":</strong> Números enteros entre 0 y 150</li>
+                <li><strong>Dominio de "Sexo":</strong> {'M', 'F'} (solo dos valores posibles)</li>
+                <li><strong>Dominio de "Email":</strong> Cadenas de texto con formato válido de correo</li>
+                <li><strong>Dominio de "Calificación":</strong> Números decimales entre 0.0 y 10.0</li>
+            </ul>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>El dominio es como las <strong>opciones de respuesta en un formulario</strong>. Si un campo dice "Estado civil" y te da un desplegable con: Soltero, Casado, Divorciado, Viudo... esas opciones son el dominio. No puedes escribir "Pizza" en ese campo.</p>
+        </div>
+
+        <!-- CARDINALIDAD -->
+        <h3>Cardinalidad</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>La <strong>cardinalidad</strong> de una relación es el <strong>número de tuplas (filas)</strong> que contiene. Es un valor que cambia constantemente conforme se agregan o eliminan registros.</p>
+        </div>
+
+        <!-- GRADO -->
+        <h3>Grado</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>El <strong>grado</strong> de una relación es el <strong>número de atributos (columnas)</strong> que tiene. A diferencia de la cardinalidad, el grado suele ser fijo una vez diseñada la tabla.</p>
+        </div>
+
+        <!-- Ejemplo visual completo -->
+        <div class="example-box">
+            <h4>&#9989; Ejemplo completo: Tabla ALUMNOS</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matricula</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Carrera</th>
+                        <th>Semestre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A001</td>
+                        <td>Pedro</td>
+                        <td>García</td>
+                        <td>Sistemas</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>A002</td>
+                        <td>María</td>
+                        <td>López</td>
+                        <td>Industrial</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>A003</td>
+                        <td>Juan</td>
+                        <td>Martínez</td>
+                        <td>Sistemas</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>A004</td>
+                        <td>Ana</td>
+                        <td>Rodríguez</td>
+                        <td>Civil</td>
+                        <td>2</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Analicemos esta tabla:</p>
+            <ul>
+                <li><strong>Relación/Tabla:</strong> ALUMNOS</li>
+                <li><strong>Tuplas/Filas:</strong> 4 registros (Pedro, María, Juan, Ana)</li>
+                <li><strong>Atributos/Columnas:</strong> Matricula, Nombre, Apellido, Carrera, Semestre</li>
+                <li><strong>Grado:</strong> 5 (tiene 5 columnas)</li>
+                <li><strong>Cardinalidad:</strong> 4 (tiene 4 filas)</li>
+                <li><strong>Dominio de Semestre:</strong> Enteros del 1 al 12</li>
+                <li><strong>Dominio de Carrera:</strong> {Sistemas, Industrial, Civil, Mecánica, ...}</li>
+            </ul>
+        </div>
+
+        <!-- Tabla resumen de terminología -->
+        <h3>Resumen de terminología</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Término formal</th>
+                    <th>Término práctico</th>
+                    <th>En Excel sería...</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Relación</td>
+                    <td>Tabla</td>
+                    <td>Una hoja del libro</td>
+                </tr>
+                <tr>
+                    <td>Tupla</td>
+                    <td>Fila / Renglón / Registro</td>
+                    <td>Una fila con datos</td>
+                </tr>
+                <tr>
+                    <td>Atributo</td>
+                    <td>Columna / Campo</td>
+                    <td>Encabezado de columna</td>
+                </tr>
+                <tr>
+                    <td>Dominio</td>
+                    <td>Valores permitidos</td>
+                    <td>Validación de datos en celda</td>
+                </tr>
+                <tr>
+                    <td>Cardinalidad</td>
+                    <td>Número de filas</td>
+                    <td>Cuántas filas con datos hay</td>
+                </tr>
+                <tr>
+                    <td>Grado</td>
+                    <td>Número de columnas</td>
+                    <td>Cuántas columnas hay</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 2.2: TIPOS DE LLAVES -->
+        <!-- ============================================ -->
+        <h2 id="llaves">2.2 Tipos de Llaves (Keys)</h2>
+
+        <p>Las llaves son el mecanismo para <strong>identificar de forma única</strong> cada registro y para <strong>conectar</strong> tablas entre sí. Son el corazón del modelo relacional.</p>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>Las llaves son como el <strong>número de credencial de elector (INE)</strong>. No importa cuántos "Juan García" existan en México, cada uno tiene un número de INE único que lo identifica sin ambigüedad. Ese número es su "llave primaria" como ciudadano.</p>
+        </div>
+
+        <!-- Llave Primaria -->
+        <h3>Llave Primaria (Primary Key - PK)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>La <strong>llave primaria</strong> es un atributo (o conjunto de atributos) que identifica de manera <strong>única e inequívoca</strong> cada tupla en una relación. Sus reglas son:</p>
+            <ul>
+                <li><strong>Unicidad:</strong> No puede haber dos filas con el mismo valor de PK</li>
+                <li><strong>No nulidad:</strong> No puede ser NULL (vacía)</li>
+                <li><strong>Inmutabilidad:</strong> Idealmente, no debería cambiar con el tiempo</li>
+                <li><strong>Mínima:</strong> Debe usar la menor cantidad de atributos posible</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplos de llaves primarias</h4>
+            <ul>
+                <li><code>Matricula</code> en tabla ALUMNOS</li>
+                <li><code>RFC</code> en tabla EMPLEADOS</li>
+                <li><code>ISBN</code> en tabla LIBROS</li>
+                <li><code>NumeroFactura</code> en tabla FACTURAS</li>
+                <li><code>ID</code> (autonumérico) - la opción más común en la práctica</li>
+            </ul>
+        </div>
+
+        <!-- Llave Candidata -->
+        <h3>Llave Candidata (Candidate Key)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>Una <strong>llave candidata</strong> es cualquier atributo (o conjunto de atributos) que <em>podría</em> ser llave primaria porque cumple con unicidad y no nulidad. De todas las candidatas, se elige una como PK.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo</h4>
+            <p>En una tabla EMPLEADOS:</p>
+            <ul>
+                <li><code>RFC</code> - Es único por persona &#10004; Candidata</li>
+                <li><code>CURP</code> - Es único por persona &#10004; Candidata</li>
+                <li><code>NumSeguroSocial</code> - Es único &#10004; Candidata</li>
+                <li><code>Nombre</code> - Puede repetirse &#10008; NO es candidata</li>
+            </ul>
+            <p>Si eliges RFC como PK, entonces CURP y NSS quedan como "llaves alternas".</p>
+        </div>
+
+        <!-- Llave Alterna -->
+        <h3>Llave Alterna (Alternate Key)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>Las <strong>llaves alternas</strong> son las llaves candidatas que <em>no</em> fueron elegidas como llave primaria. Siguen siendo únicas, pero no son la identificación principal.</p>
+        </div>
+
+        <!-- Llave Foránea -->
+        <h3>Llave Foránea (Foreign Key - FK)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>La <strong>llave foránea</strong> es un atributo en una tabla que hace referencia a la llave primaria de <em>otra</em> tabla. Es el mecanismo que <strong>conecta tablas entre sí</strong> y establece relaciones.</p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>Es como cuando en un formulario de pedido escribes tu <strong>Número de Cliente</strong>. Ese número no se "inventó" en el pedido; hace referencia a tu registro en la tabla de CLIENTES. El pedido "apunta" a tu información sin repetirla.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo visual de llave foránea</h4>
+            <p><strong>Tabla ALUMNOS:</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matricula (PK)</th>
+                        <th>Nombre</th>
+                        <th>CarreraID (FK)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A001</td>
+                        <td>Pedro García</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>A002</td>
+                        <td>María López</td>
+                        <td>2</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>Tabla CARRERAS:</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>CarreraID (PK)</th>
+                        <th>NombreCarrera</th>
+                        <th>Duracion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Ing. en Sistemas</td>
+                        <td>9 semestres</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ing. Industrial</td>
+                        <td>9 semestres</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>&#8593; El campo <code>CarreraID</code> en ALUMNOS es una <strong>FK</strong> que apunta a la <strong>PK</strong> de CARRERAS. Así conectamos las tablas sin duplicar datos.</p>
+        </div>
+
+        <!-- Llave Compuesta -->
+        <h3>Llave Compuesta (Composite Key)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>Una <strong>llave compuesta</strong> es una llave primaria formada por <strong>dos o más atributos</strong> que juntos identifican de forma única una tupla. Ninguno de los atributos por separado es suficiente.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo</h4>
+            <p><strong>Tabla INSCRIPCIONES:</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matricula (PK, FK)</th>
+                        <th>MateriaID (PK, FK)</th>
+                        <th>Periodo</th>
+                        <th>Calificacion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A001</td>
+                        <td>MAT101</td>
+                        <td>2024-1</td>
+                        <td>85</td>
+                    </tr>
+                    <tr>
+                        <td>A001</td>
+                        <td>FIS201</td>
+                        <td>2024-1</td>
+                        <td>90</td>
+                    </tr>
+                    <tr>
+                        <td>A002</td>
+                        <td>MAT101</td>
+                        <td>2024-1</td>
+                        <td>78</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Aquí ni <code>Matricula</code> sola ni <code>MateriaID</code> sola son únicas (un alumno cursa varias materias, una materia tiene varios alumnos). Pero la <strong>combinación</strong> Matricula + MateriaID sí es única.</p>
+        </div>
+
+        <!-- Tabla resumen de llaves -->
+        <h3>Resumen de tipos de llaves</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>¿Qué hace?</th>
+                    <th>¿Puede repetirse?</th>
+                    <th>¿Puede ser NULL?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Primaria (PK)</strong></td>
+                    <td>Identifica cada fila de forma única</td>
+                    <td>No</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td><strong>Candidata</strong></td>
+                    <td>Podría ser PK (cumple requisitos)</td>
+                    <td>No</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td><strong>Alterna</strong></td>
+                    <td>Candidata que no fue elegida como PK</td>
+                    <td>No</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td><strong>Foránea (FK)</strong></td>
+                    <td>Conecta con PK de otra tabla</td>
+                    <td>Sí</td>
+                    <td>Depende del diseño</td>
+                </tr>
+                <tr>
+                    <td><strong>Compuesta</strong></td>
+                    <td>PK formada por 2+ columnas</td>
+                    <td>No (la combinación)</td>
+                    <td>No</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 2.3: INTEGRIDAD (CONSTRAINTS) -->
+        <!-- ============================================ -->
+        <h2 id="integridad">2.3 Integridad de la Información (Constraints)</h2>
+
+        <p>Las <strong>restricciones de integridad</strong> (constraints) son reglas que el DBMS aplica automáticamente para garantizar que los datos sean correctos, consistentes y confiables. Son como las "reglas del juego" de tu base de datos.</p>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>Los constraints son como las <strong>validaciones de un formulario web</strong>. Si intentas enviar un formulario sin correo electrónico, te dice "campo requerido". Si pones letras en un campo de teléfono, te dice "formato inválido". Los constraints hacen lo mismo pero a nivel de base de datos.</p>
+        </div>
+
+        <!-- Integridad de Entidad -->
+        <h3>Integridad de Entidad</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>La <strong>integridad de entidad</strong> establece que ningún atributo que forme parte de la llave primaria puede ser NULL. Cada registro <em>debe</em> poder ser identificado.</p>
+            <p><strong>En SQL:</strong> <code>PRIMARY KEY</code></p>
+        </div>
+
+        <!-- Integridad Referencial -->
+        <h3>Integridad Referencial</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>La <strong>integridad referencial</strong> garantiza que una llave foránea siempre apunte a un registro que <em>realmente existe</em> en la tabla referenciada. No puedes tener un alumno con CarreraID = 99 si no existe una carrera con ID 99.</p>
+            <p><strong>En SQL:</strong> <code>FOREIGN KEY ... REFERENCES</code></p>
+        </div>
+
+        <div class="warning-box">
+            <h4>&#9888;&#65039; Error clásico</h4>
+            <p>Si intentas insertar un registro con una FK que no existe en la tabla padre, el DBMS rechazará la operación. Igualmente, si intentas eliminar un registro padre que tiene hijos que lo referencian, el sistema te lo impedirá (a menos que configures CASCADE).</p>
+        </div>
+
+        <!-- Tipos de constraints -->
+        <h3>Constraints comunes en SQL</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Constraint</th>
+                    <th>¿Qué hace?</th>
+                    <th>Ejemplo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>PRIMARY KEY</code></td>
+                    <td>Define la llave primaria (única + no nula)</td>
+                    <td><code>Matricula VARCHAR(10) PRIMARY KEY</code></td>
+                </tr>
+                <tr>
+                    <td><code>FOREIGN KEY</code></td>
+                    <td>Establece relación con otra tabla</td>
+                    <td><code>FOREIGN KEY (CarreraID) REFERENCES Carreras(ID)</code></td>
+                </tr>
+                <tr>
+                    <td><code>NOT NULL</code></td>
+                    <td>Prohíbe valores vacíos</td>
+                    <td><code>Nombre VARCHAR(50) NOT NULL</code></td>
+                </tr>
+                <tr>
+                    <td><code>UNIQUE</code></td>
+                    <td>No permite valores duplicados</td>
+                    <td><code>Email VARCHAR(100) UNIQUE</code></td>
+                </tr>
+                <tr>
+                    <td><code>CHECK</code></td>
+                    <td>Valida que el valor cumpla una condición</td>
+                    <td><code>Edad INT CHECK (Edad >= 0 AND Edad <= 150)</code></td>
+                </tr>
+                <tr>
+                    <td><code>DEFAULT</code></td>
+                    <td>Asigna un valor automático si no se especifica</td>
+                    <td><code>FechaRegistro DATE DEFAULT GETDATE()</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo completo de tabla con constraints</h4>
+<pre><code><span class="keyword">CREATE TABLE</span> Alumnos (
+    Matricula   <span class="keyword">VARCHAR</span>(10)  <span class="keyword">PRIMARY KEY</span>,
+    Nombre      <span class="keyword">VARCHAR</span>(50)  <span class="keyword">NOT NULL</span>,
+    Apellido    <span class="keyword">VARCHAR</span>(50)  <span class="keyword">NOT NULL</span>,
+    Email       <span class="keyword">VARCHAR</span>(100) <span class="keyword">UNIQUE</span>,
+    Edad        <span class="keyword">INT</span>          <span class="keyword">CHECK</span> (Edad >= 15 <span class="keyword">AND</span> Edad <= 80),
+    CarreraID   <span class="keyword">INT</span>          <span class="keyword">NOT NULL</span>,
+    FechaIngreso <span class="keyword">DATE</span>        <span class="keyword">DEFAULT</span> CURRENT_DATE,
+    <span class="keyword">FOREIGN KEY</span> (CarreraID) <span class="keyword">REFERENCES</span> Carreras(CarreraID)
+);</code></pre>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 2.4: ÍNDICES -->
+        <!-- ============================================ -->
+        <h2 id="indices">2.4 Índices</h2>
+
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>Un <strong>índice</strong> es una estructura auxiliar que el DBMS crea para <strong>acelerar las búsquedas</strong> en una tabla. No cambia los datos, solo crea un "atajo" para encontrarlos más rápido.</p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía: El índice de un libro</h4>
+            <p>Imagina un libro de 500 páginas. Si buscas el tema "Normalización", tienes dos opciones:</p>
+            <ol>
+                <li><strong>Sin índice:</strong> Hojear página por página hasta encontrarlo (lento)</li>
+                <li><strong>Con índice:</strong> Ir al índice al final del libro, buscar "Normalización... pág. 234" e ir directo (rápido)</li>
+            </ol>
+            <p>Los índices en BD funcionan igual: crean una referencia ordenada que apunta directamente a la ubicación de los datos.</p>
+        </div>
+
+        <h3>¿Cuándo usar índices?</h3>
+        <div class="info-box">
+            <h4>&#128161; Regla general</h4>
+            <ul>
+                <li><strong>Sí crear índice en:</strong> Columnas que se usan frecuentemente en WHERE, JOIN, o ORDER BY</li>
+                <li><strong>No crear índice en:</strong> Tablas pequeñas, columnas que cambian muy frecuentemente, columnas con pocos valores distintos (como "Sexo": M/F)</li>
+            </ul>
+        </div>
+
+        <h3>Tipos de índices</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Descripción</th>
+                    <th>Uso típico</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Índice Clustered</strong></td>
+                    <td>Ordena físicamente los datos en disco. Solo puede haber UNO por tabla.</td>
+                    <td>Se crea automáticamente con la PK</td>
+                </tr>
+                <tr>
+                    <td><strong>Índice Non-Clustered</strong></td>
+                    <td>Crea una estructura separada con punteros a los datos. Puede haber varios por tabla.</td>
+                    <td>Columnas que se buscan frecuentemente</td>
+                </tr>
+                <tr>
+                    <td><strong>Índice Único</strong></td>
+                    <td>Como el non-clustered pero además garantiza que no haya duplicados.</td>
+                    <td>Email, RFC, CURP</td>
+                </tr>
+                <tr>
+                    <td><strong>Índice Compuesto</strong></td>
+                    <td>Índice sobre 2 o más columnas combinadas.</td>
+                    <td>Búsquedas por Apellido + Nombre</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo de creación de índices en SQL</h4>
+<pre><code><span class="comment">-- Índice simple en la columna Apellido</span>
+<span class="keyword">CREATE INDEX</span> idx_apellido <span class="keyword">ON</span> Alumnos(Apellido);
+
+<span class="comment">-- Índice único en Email (no permite duplicados)</span>
+<span class="keyword">CREATE UNIQUE INDEX</span> idx_email <span class="keyword">ON</span> Alumnos(Email);
+
+<span class="comment">-- Índice compuesto (buscar por apellido Y nombre)</span>
+<span class="keyword">CREATE INDEX</span> idx_nombre_completo <span class="keyword">ON</span> Alumnos(Apellido, Nombre);</code></pre>
+        </div>
+
+        <h3>Ventajas y desventajas de los índices</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>&#9989; Ventajas</th>
+                    <th>&#9888;&#65039; Desventajas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Búsquedas mucho más rápidas (SELECT)</td>
+                    <td>Ocupan espacio extra en disco</td>
+                </tr>
+                <tr>
+                    <td>Ordenamientos más eficientes (ORDER BY)</td>
+                    <td>Hacen más lentas las escrituras (INSERT, UPDATE, DELETE)</td>
+                </tr>
+                <tr>
+                    <td>JOINs entre tablas más rápidos</td>
+                    <td>Requieren mantenimiento del DBMS</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="warning-box">
+            <h4>&#9888;&#65039; Cuidado</h4>
+            <p>No pongas índice en TODO. Cada índice adicional hace más lenta la escritura de datos porque el sistema debe actualizar tanto la tabla como cada índice. La regla es: <strong>indexa solo lo que realmente necesitas buscar con frecuencia</strong>.</p>
+        </div>
+
+        <!-- Navegación entre páginas -->
+        <div class="page-nav">
+            <a href="unidad1.html">&larr; Unidad 1: Introducción</a>
+            <a href="unidad3.html">Unidad 3: Modelado Lógico &rarr;</a>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>Unidad 2 - El Modelo Relacional | <a href="index.html">Volver al índice</a></p>
+    </footer>
+</body>
+</html>

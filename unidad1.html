@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 1 - Introducción y Conceptos Asociados | Curso de Bases de Datos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-brand">&#128218; Curso de Bases de Datos</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="unidad1.html"><strong>U1</strong></a></li>
+                <li><a href="unidad2.html">U2</a></li>
+                <li><a href="unidad3.html">U3</a></li>
+                <li><a href="unidad4.html">U4</a></li>
+                <li><a href="unidad5.html">U5</a></li>
+                <li><a href="unidad6.html">U6</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <h1>Unidad 1: Introducción y Conceptos Asociados a las Bases de Datos</h1>
+        
+        <div class="toc">
+            <h4>&#128203; Contenido de esta unidad</h4>
+            <ol>
+                <li><a href="#definiciones">Definiciones y conceptos fundamentales</a></li>
+                <li><a href="#evolucion">Evolución de las bases de datos</a></li>
+                <li><a href="#reglas-codd">Las 12 Reglas de Codd</a></li>
+            </ol>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 1.1: DEFINICIONES Y CONCEPTOS -->
+        <!-- ============================================ -->
+        <h2 id="definiciones">1.1 Definiciones y Conceptos Fundamentales</h2>
+
+        <p>Antes de construir una casa, necesitas conocer los materiales: ladrillos, cemento, varillas. De la misma forma, antes de trabajar con bases de datos, necesitas dominar su vocabulario básico.</p>
+
+        <div class="analogy-box">
+            <h4>&#127968; Analogía: La oficina de archivo</h4>
+            <p>Imagina una oficina gubernamental con un gran archivero metálico. Cada <strong>cajón</strong> es un archivo, cada <strong>carpeta</strong> dentro del cajón es un registro, cada <strong>dato escrito</strong> en la carpeta es un campo, y todo el sistema de organización junto con las reglas para guardar y buscar carpetas es el <strong>sistema de base de datos</strong>.</p>
+        </div>
+
+        <!-- DATO -->
+        <h3>Dato</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>Un <strong>dato</strong> es la unidad mínima de información. Es un hecho aislado que por sí solo no tiene un significado completo. Puede ser un número, una palabra, una fecha o cualquier valor individual.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplos de datos</h4>
+            <ul>
+                <li><code>42</code> &mdash; ¿Es una edad? ¿Un número de calle? ¿Una calificación? Solo es un número.</li>
+                <li><code>"Pedro"</code> &mdash; ¿Es un nombre? ¿Una ciudad? ¿Una marca? Solo es texto.</li>
+                <li><code>2024-03-15</code> &mdash; ¿Fecha de nacimiento? ¿De venta? Solo es una fecha.</li>
+            </ul>
+            <p>Los datos adquieren significado cuando les damos <strong>contexto</strong>. "Pedro" + "es el nombre del alumno" = información.</p>
+        </div>
+
+        <!-- INFORMACIÓN -->
+        <h3>Información</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>La <strong>información</strong> es el resultado de procesar, organizar y dar contexto a los datos. Es un dato (o conjunto de datos) con significado útil para quien lo recibe.</p>
+        </div>
+
+        <div class="diagram">
+            <div class="diagram-row">
+                <div class="diagram-box">Datos crudos</div>
+                <span class="diagram-arrow">&rarr;</span>
+                <div class="diagram-box secondary">Procesamiento + Contexto</div>
+                <span class="diagram-arrow">&rarr;</span>
+                <div class="diagram-box accent">Información útil</div>
+            </div>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo</h4>
+            <p><strong>Datos:</strong> "Pedro", "García", "85", "Matemáticas"</p>
+            <p><strong>Información:</strong> "El alumno Pedro García obtuvo 85 de calificación en Matemáticas"</p>
+        </div>
+
+        <!-- CAMPO -->
+        <h3>Campo</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>Un <strong>campo</strong> es la unidad más pequeña de datos con significado dentro de un registro. Representa una característica o atributo específico. En una tabla, un campo corresponde a una <strong>columna</strong>.</p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>En un formulario de inscripción, cada <strong>espacio para llenar</strong> es un campo: "Nombre: ___", "Apellido: ___", "Edad: ___". El campo define <em>qué tipo</em> de dato se espera.</p>
+        </div>
+
+        <!-- REGISTRO -->
+        <h3>Registro</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>Un <strong>registro</strong> (también llamado tupla o fila) es un conjunto de campos relacionados que describen a una entidad completa. En una tabla, un registro corresponde a una <strong>fila</strong>.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo visual</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID (campo)</th>
+                        <th>Nombre (campo)</th>
+                        <th>Apellido (campo)</th>
+                        <th>Edad (campo)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Pedro</td>
+                        <td>García</td>
+                        <td>22</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>María</td>
+                        <td>López</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Juan</td>
+                        <td>Martínez</td>
+                        <td>21</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>&#8593; Cada <strong>fila completa</strong> es un registro. Cada <strong>columna</strong> es un campo.</p>
+        </div>
+
+        <!-- ARCHIVO -->
+        <h3>Archivo (en contexto de BD)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>Un <strong>archivo</strong> es un conjunto de registros del mismo tipo almacenados de forma organizada. En el contexto de bases de datos, un archivo equivale conceptualmente a una <strong>tabla</strong>.</p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>Si cada registro es una <strong>ficha de alumno</strong>, entonces el archivo es el <strong>cajón completo</strong> que contiene todas las fichas de alumnos. No mezclas fichas de alumnos con facturas; cada tipo tiene su propio cajón (archivo/tabla).</p>
+        </div>
+
+        <!-- BANCO DE DATOS -->
+        <h3>Banco de Datos</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>Un <strong>banco de datos</strong> (o base de datos) es una colección organizada de datos relacionados entre sí, almacenados de forma estructurada para permitir su acceso, gestión y actualización de manera eficiente.</p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>El banco de datos es toda la <strong>biblioteca</strong>: incluye todos los estantes (tablas), todos los libros (registros) y el sistema de organización que los conecta. No es solo un cajón, sino todo el edificio con su lógica.</p>
+        </div>
+
+        <!-- SISTEMA DE INFORMACIÓN -->
+        <h3>Sistema de Información</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>Un <strong>sistema de información</strong> es el conjunto de componentes (personas, hardware, software, datos, procedimientos y redes) que trabajan juntos para recopilar, procesar, almacenar y distribuir información que apoya la toma de decisiones en una organización.</p>
+        </div>
+
+        <div class="diagram">
+            <h4>Componentes de un Sistema de Información</h4>
+            <div class="diagram-row">
+                <div class="diagram-box">Personas</div>
+                <div class="diagram-box">Hardware</div>
+                <div class="diagram-box secondary">Software</div>
+                <div class="diagram-box accent">Datos</div>
+                <div class="diagram-box">Procedimientos</div>
+                <div class="diagram-box secondary">Redes</div>
+            </div>
+        </div>
+
+        <!-- SISTEMA DE BASE DE DATOS -->
+        <h3>Sistema de Base de Datos</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>Un <strong>sistema de base de datos</strong> es un sistema computarizado cuyo propósito es almacenar información y permitir a los usuarios recuperar y actualizar esa información con base en peticiones. Incluye cuatro componentes principales:</p>
+            <ol>
+                <li><strong>Datos:</strong> La información almacenada</li>
+                <li><strong>Hardware:</strong> Los discos, servidores, memoria</li>
+                <li><strong>Software:</strong> El DBMS (Sistema Manejador de Base de Datos)</li>
+                <li><strong>Usuarios:</strong> Administradores, programadores, usuarios finales</li>
+            </ol>
+        </div>
+
+        <div class="diagram">
+            <h4>Estructura de un Sistema de Base de Datos</h4>
+            <div class="diagram-row">
+                <div class="diagram-box">Usuarios</div>
+            </div>
+            <div class="diagram-row">
+                <span class="diagram-arrow">&darr;</span>
+            </div>
+            <div class="diagram-row">
+                <div class="diagram-box secondary">Software (DBMS)</div>
+            </div>
+            <div class="diagram-row">
+                <span class="diagram-arrow">&darr;</span>
+            </div>
+            <div class="diagram-row">
+                <div class="diagram-box accent">Base de Datos (Datos almacenados)</div>
+            </div>
+        </div>
+
+        <!-- Resumen visual de jerarquía -->
+        <h3>Resumen: Jerarquía de conceptos</h3>
+        <div class="info-box">
+            <h4>&#128202; De menor a mayor</h4>
+            <p><code>Dato</code> &rarr; <code>Campo</code> &rarr; <code>Registro</code> &rarr; <code>Archivo/Tabla</code> &rarr; <code>Base de Datos</code> &rarr; <code>Sistema de Base de Datos</code></p>
+            <p>Es como: <em>Letra &rarr; Palabra &rarr; Oración &rarr; Página &rarr; Libro &rarr; Biblioteca completa</em></p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 1.2: EVOLUCIÓN DE LAS BD -->
+        <!-- ============================================ -->
+        <h2 id="evolucion">1.2 Evolución de las Bases de Datos</h2>
+
+        <p>Las bases de datos no siempre fueron como las conocemos hoy. Han pasado por varias generaciones, cada una resolviendo problemas de la anterior.</p>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="year">1950s-1960s: Procesamiento de archivos</span>
+                <p>Los datos se almacenaban en archivos planos en cintas magnéticas. Cada programa tenía sus propios archivos. Si dos programas necesitaban los mismos datos, se duplicaban. Problemas: <strong>redundancia</strong>, <strong>inconsistencia</strong> y <strong>dependencia de los datos</strong> respecto al programa.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="year">1960s-1970s: Modelo Jerárquico</span>
+                <p>Los datos se organizan en estructura de árbol (padre-hijo). El ejemplo más famoso es <strong>IMS de IBM</strong> (1966). Ventaja: rápido para relaciones padre-hijo. Desventaja: inflexible, difícil navegar relaciones complejas.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="year">1970s: Modelo de Red (CODASYL)</span>
+                <p>Extiende el modelo jerárquico permitiendo que un hijo tenga múltiples padres (grafo en lugar de árbol). Más flexible pero extremadamente complejo de programar y mantener.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="year">1970: Modelo Relacional (E.F. Codd)</span>
+                <p>En 1970, Edgar F. Codd publica su artículo revolucionario proponiendo organizar los datos en <strong>tablas</strong> (relaciones) con filas y columnas. Introdujo el álgebra relacional como lenguaje de consulta. Este modelo es la base de las BD modernas.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="year">1980s: RDBMS comerciales</span>
+                <p>Aparecen los primeros sistemas comerciales: <strong>Oracle</strong> (1979), <strong>DB2 de IBM</strong> (1983), <strong>SQL Server</strong>. Se estandariza el lenguaje <strong>SQL</strong> (1986, ANSI). Las bases de datos relacionales dominan el mercado.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="year">1990s: Bases de datos orientadas a objetos</span>
+                <p>Intentan combinar BD con programación orientada a objetos. Surgen las <strong>bases de datos objeto-relacionales</strong> (PostgreSQL). También nace la web y crece la demanda de BD para aplicaciones en internet.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="year">2000s-presente: NoSQL y NewSQL</span>
+                <p>Con el Big Data surgen alternativas: <strong>MongoDB</strong> (documentos), <strong>Redis</strong> (clave-valor), <strong>Neo4j</strong> (grafos). No reemplazan al modelo relacional, sino que lo complementan para casos específicos de alto volumen o datos no estructurados.</p>
+            </div>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía: Evolución del almacenamiento</h4>
+            <p>Es como la evolución de guardar música: <strong>Vinnil</strong> (archivos secuenciales) &rarr; <strong>Casete</strong> (jerárquico) &rarr; <strong>CD</strong> (relacional, acceso directo a cualquier canción) &rarr; <strong>Streaming</strong> (distribuido, en la nube). Cada paso resolvió limitaciones del anterior.</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 1.3: REGLAS DE CODD -->
+        <!-- ============================================ -->
+        <h2 id="reglas-codd">1.3 Las 12+1 Reglas de Codd</h2>
+
+        <p>En 1985, Edgar F. Codd publicó 12 reglas (numeradas del 0 al 12, por eso son 13) que definen qué debe cumplir un sistema para ser considerado un verdadero <strong>Sistema de Gestión de Bases de Datos Relacional (RDBMS)</strong>. Son como un "examen de certificación" para un DBMS.</p>
+
+        <div class="info-box">
+            <h4>&#128161; ¿Por qué importan?</h4>
+            <p>Ningún RDBMS comercial cumple las 12 reglas al 100%. Pero son el estándar ideal al que aspiran. Te ayudan a entender qué características debe tener una BD relacional "pura".</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Regla</th>
+                    <th>Explicación sencilla</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>0</strong></td>
+                    <td>Regla fundamental</td>
+                    <td>Un RDBMS debe gestionar los datos únicamente usando sus capacidades relacionales (tablas, filas, columnas).</td>
+                </tr>
+                <tr>
+                    <td><strong>1</strong></td>
+                    <td>Regla de la información</td>
+                    <td>Toda la información debe representarse como valores en tablas. No hay "datos ocultos" fuera de las tablas.</td>
+                </tr>
+                <tr>
+                    <td><strong>2</strong></td>
+                    <td>Regla del acceso garantizado</td>
+                    <td>Cada dato individual debe ser accesible usando: nombre de tabla + nombre de columna + valor de llave primaria.</td>
+                </tr>
+                <tr>
+                    <td><strong>3</strong></td>
+                    <td>Tratamiento de valores nulos</td>
+                    <td>El sistema debe soportar valores NULL para representar información faltante o no aplicable, de forma consistente.</td>
+                </tr>
+                <tr>
+                    <td><strong>4</strong></td>
+                    <td>Catálogo en línea basado en el modelo relacional</td>
+                    <td>La estructura de la BD (metadatos: nombres de tablas, columnas, tipos) debe almacenarse también en tablas consultables con SQL.</td>
+                </tr>
+                <tr>
+                    <td><strong>5</strong></td>
+                    <td>Sublenguaje completo</td>
+                    <td>Debe existir al menos un lenguaje (SQL) que soporte: definición de datos, manipulación, seguridad, integridad y transacciones.</td>
+                </tr>
+                <tr>
+                    <td><strong>6</strong></td>
+                    <td>Actualización de vistas</td>
+                    <td>Las vistas (consultas guardadas) que sean teóricamente actualizables deben poder ser actualizadas por el sistema.</td>
+                </tr>
+                <tr>
+                    <td><strong>7</strong></td>
+                    <td>Inserción, actualización y eliminación de alto nivel</td>
+                    <td>Se debe poder insertar, actualizar y borrar conjuntos de filas en una sola operación (no solo fila por fila).</td>
+                </tr>
+                <tr>
+                    <td><strong>8</strong></td>
+                    <td>Independencia física</td>
+                    <td>Cambiar cómo se almacenan físicamente los datos (disco, índices) no debe afectar a las aplicaciones que los usan.</td>
+                </tr>
+                <tr>
+                    <td><strong>9</strong></td>
+                    <td>Independencia lógica</td>
+                    <td>Cambiar la estructura lógica (agregar columnas, renombrar) no debe obligar a reescribir las aplicaciones existentes.</td>
+                </tr>
+                <tr>
+                    <td><strong>10</strong></td>
+                    <td>Independencia de integridad</td>
+                    <td>Las reglas de integridad (restricciones) deben definirse en la BD, no en las aplicaciones. Si cambias una regla, solo la cambias en un lugar.</td>
+                </tr>
+                <tr>
+                    <td><strong>11</strong></td>
+                    <td>Independencia de distribución</td>
+                    <td>Si la BD se reparte en varios servidores, el usuario no debería notarlo. Las consultas funcionan igual.</td>
+                </tr>
+                <tr>
+                    <td><strong>12</strong></td>
+                    <td>No subversión</td>
+                    <td>Si el sistema tiene un lenguaje de bajo nivel, este no debe poder saltarse las reglas de integridad y seguridad definidas en el nivel relacional.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía: Reglas de un buen restaurante</h4>
+            <p>Las reglas de Codd son como las normas de sanidad para un restaurante. Si un restaurante cumple <em>todas</em>, es excelente. Si cumple la mayoría, es bueno. Pero si no cumple las básicas (como la regla 1: toda la información en tablas), no puede llamarse "restaurante relacional". Los RDBMS como MySQL, PostgreSQL y Oracle cumplen la gran mayoría.</p>
+        </div>
+
+        <h3>Las 3 reglas más importantes para recordar</h3>
+        <div class="info-box">
+            <h4>&#127775; Enfócate en estas</h4>
+            <ol>
+                <li><strong>Regla 1 (Información):</strong> Todo son tablas. Si no está en una tabla, no existe para la BD.</li>
+                <li><strong>Regla 2 (Acceso garantizado):</strong> Cualquier dato se localiza con: tabla + columna + llave primaria.</li>
+                <li><strong>Regla 8 y 9 (Independencia):</strong> Los cambios internos no rompen las aplicaciones. Esto es lo que hace a las BD relacionales tan poderosas y duraderas.</li>
+            </ol>
+        </div>
+
+        <!-- Navegación entre páginas -->
+        <div class="page-nav">
+            <a href="index.html">&larr; Inicio</a>
+            <a href="unidad2.html">Unidad 2: Modelo Relacional &rarr;</a>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>Unidad 1 - Introducción y Conceptos | <a href="index.html">Volver al índice</a></p>
+    </footer>
+</body>
+</html>

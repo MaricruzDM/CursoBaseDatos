@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 4 - Álgebra Relacional | Curso de Bases de Datos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-brand">&#128218; Curso de Bases de Datos</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="unidad1.html">U1</a></li>
+                <li><a href="unidad2.html">U2</a></li>
+                <li><a href="unidad3.html">U3</a></li>
+                <li><a href="unidad4.html"><strong>U4</strong></a></li>
+                <li><a href="unidad5.html">U5</a></li>
+                <li><a href="unidad6.html">U6</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <h1>Unidad 4: Álgebra Relacional</h1>
+
+        <div class="toc">
+            <h4>&#128203; Contenido de esta unidad</h4>
+            <ol>
+                <li><a href="#definicion">Definición</a></li>
+                <li><a href="#conjuntos">Operadores de conjuntos</a></li>
+                <li><a href="#relacionales">Operadores relacionales</a></li>
+            </ol>
+        </div>
+
+        <p>El álgebra relacional es el <strong>fundamento teórico</strong> detrás del lenguaje SQL. Antes de escribir consultas SQL, es importante entender las operaciones matemáticas que las respaldan. No te preocupes, no necesitas ser experto en matemáticas; los conceptos son bastante intuitivos.</p>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 4.1: DEFINICIÓN -->
+        <!-- ============================================ -->
+        <h2 id="definicion">4.1 Definición</h2>
+
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>El <strong>álgebra relacional</strong> es un lenguaje de consulta procedimental que consiste en un conjunto de operaciones que toman una o dos relaciones (tablas) como entrada y producen una nueva relación como resultado. Es la base teórica sobre la que se construyó SQL.</p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía: Operaciones con recetas de cocina</h4>
+            <p>Imagina que tienes ingredientes (tablas con datos). El álgebra relacional te da las "técnicas de cocina" para combinarlos y obtener un platillo final (resultado). Puedes <strong>filtrar</strong> (quitar lo que no necesitas), <strong>seleccionar</strong> (elegir solo ciertos ingredientes), <strong>combinar</strong> (mezclar dos preparaciones), etc. Cada técnica es un operador.</p>
+        </div>
+
+        <div class="info-box">
+            <h4>&#128161; Características clave</h4>
+            <ul>
+                <li><strong>Procedimental:</strong> Describes CÓMO obtener el resultado (paso a paso)</li>
+                <li><strong>Cerrado:</strong> El resultado de toda operación es siempre otra relación (tabla)</li>
+                <li><strong>Composición:</strong> Puedes encadenar operaciones (el resultado de una es la entrada de otra)</li>
+                <li><strong>Base de SQL:</strong> Cada operación de álgebra tiene su equivalente en SQL</li>
+            </ul>
+        </div>
+
+        <h3>Datos de ejemplo para toda la unidad</h3>
+        <p>Usaremos estas tablas en todos los ejemplos:</p>
+
+        <div class="example-box">
+            <h4>&#9989; Tabla ESTUDIANTES</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matricula</th>
+                        <th>Nombre</th>
+                        <th>Carrera</th>
+                        <th>Semestre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>A001</td><td>Pedro</td><td>Sistemas</td><td>4</td></tr>
+                    <tr><td>A002</td><td>María</td><td>Industrial</td><td>6</td></tr>
+                    <tr><td>A003</td><td>Juan</td><td>Sistemas</td><td>4</td></tr>
+                    <tr><td>A004</td><td>Ana</td><td>Civil</td><td>2</td></tr>
+                    <tr><td>A005</td><td>Luis</td><td>Industrial</td><td>8</td></tr>
+                </tbody>
+            </table>
+
+            <h4>&#9989; Tabla MATERIAS</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Clave</th>
+                        <th>NombreMateria</th>
+                        <th>Creditos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>MAT101</td><td>Cálculo I</td><td>8</td></tr>
+                    <tr><td>FIS201</td><td>Física I</td><td>8</td></tr>
+                    <tr><td>PRG301</td><td>Programación</td><td>6</td></tr>
+                    <tr><td>BD401</td><td>Bases de Datos</td><td>6</td></tr>
+                </tbody>
+            </table>
+
+            <h4>&#9989; Tabla INSCRIPCIONES</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matricula</th>
+                        <th>Clave</th>
+                        <th>Calificacion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>A001</td><td>MAT101</td><td>85</td></tr>
+                    <tr><td>A001</td><td>PRG301</td><td>92</td></tr>
+                    <tr><td>A002</td><td>MAT101</td><td>78</td></tr>
+                    <tr><td>A002</td><td>FIS201</td><td>88</td></tr>
+                    <tr><td>A003</td><td>BD401</td><td>95</td></tr>
+                    <tr><td>A004</td><td>MAT101</td><td>70</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 4.2: OPERADORES DE CONJUNTOS -->
+        <!-- ============================================ -->
+        <h2 id="conjuntos">4.2 Operadores de Conjuntos</h2>
+
+        <p>Estos operadores provienen de la teoría de conjuntos matemática. Trabajan con <strong>dos relaciones que tienen la misma estructura</strong> (mismo número y tipo de columnas). A esto se le llama <strong>unión-compatible</strong>.</p>
+
+        <div class="info-box">
+            <h4>&#128161; Requisito: Unión-compatible</h4>
+            <p>Para usar operadores de conjuntos, las dos tablas deben tener:</p>
+            <ul>
+                <li>El mismo número de columnas (mismo grado)</li>
+                <li>Columnas con tipos de datos compatibles en la misma posición</li>
+            </ul>
+            <p>No necesitan tener los mismos nombres de columna, pero sí la misma estructura.</p>
+        </div>
+
+        <!-- UNIÓN -->
+        <h3>Unión (&#8746;)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>La <strong>unión</strong> combina todas las tuplas de dos relaciones, eliminando duplicados. El resultado contiene las filas que están en A, en B, o en ambas.</p>
+            <p><strong>Notación:</strong> A &#8746; B</p>
+            <p><strong>En SQL:</strong> <code>SELECT ... UNION SELECT ...</code></p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo</h4>
+            <p>Supongamos dos tablas de alumnos becados por diferentes programas:</p>
+            <p><strong>BECA_ACADEMICA:</strong></p>
+            <table>
+                <thead><tr><th>Matricula</th><th>Nombre</th></tr></thead>
+                <tbody>
+                    <tr><td>A001</td><td>Pedro</td></tr>
+                    <tr><td>A003</td><td>Juan</td></tr>
+                </tbody>
+            </table>
+            <p><strong>BECA_DEPORTIVA:</strong></p>
+            <table>
+                <thead><tr><th>Matricula</th><th>Nombre</th></tr></thead>
+                <tbody>
+                    <tr><td>A002</td><td>María</td></tr>
+                    <tr><td>A003</td><td>Juan</td></tr>
+                </tbody>
+            </table>
+            <p><strong>BECA_ACADEMICA &#8746; BECA_DEPORTIVA =</strong> "Todos los alumnos que tienen alguna beca"</p>
+            <table>
+                <thead><tr><th>Matricula</th><th>Nombre</th></tr></thead>
+                <tbody>
+                    <tr><td>A001</td><td>Pedro</td></tr>
+                    <tr><td>A002</td><td>María</td></tr>
+                    <tr><td>A003</td><td>Juan</td></tr>
+                </tbody>
+            </table>
+            <p>Juan aparece en ambas, pero en el resultado solo aparece <strong>una vez</strong> (sin duplicados).</p>
+<pre><code><span class="comment">-- Equivalente en SQL:</span>
+<span class="keyword">SELECT</span> Matricula, Nombre <span class="keyword">FROM</span> Beca_Academica
+<span class="keyword">UNION</span>
+<span class="keyword">SELECT</span> Matricula, Nombre <span class="keyword">FROM</span> Beca_Deportiva;</code></pre>
+        </div>
+
+        <!-- INTERSECCIÓN -->
+        <h3>Intersección (&#8745;)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>La <strong>intersección</strong> devuelve solo las tuplas que existen en <strong>ambas</strong> relaciones simultáneamente.</p>
+            <p><strong>Notación:</strong> A &#8745; B</p>
+            <p><strong>En SQL:</strong> <code>SELECT ... INTERSECT SELECT ...</code></p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo</h4>
+            <p><strong>BECA_ACADEMICA &#8745; BECA_DEPORTIVA =</strong> "Alumnos que tienen AMBAS becas"</p>
+            <table>
+                <thead><tr><th>Matricula</th><th>Nombre</th></tr></thead>
+                <tbody>
+                    <tr><td>A003</td><td>Juan</td></tr>
+                </tbody>
+            </table>
+            <p>Solo Juan está en ambas tablas.</p>
+<pre><code><span class="comment">-- Equivalente en SQL:</span>
+<span class="keyword">SELECT</span> Matricula, Nombre <span class="keyword">FROM</span> Beca_Academica
+<span class="keyword">INTERSECT</span>
+<span class="keyword">SELECT</span> Matricula, Nombre <span class="keyword">FROM</span> Beca_Deportiva;</code></pre>
+        </div>
+
+        <!-- DIFERENCIA -->
+        <h3>Diferencia ( &minus; )</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>La <strong>diferencia</strong> devuelve las tuplas que están en la primera relación pero <strong>NO</strong> están en la segunda. El orden importa: A &minus; B ≠ B &minus; A.</p>
+            <p><strong>Notación:</strong> A &minus; B</p>
+            <p><strong>En SQL:</strong> <code>SELECT ... EXCEPT SELECT ...</code></p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo</h4>
+            <p><strong>BECA_ACADEMICA &minus; BECA_DEPORTIVA =</strong> "Alumnos con beca académica que NO tienen beca deportiva"</p>
+            <table>
+                <thead><tr><th>Matricula</th><th>Nombre</th></tr></thead>
+                <tbody>
+                    <tr><td>A001</td><td>Pedro</td></tr>
+                </tbody>
+            </table>
+            <p>Pedro tiene beca académica pero no deportiva.</p>
+            <p><strong>BECA_DEPORTIVA &minus; BECA_ACADEMICA =</strong> "Alumnos con beca deportiva que NO tienen beca académica"</p>
+            <table>
+                <thead><tr><th>Matricula</th><th>Nombre</th></tr></thead>
+                <tbody>
+                    <tr><td>A002</td><td>María</td></tr>
+                </tbody>
+            </table>
+<pre><code><span class="comment">-- Equivalente en SQL:</span>
+<span class="keyword">SELECT</span> Matricula, Nombre <span class="keyword">FROM</span> Beca_Academica
+<span class="keyword">EXCEPT</span>
+<span class="keyword">SELECT</span> Matricula, Nombre <span class="keyword">FROM</span> Beca_Deportiva;</code></pre>
+        </div>
+
+        <!-- PRODUCTO CARTESIANO -->
+        <h3>Producto Cartesiano ( &times; )</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>El <strong>producto cartesiano</strong> combina CADA fila de la primera relación con CADA fila de la segunda. Si A tiene 5 filas y B tiene 4 filas, el resultado tendrá 5 &times; 4 = 20 filas.</p>
+            <p><strong>Notación:</strong> A &times; B</p>
+            <p><strong>En SQL:</strong> <code>SELECT * FROM A, B</code> (sin WHERE) o <code>CROSS JOIN</code></p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>Es como combinar camisas con pantalones. Si tienes 3 camisas y 4 pantalones, puedes hacer 3 &times; 4 = 12 combinaciones posibles. El producto cartesiano genera TODAS las combinaciones posibles entre dos tablas.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo simplificado</h4>
+            <p><strong>Tabla A:</strong></p>
+            <table>
+                <thead><tr><th>Color</th></tr></thead>
+                <tbody>
+                    <tr><td>Rojo</td></tr>
+                    <tr><td>Azul</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Tabla B:</strong></p>
+            <table>
+                <thead><tr><th>Talla</th></tr></thead>
+                <tbody>
+                    <tr><td>S</td></tr>
+                    <tr><td>M</td></tr>
+                    <tr><td>L</td></tr>
+                </tbody>
+            </table>
+            <p><strong>A &times; B =</strong> (2 &times; 3 = 6 filas)</p>
+            <table>
+                <thead><tr><th>Color</th><th>Talla</th></tr></thead>
+                <tbody>
+                    <tr><td>Rojo</td><td>S</td></tr>
+                    <tr><td>Rojo</td><td>M</td></tr>
+                    <tr><td>Rojo</td><td>L</td></tr>
+                    <tr><td>Azul</td><td>S</td></tr>
+                    <tr><td>Azul</td><td>M</td></tr>
+                    <tr><td>Azul</td><td>L</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="warning-box">
+            <h4>&#9888;&#65039; Cuidado con el producto cartesiano</h4>
+            <p>En la práctica, el producto cartesiano rara vez se usa solo. Si tus tablas tienen 1000 y 500 filas, el resultado sería de 500,000 filas. Normalmente se combina con una condición (lo que nos da el JOIN).</p>
+        </div>
+
+        <!-- Resumen de operadores de conjuntos -->
+        <h3>Resumen de operadores de conjuntos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Operador</th>
+                    <th>Símbolo</th>
+                    <th>Resultado</th>
+                    <th>SQL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Unión</strong></td>
+                    <td>&#8746;</td>
+                    <td>Filas en A o B (sin duplicados)</td>
+                    <td><code>UNION</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Intersección</strong></td>
+                    <td>&#8745;</td>
+                    <td>Filas en A y B</td>
+                    <td><code>INTERSECT</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Diferencia</strong></td>
+                    <td>&minus;</td>
+                    <td>Filas en A que no están en B</td>
+                    <td><code>EXCEPT</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Producto Cartesiano</strong></td>
+                    <td>&times;</td>
+                    <td>Todas las combinaciones posibles</td>
+                    <td><code>CROSS JOIN</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 4.3: OPERADORES RELACIONALES -->
+        <!-- ============================================ -->
+        <h2 id="relacionales">4.3 Operadores Relacionales</h2>
+
+        <p>Estos operadores son exclusivos del modelo relacional y son los más usados en la práctica. Cada uno tiene un equivalente directo en SQL.</p>
+
+        <!-- SELECCIÓN -->
+        <h3>Selección (&sigma;)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>La <strong>selección</strong> filtra <strong>filas</strong> de una relación que cumplen una condición determinada. Solo devuelve las tuplas que satisfacen el predicado.</p>
+            <p><strong>Notación:</strong> &sigma;<sub>condición</sub>(Relación)</p>
+            <p><strong>En SQL:</strong> <code>SELECT * FROM tabla WHERE condición</code></p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>Es como usar un <strong>filtro en Excel</strong>. Tienes una tabla con muchos datos y dices "muéstrame solo los de carrera Sistemas". La selección filtra filas horizontalmente.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo</h4>
+            <p><strong>&sigma;<sub>Carrera = 'Sistemas'</sub>(ESTUDIANTES)</strong> = "Dame todos los estudiantes de Sistemas"</p>
+            <table>
+                <thead>
+                    <tr><th>Matricula</th><th>Nombre</th><th>Carrera</th><th>Semestre</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>A001</td><td>Pedro</td><td>Sistemas</td><td>4</td></tr>
+                    <tr><td>A003</td><td>Juan</td><td>Sistemas</td><td>4</td></tr>
+                </tbody>
+            </table>
+            <p><strong>&sigma;<sub>Semestre > 4</sub>(ESTUDIANTES)</strong> = "Estudiantes en semestre mayor a 4"</p>
+            <table>
+                <thead>
+                    <tr><th>Matricula</th><th>Nombre</th><th>Carrera</th><th>Semestre</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>A002</td><td>María</td><td>Industrial</td><td>6</td></tr>
+                    <tr><td>A005</td><td>Luis</td><td>Industrial</td><td>8</td></tr>
+                </tbody>
+            </table>
+<pre><code><span class="comment">-- Equivalente en SQL:</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Estudiantes <span class="keyword">WHERE</span> Carrera = <span class="string">'Sistemas'</span>;
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Estudiantes <span class="keyword">WHERE</span> Semestre > <span class="number">4</span>;</code></pre>
+        </div>
+
+        <!-- PROYECCIÓN -->
+        <h3>Proyección (&pi;)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>La <strong>proyección</strong> selecciona solo ciertas <strong>columnas</strong> de una relación, descartando las demás. Elimina duplicados en el resultado.</p>
+            <p><strong>Notación:</strong> &pi;<sub>columna1, columna2</sub>(Relación)</p>
+            <p><strong>En SQL:</strong> <code>SELECT columna1, columna2 FROM tabla</code></p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>Si la selección es un filtro horizontal (filas), la proyección es un <strong>filtro vertical (columnas)</strong>. Es como ocultar columnas en Excel: la información sigue ahí, pero solo ves lo que te interesa.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo</h4>
+            <p><strong>&pi;<sub>Nombre, Carrera</sub>(ESTUDIANTES)</strong> = "Dame solo el nombre y carrera de cada estudiante"</p>
+            <table>
+                <thead>
+                    <tr><th>Nombre</th><th>Carrera</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Pedro</td><td>Sistemas</td></tr>
+                    <tr><td>María</td><td>Industrial</td></tr>
+                    <tr><td>Juan</td><td>Sistemas</td></tr>
+                    <tr><td>Ana</td><td>Civil</td></tr>
+                    <tr><td>Luis</td><td>Industrial</td></tr>
+                </tbody>
+            </table>
+            <p><strong>&pi;<sub>Carrera</sub>(ESTUDIANTES)</strong> = "¿Qué carreras hay?" (elimina duplicados)</p>
+            <table>
+                <thead>
+                    <tr><th>Carrera</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Sistemas</td></tr>
+                    <tr><td>Industrial</td></tr>
+                    <tr><td>Civil</td></tr>
+                </tbody>
+            </table>
+<pre><code><span class="comment">-- Equivalente en SQL:</span>
+<span class="keyword">SELECT</span> Nombre, Carrera <span class="keyword">FROM</span> Estudiantes;
+<span class="keyword">SELECT DISTINCT</span> Carrera <span class="keyword">FROM</span> Estudiantes;</code></pre>
+        </div>
+
+        <!-- COMBINACIÓN DE SELECCIÓN Y PROYECCIÓN -->
+        <h3>Combinación de operadores</h3>
+        <div class="example-box">
+            <h4>&#9989; Ejemplo: Selección + Proyección</h4>
+            <p>"Dame el nombre de los estudiantes de Sistemas"</p>
+            <p><strong>&pi;<sub>Nombre</sub>(&sigma;<sub>Carrera = 'Sistemas'</sub>(ESTUDIANTES))</strong></p>
+            <p>Primero filtra (selección), luego toma solo el nombre (proyección):</p>
+            <table>
+                <thead><tr><th>Nombre</th></tr></thead>
+                <tbody>
+                    <tr><td>Pedro</td></tr>
+                    <tr><td>Juan</td></tr>
+                </tbody>
+            </table>
+<pre><code><span class="comment">-- Equivalente en SQL:</span>
+<span class="keyword">SELECT</span> Nombre <span class="keyword">FROM</span> Estudiantes <span class="keyword">WHERE</span> Carrera = <span class="string">'Sistemas'</span>;</code></pre>
+        </div>
+
+        <!-- JOIN / REUNIÓN -->
+        <h3>Reunión / Join (&#10781;)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>La <strong>reunión</strong> (join) combina tuplas de dos relaciones cuando cumplen una condición de igualdad entre sus atributos. Es el producto cartesiano + una condición de filtro. Es la operación más importante para combinar información de varias tablas.</p>
+            <p><strong>Notación:</strong> A &#10781;<sub>condición</sub> B</p>
+            <p><strong>En SQL:</strong> <code>SELECT ... FROM A JOIN B ON condición</code></p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>Es como <strong>unir piezas de rompecabezas</strong>. Tienes la información del alumno en una tabla y sus calificaciones en otra. El JOIN las une donde "encajan" (donde la matrícula coincide), creando una vista completa.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo: JOIN entre ESTUDIANTES e INSCRIPCIONES</h4>
+            <p><strong>ESTUDIANTES &#10781;<sub>ESTUDIANTES.Matricula = INSCRIPCIONES.Matricula</sub> INSCRIPCIONES</strong></p>
+            <p>"Une la información del alumno con sus inscripciones"</p>
+            <table>
+                <thead>
+                    <tr><th>Matricula</th><th>Nombre</th><th>Carrera</th><th>Clave</th><th>Calificacion</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>A001</td><td>Pedro</td><td>Sistemas</td><td>MAT101</td><td>85</td></tr>
+                    <tr><td>A001</td><td>Pedro</td><td>Sistemas</td><td>PRG301</td><td>92</td></tr>
+                    <tr><td>A002</td><td>María</td><td>Industrial</td><td>MAT101</td><td>78</td></tr>
+                    <tr><td>A002</td><td>María</td><td>Industrial</td><td>FIS201</td><td>88</td></tr>
+                    <tr><td>A003</td><td>Juan</td><td>Sistemas</td><td>BD401</td><td>95</td></tr>
+                    <tr><td>A004</td><td>Ana</td><td>Civil</td><td>MAT101</td><td>70</td></tr>
+                </tbody>
+            </table>
+            <p>Nota: Luis (A005) no aparece porque no tiene inscripciones.</p>
+<pre><code><span class="comment">-- Equivalente en SQL:</span>
+<span class="keyword">SELECT</span> E.Matricula, E.Nombre, E.Carrera, I.Clave, I.Calificacion
+<span class="keyword">FROM</span> Estudiantes E
+<span class="keyword">INNER JOIN</span> Inscripciones I <span class="keyword">ON</span> E.Matricula = I.Matricula;</code></pre>
+        </div>
+
+        <!-- Tipos de JOIN -->
+        <h3>Tipos de Join</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Descripción</th>
+                    <th>SQL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>INNER JOIN</strong></td>
+                    <td>Solo filas que tienen coincidencia en AMBAS tablas</td>
+                    <td><code>INNER JOIN ... ON</code></td>
+                </tr>
+                <tr>
+                    <td><strong>LEFT JOIN</strong></td>
+                    <td>Todas las filas de la tabla izquierda + coincidencias de la derecha (NULL si no hay)</td>
+                    <td><code>LEFT JOIN ... ON</code></td>
+                </tr>
+                <tr>
+                    <td><strong>RIGHT JOIN</strong></td>
+                    <td>Todas las filas de la tabla derecha + coincidencias de la izquierda (NULL si no hay)</td>
+                    <td><code>RIGHT JOIN ... ON</code></td>
+                </tr>
+                <tr>
+                    <td><strong>FULL JOIN</strong></td>
+                    <td>Todas las filas de ambas tablas (NULL donde no hay coincidencia)</td>
+                    <td><code>FULL OUTER JOIN ... ON</code></td>
+                </tr>
+                <tr>
+                    <td><strong>NATURAL JOIN</strong></td>
+                    <td>Join automático usando columnas con el mismo nombre</td>
+                    <td><code>NATURAL JOIN</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="example-box">
+            <h4>&#9989; LEFT JOIN: Incluir estudiantes sin inscripciones</h4>
+<pre><code><span class="comment">-- LEFT JOIN: Muestra TODOS los estudiantes, incluso sin inscripciones</span>
+<span class="keyword">SELECT</span> E.Nombre, I.Clave, I.Calificacion
+<span class="keyword">FROM</span> Estudiantes E
+<span class="keyword">LEFT JOIN</span> Inscripciones I <span class="keyword">ON</span> E.Matricula = I.Matricula;</code></pre>
+            <table>
+                <thead><tr><th>Nombre</th><th>Clave</th><th>Calificacion</th></tr></thead>
+                <tbody>
+                    <tr><td>Pedro</td><td>MAT101</td><td>85</td></tr>
+                    <tr><td>Pedro</td><td>PRG301</td><td>92</td></tr>
+                    <tr><td>María</td><td>MAT101</td><td>78</td></tr>
+                    <tr><td>María</td><td>FIS201</td><td>88</td></tr>
+                    <tr><td>Juan</td><td>BD401</td><td>95</td></tr>
+                    <tr><td>Ana</td><td>MAT101</td><td>70</td></tr>
+                    <tr><td>Luis</td><td>NULL</td><td>NULL</td></tr>
+                </tbody>
+            </table>
+            <p>Luis aparece con NULL porque no tiene inscripciones, pero el LEFT JOIN lo incluye de todas formas.</p>
+        </div>
+
+        <!-- DIVISIÓN -->
+        <h3>División (&divide;)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>La <strong>división</strong> devuelve las tuplas de una relación que están asociadas con TODAS las tuplas de otra relación. Es la operación más compleja y menos intuitiva.</p>
+            <p><strong>Notación:</strong> A &divide; B</p>
+            <p><strong>En SQL:</strong> No hay operador directo, se simula con subconsultas y NOT EXISTS.</p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>Imagina que preguntas: "¿Qué alumnos han cursado TODAS las materias de la lista?" No basta con cursar una o dos, tienen que haber cursado absolutamente todas. Esa es la división.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo</h4>
+            <p>Pregunta: "¿Qué alumnos están inscritos en MAT101 Y en PRG301?"</p>
+            <p>Si definimos B = {MAT101, PRG301}, la división INSCRIPCIONES[Matricula, Clave] &divide; B da:</p>
+            <table>
+                <thead><tr><th>Matricula</th></tr></thead>
+                <tbody>
+                    <tr><td>A001</td></tr>
+                </tbody>
+            </table>
+            <p>Solo Pedro (A001) está inscrito en ambas materias.</p>
+        </div>
+
+        <!-- Resumen general -->
+        <h3>Resumen completo de operadores</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Operador</th>
+                    <th>Tipo</th>
+                    <th>Opera sobre</th>
+                    <th>Equivalente SQL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Selección (&sigma;)</td>
+                    <td>Relacional</td>
+                    <td>Filas (filtra)</td>
+                    <td><code>WHERE</code></td>
+                </tr>
+                <tr>
+                    <td>Proyección (&pi;)</td>
+                    <td>Relacional</td>
+                    <td>Columnas (elige)</td>
+                    <td><code>SELECT col1, col2</code></td>
+                </tr>
+                <tr>
+                    <td>Reunión (&#10781;)</td>
+                    <td>Relacional</td>
+                    <td>Combina dos tablas</td>
+                    <td><code>JOIN ... ON</code></td>
+                </tr>
+                <tr>
+                    <td>División (&divide;)</td>
+                    <td>Relacional</td>
+                    <td>"Todos los de"</td>
+                    <td>Subconsultas</td>
+                </tr>
+                <tr>
+                    <td>Unión (&#8746;)</td>
+                    <td>Conjuntos</td>
+                    <td>A o B</td>
+                    <td><code>UNION</code></td>
+                </tr>
+                <tr>
+                    <td>Intersección (&#8745;)</td>
+                    <td>Conjuntos</td>
+                    <td>A y B</td>
+                    <td><code>INTERSECT</code></td>
+                </tr>
+                <tr>
+                    <td>Diferencia (&minus;)</td>
+                    <td>Conjuntos</td>
+                    <td>A pero no B</td>
+                    <td><code>EXCEPT</code></td>
+                </tr>
+                <tr>
+                    <td>Producto (&times;)</td>
+                    <td>Conjuntos</td>
+                    <td>Todas las combinaciones</td>
+                    <td><code>CROSS JOIN</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box">
+            <h4>&#128161; Conexión con SQL</h4>
+            <p>No necesitas memorizar las notaciones matemáticas para el curso. Lo importante es entender <strong>qué hace cada operación</strong>, porque cuando escribas SQL en la Unidad 6, estarás usando exactamente estos conceptos: WHERE es selección, SELECT columnas es proyección, JOIN es reunión, etc.</p>
+        </div>
+
+        <!-- Navegación entre páginas -->
+        <div class="page-nav">
+            <a href="unidad3.html">&larr; Unidad 3: Modelado Lógico</a>
+            <a href="unidad5.html">Unidad 5: RDBMS &rarr;</a>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>Unidad 4 - Álgebra Relacional | <a href="index.html">Volver al índice</a></p>
+    </footer>
+</body>
+</html>

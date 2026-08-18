@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 5 - Sistemas Manejadores de Bases de Datos (RDBMS) | Curso de Bases de Datos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-brand">&#128218; Curso de Bases de Datos</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="unidad1.html">U1</a></li>
+                <li><a href="unidad2.html">U2</a></li>
+                <li><a href="unidad3.html">U3</a></li>
+                <li><a href="unidad4.html">U4</a></li>
+                <li><a href="unidad5.html"><strong>U5</strong></a></li>
+                <li><a href="unidad6.html">U6</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <h1>Unidad 5: Sistemas Manejadores de Bases de Datos Relacionales (RDBMS)</h1>
+
+        <div class="toc">
+            <h4>&#128203; Contenido de esta unidad</h4>
+            <ol>
+                <li><a href="#definicion">Definición y función de los RDBMS</a></li>
+                <li><a href="#comerciales">RDBMS comerciales y de software libre</a></li>
+                <li><a href="#componentes">Componentes de los RDBMS</a></li>
+                <li><a href="#arquitecturas">Arquitecturas de los RDBMS</a></li>
+                <li><a href="#dba">Definición y funciones de un DBA</a></li>
+            </ol>
+        </div>
+
+        <p>Hasta ahora hemos hablado de conceptos, modelos y teoría. Pero, ¿quién hace todo el trabajo pesado de realmente almacenar, buscar y proteger los datos? Eso lo hace el <strong>RDBMS</strong>: el software que convierte la teoría en realidad.</p>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 5.1: DEFINICIÓN Y FUNCIÓN -->
+        <!-- ============================================ -->
+        <h2 id="definicion">5.1 Definición y Función de los RDBMS</h2>
+
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>Un <strong>RDBMS</strong> (Relational Database Management System / Sistema Manejador de Bases de Datos Relacionales) es un software especializado que permite crear, administrar, consultar y mantener bases de datos basadas en el modelo relacional.</p>
+            <p>Es el intermediario entre los usuarios/aplicaciones y los datos almacenados en disco.</p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía: El bibliotecario experto</h4>
+            <p>Si la base de datos es la <strong>biblioteca</strong> (el edificio con los libros), el RDBMS es el <strong>bibliotecario profesional</strong>. Tú le dices "necesito el libro de Cálculo del estante 3" y él lo busca por ti. Tú nunca tocas los estantes directamente. El bibliotecario además:</p>
+            <ul>
+                <li>Sabe dónde está cada libro (gestión de almacenamiento)</li>
+                <li>Controla quién puede sacar libros (seguridad)</li>
+                <li>Lleva registro de préstamos (transacciones)</li>
+                <li>Evita que dos personas tomen el mismo libro a la vez (concurrencia)</li>
+                <li>Tiene copias de respaldo por si hay un incendio (backup)</li>
+            </ul>
+        </div>
+
+        <h3>Funciones principales de un RDBMS</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Función</th>
+                    <th>Descripción</th>
+                    <th>Ejemplo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Definición de datos</strong></td>
+                    <td>Crear y modificar la estructura (tablas, columnas, tipos)</td>
+                    <td>CREATE TABLE, ALTER TABLE</td>
+                </tr>
+                <tr>
+                    <td><strong>Manipulación de datos</strong></td>
+                    <td>Insertar, consultar, actualizar y eliminar datos</td>
+                    <td>SELECT, INSERT, UPDATE, DELETE</td>
+                </tr>
+                <tr>
+                    <td><strong>Control de acceso</strong></td>
+                    <td>Definir quién puede ver o modificar qué datos</td>
+                    <td>GRANT, REVOKE, roles de usuario</td>
+                </tr>
+                <tr>
+                    <td><strong>Integridad de datos</strong></td>
+                    <td>Garantizar que los datos sean correctos y consistentes</td>
+                    <td>Constraints, triggers, validaciones</td>
+                </tr>
+                <tr>
+                    <td><strong>Control de concurrencia</strong></td>
+                    <td>Permitir que múltiples usuarios trabajen simultáneamente sin conflictos</td>
+                    <td>Bloqueos (locks), niveles de aislamiento</td>
+                </tr>
+                <tr>
+                    <td><strong>Recuperación</strong></td>
+                    <td>Restaurar datos después de fallos (cortes de luz, errores)</td>
+                    <td>Logs de transacciones, backups, rollback</td>
+                </tr>
+                <tr>
+                    <td><strong>Optimización</strong></td>
+                    <td>Ejecutar consultas de la forma más eficiente posible</td>
+                    <td>Query optimizer, planes de ejecución</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box">
+            <h4>&#128161; DBMS vs RDBMS</h4>
+            <p><strong>DBMS</strong> es el término general para cualquier sistema de gestión de bases de datos. <strong>RDBMS</strong> es un DBMS que específicamente usa el modelo relacional (tablas con filas y columnas, SQL, llaves, etc.). Hoy en día, cuando alguien dice "DBMS" generalmente se refiere a un RDBMS.</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 5.2: COMERCIALES Y LIBRES -->
+        <!-- ============================================ -->
+        <h2 id="comerciales">5.2 RDBMS Comerciales y de Software Libre</h2>
+
+        <h3>RDBMS Comerciales (de pago)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>RDBMS</th>
+                    <th>Empresa</th>
+                    <th>Uso típico</th>
+                    <th>Características destacadas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Oracle Database</strong></td>
+                    <td>Oracle Corp.</td>
+                    <td>Grandes empresas, bancos, gobierno</td>
+                    <td>Muy robusto, escalable, costoso. Líder del mercado empresarial.</td>
+                </tr>
+                <tr>
+                    <td><strong>Microsoft SQL Server</strong></td>
+                    <td>Microsoft</td>
+                    <td>Empresas con ecosistema Microsoft</td>
+                    <td>Integración con .NET y Azure. Tiene versión Express (gratuita limitada).</td>
+                </tr>
+                <tr>
+                    <td><strong>IBM Db2</strong></td>
+                    <td>IBM</td>
+                    <td>Mainframes, banca, seguros</td>
+                    <td>Muy antiguo y estable. Fuerte en sistemas legacy.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>RDBMS de Software Libre (gratuitos)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>RDBMS</th>
+                    <th>Licencia</th>
+                    <th>Uso típico</th>
+                    <th>Características destacadas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>MySQL</strong></td>
+                    <td>GPL (Oracle)</td>
+                    <td>Web, aplicaciones medianas, startups</td>
+                    <td>El más popular del mundo. Simple, rápido. Usado por Facebook, Twitter, WordPress.</td>
+                </tr>
+                <tr>
+                    <td><strong>PostgreSQL</strong></td>
+                    <td>PostgreSQL License</td>
+                    <td>Proyectos que necesitan funciones avanzadas</td>
+                    <td>El más completo en funciones. Soporta JSON, geoespacial, herencia. Muy estándar SQL.</td>
+                </tr>
+                <tr>
+                    <td><strong>MariaDB</strong></td>
+                    <td>GPL</td>
+                    <td>Reemplazo de MySQL</td>
+                    <td>Fork de MySQL creado por su fundador original. 100% compatible.</td>
+                </tr>
+                <tr>
+                    <td><strong>SQLite</strong></td>
+                    <td>Dominio público</td>
+                    <td>Apps móviles, embedded, prototipos</td>
+                    <td>No necesita servidor. La BD es un solo archivo. Está en tu celular.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía: Autos</h4>
+            <ul>
+                <li><strong>Oracle</strong> = Mercedes-Benz (potente, costoso, para empresas grandes)</li>
+                <li><strong>SQL Server</strong> = BMW (bueno si ya estás en el ecosistema Microsoft)</li>
+                <li><strong>MySQL</strong> = Toyota (confiable, popular, accesible para todos)</li>
+                <li><strong>PostgreSQL</strong> = Volvo (seguro, completo, muy bien diseñado)</li>
+                <li><strong>SQLite</strong> = Bicicleta (ligero, sin mantenimiento, perfecto para lo pequeño)</li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <h4>&#128161; ¿Cuál usar para aprender?</h4>
+            <p>Para este curso, <strong>MySQL</strong> o <strong>PostgreSQL</strong> son ideales. Ambos son gratuitos, tienen mucha documentación y comunidad. Si quieres algo aún más simple para empezar, <strong>SQLite</strong> no requiere instalar un servidor.</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 5.3: COMPONENTES -->
+        <!-- ============================================ -->
+        <h2 id="componentes">5.3 Componentes de los RDBMS</h2>
+
+        <p>Un RDBMS es un software complejo con múltiples componentes internos que trabajan juntos. Veamos los principales:</p>
+
+        <div class="diagram">
+            <h4>Arquitectura interna simplificada de un RDBMS</h4>
+            <div class="diagram-row">
+                <div class="diagram-box">Usuarios / Aplicaciones</div>
+            </div>
+            <div class="diagram-row">
+                <span class="diagram-arrow">&darr;</span>
+            </div>
+            <div class="diagram-row">
+                <div class="diagram-box secondary">Motor de consultas (Query Engine)</div>
+            </div>
+            <div class="diagram-row">
+                <span class="diagram-arrow">&darr;</span>
+            </div>
+            <div class="diagram-row">
+                <div class="diagram-box">Optimizador</div>
+                <div class="diagram-box">Gestor de transacciones</div>
+                <div class="diagram-box">Gestor de seguridad</div>
+            </div>
+            <div class="diagram-row">
+                <span class="diagram-arrow">&darr;</span>
+            </div>
+            <div class="diagram-row">
+                <div class="diagram-box accent">Motor de almacenamiento (Storage Engine)</div>
+            </div>
+            <div class="diagram-row">
+                <span class="diagram-arrow">&darr;</span>
+            </div>
+            <div class="diagram-row">
+                <div class="diagram-box">Disco (archivos de datos)</div>
+            </div>
+        </div>
+
+        <h3>Descripción de cada componente</h3>
+
+        <div class="concept-box">
+            <h4>&#128196; 1. Motor de Consultas (Query Engine)</h4>
+            <p>Recibe las instrucciones SQL del usuario, las interpreta (parseo), verifica que sean correctas (sintaxis y semántica), y las convierte en un plan de ejecución interno.</p>
+            <p><em>Analogía:</em> Es como el recepcionista que recibe tu pedido y lo traduce a instrucciones para la cocina.</p>
+        </div>
+
+        <div class="concept-box">
+            <h4>&#128196; 2. Optimizador de Consultas</h4>
+            <p>Analiza múltiples formas posibles de ejecutar una consulta y elige la más eficiente. Decide si usar un índice, en qué orden hacer los JOINs, etc.</p>
+            <p><em>Analogía:</em> Es como un GPS que calcula varias rutas y te da la más rápida.</p>
+        </div>
+
+        <div class="concept-box">
+            <h4>&#128196; 3. Gestor de Transacciones</h4>
+            <p>Garantiza que las operaciones cumplan las propiedades <strong>ACID</strong>:</p>
+            <ul>
+                <li><strong>A</strong>tomicidad: Una transacción se ejecuta completa o no se ejecuta nada</li>
+                <li><strong>C</strong>onsistencia: La BD pasa de un estado válido a otro estado válido</li>
+                <li><strong>I</strong>solamiento (Aislamiento): Las transacciones concurrentes no interfieren entre sí</li>
+                <li><strong>D</strong>urabilidad: Una vez confirmada (COMMIT), la transacción persiste aunque haya un fallo</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo de ACID: Transferencia bancaria</h4>
+            <p>Transferir $1000 de la cuenta A a la cuenta B involucra dos operaciones:</p>
+<pre><code><span class="keyword">BEGIN TRANSACTION</span>;
+    <span class="keyword">UPDATE</span> Cuentas <span class="keyword">SET</span> Saldo = Saldo - <span class="number">1000</span> <span class="keyword">WHERE</span> Cuenta = <span class="string">'A'</span>;
+    <span class="keyword">UPDATE</span> Cuentas <span class="keyword">SET</span> Saldo = Saldo + <span class="number">1000</span> <span class="keyword">WHERE</span> Cuenta = <span class="string">'B'</span>;
+<span class="keyword">COMMIT</span>;</code></pre>
+            <ul>
+                <li><strong>Atomicidad:</strong> Si falla después de restar de A pero antes de sumar a B, se deshace todo (ROLLBACK). No se "pierde" dinero.</li>
+                <li><strong>Consistencia:</strong> La suma total de dinero en el sistema no cambia.</li>
+                <li><strong>Aislamiento:</strong> Otra persona consultando saldos no ve un estado intermedio.</li>
+                <li><strong>Durabilidad:</strong> Si se confirma (COMMIT), aunque se apague el servidor, la transferencia persiste.</li>
+            </ul>
+        </div>
+
+        <div class="concept-box">
+            <h4>&#128196; 4. Gestor de Seguridad</h4>
+            <p>Controla la autenticación (¿quién eres?) y la autorización (¿qué puedes hacer?). Maneja usuarios, roles, privilegios y auditoría.</p>
+        </div>
+
+        <div class="concept-box">
+            <h4>&#128196; 5. Motor de Almacenamiento (Storage Engine)</h4>
+            <p>Se encarga de la lectura/escritura física de datos en disco. Gestiona buffers de memoria, páginas de datos, índices en disco y el espacio físico.</p>
+            <p><em>Nota:</em> MySQL permite elegir entre varios motores (InnoDB, MyISAM). PostgreSQL usa un solo motor integrado.</p>
+        </div>
+
+        <div class="concept-box">
+            <h4>&#128196; 6. Catálogo del Sistema (Diccionario de datos interno)</h4>
+            <p>Almacena metadatos: información sobre la estructura de la BD (nombres de tablas, columnas, tipos, constraints, usuarios, permisos). Es la "BD sobre la BD".</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 5.4: ARQUITECTURAS -->
+        <!-- ============================================ -->
+        <h2 id="arquitecturas">5.4 Arquitecturas de los RDBMS</h2>
+
+        <p>La arquitectura define cómo se distribuye el trabajo entre los diferentes componentes del sistema. Existen tres arquitecturas principales:</p>
+
+        <!-- Centralizada -->
+        <h3>Arquitectura Centralizada (Mainframe)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Descripción</h4>
+            <p>Todo se ejecuta en una sola máquina poderosa (mainframe). Los usuarios se conectan mediante terminales "tontas" que solo muestran información.</p>
+            <ul>
+                <li><strong>Ventaja:</strong> Fácil de administrar y asegurar</li>
+                <li><strong>Desventaja:</strong> Si falla el servidor central, nadie puede trabajar</li>
+            </ul>
+            <p><em>Uso actual:</em> Bancos con sistemas legacy, gobierno.</p>
+        </div>
+
+        <!-- Cliente-Servidor -->
+        <h3>Arquitectura Cliente-Servidor (2 capas)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Descripción</h4>
+            <p>El trabajo se divide entre el <strong>cliente</strong> (que presenta la interfaz y envía solicitudes) y el <strong>servidor</strong> (que procesa las consultas y gestiona los datos).</p>
+        </div>
+
+        <div class="diagram">
+            <h4>Cliente-Servidor (2 capas)</h4>
+            <div class="diagram-row">
+                <div class="diagram-box">Cliente 1</div>
+                <div class="diagram-box">Cliente 2</div>
+                <div class="diagram-box">Cliente 3</div>
+            </div>
+            <div class="diagram-row">
+                <span class="diagram-arrow">&darr; &darr; &darr;</span>
+            </div>
+            <div class="diagram-row">
+                <div class="diagram-box accent">Servidor de Base de Datos (RDBMS)</div>
+            </div>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplo</h4>
+            <p>Una aplicación de escritorio (el cliente) se conecta directamente al servidor MySQL para consultar datos. El cliente envía SQL, el servidor lo ejecuta y devuelve resultados.</p>
+        </div>
+
+        <!-- Tres capas -->
+        <h3>Arquitectura de Tres Capas (3-tier)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Descripción</h4>
+            <p>Agrega una capa intermedia (servidor de aplicaciones) entre el cliente y la base de datos. Es la arquitectura más usada en aplicaciones web modernas.</p>
+        </div>
+
+        <div class="diagram">
+            <h4>Arquitectura de 3 capas</h4>
+            <div class="diagram-row">
+                <div class="diagram-box">Capa de Presentación<br><small>(Navegador web, app móvil)</small></div>
+            </div>
+            <div class="diagram-row">
+                <span class="diagram-arrow">&darr;</span>
+            </div>
+            <div class="diagram-row">
+                <div class="diagram-box secondary">Capa de Lógica/Aplicación<br><small>(Servidor web: Node.js, Java, PHP)</small></div>
+            </div>
+            <div class="diagram-row">
+                <span class="diagram-arrow">&darr;</span>
+            </div>
+            <div class="diagram-row">
+                <div class="diagram-box accent">Capa de Datos<br><small>(RDBMS: MySQL, PostgreSQL)</small></div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Capa</th>
+                    <th>Responsabilidad</th>
+                    <th>Ejemplo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Presentación</strong></td>
+                    <td>Interfaz visual, interacción con el usuario</td>
+                    <td>Página web en el navegador, app de celular</td>
+                </tr>
+                <tr>
+                    <td><strong>Lógica</strong></td>
+                    <td>Reglas de negocio, validaciones, procesamiento</td>
+                    <td>Servidor en Node.js que valida y procesa pedidos</td>
+                </tr>
+                <tr>
+                    <td><strong>Datos</strong></td>
+                    <td>Almacenamiento y gestión de la información</td>
+                    <td>MySQL guardando productos, usuarios, pedidos</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía: Restaurante</h4>
+            <ul>
+                <li><strong>Capa de presentación</strong> = El menú y la mesa (lo que ve el cliente)</li>
+                <li><strong>Capa de lógica</strong> = El mesero (recibe la orden, la valida, la lleva a cocina, trae el plato)</li>
+                <li><strong>Capa de datos</strong> = La cocina y la bodega (donde se almacenan y preparan los ingredientes)</li>
+            </ul>
+            <p>El cliente nunca entra a la cocina directamente. Todo pasa por el mesero.</p>
+        </div>
+
+        <!-- Comparación -->
+        <h3>Comparación de arquitecturas</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Característica</th>
+                    <th>Centralizada</th>
+                    <th>Cliente-Servidor</th>
+                    <th>3 Capas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Escalabilidad</td>
+                    <td>Baja</td>
+                    <td>Media</td>
+                    <td>Alta</td>
+                </tr>
+                <tr>
+                    <td>Mantenimiento</td>
+                    <td>Simple</td>
+                    <td>Moderado</td>
+                    <td>Más complejo pero flexible</td>
+                </tr>
+                <tr>
+                    <td>Seguridad</td>
+                    <td>Alta (todo centralizado)</td>
+                    <td>Media</td>
+                    <td>Alta (capas separadas)</td>
+                </tr>
+                <tr>
+                    <td>Uso moderno</td>
+                    <td>Sistemas legacy</td>
+                    <td>Apps de escritorio</td>
+                    <td>Apps web y móviles</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 5.5: EL DBA -->
+        <!-- ============================================ -->
+        <h2 id="dba">5.5 Definición y Funciones de un DBA</h2>
+
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p>El <strong>DBA</strong> (Database Administrator / Administrador de Base de Datos) es el profesional responsable de la instalación, configuración, mantenimiento, seguridad y rendimiento de los sistemas de bases de datos de una organización.</p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>El DBA es como el <strong>administrador de un edificio de departamentos</strong>. No vive en cada departamento (no usa los datos directamente), pero se asegura de que el agua funcione (disponibilidad), que las cerraduras estén bien (seguridad), que haya luz (rendimiento), que se hagan respaldos del sistema eléctrico (backups) y que los nuevos inquilinos tengan sus llaves (gestión de usuarios).</p>
+        </div>
+
+        <h3>Funciones principales del DBA</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Función</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Instalación y configuración</strong></td>
+                    <td>Instalar el RDBMS, configurar parámetros de rendimiento, memoria, almacenamiento.</td>
+                </tr>
+                <tr>
+                    <td><strong>Diseño y modelado</strong></td>
+                    <td>Participar en el diseño del esquema de la BD, revisión de modelos lógicos y físicos.</td>
+                </tr>
+                <tr>
+                    <td><strong>Seguridad</strong></td>
+                    <td>Crear usuarios, asignar permisos, implementar políticas de acceso, auditoría.</td>
+                </tr>
+                <tr>
+                    <td><strong>Respaldos y recuperación</strong></td>
+                    <td>Planificar y ejecutar backups periódicos. Restaurar datos en caso de fallos.</td>
+                </tr>
+                <tr>
+                    <td><strong>Monitoreo y rendimiento</strong></td>
+                    <td>Vigilar el rendimiento del sistema, identificar consultas lentas, optimizar (tuning).</td>
+                </tr>
+                <tr>
+                    <td><strong>Mantenimiento</strong></td>
+                    <td>Aplicar actualizaciones, reorganizar índices, gestionar espacio en disco.</td>
+                </tr>
+                <tr>
+                    <td><strong>Alta disponibilidad</strong></td>
+                    <td>Configurar replicación, clusters, failover para minimizar tiempo sin servicio.</td>
+                </tr>
+                <tr>
+                    <td><strong>Documentación</strong></td>
+                    <td>Mantener actualizado el diccionario de datos, procedimientos y políticas.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Tipos de DBA</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Enfoque</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>DBA de desarrollo</strong></td>
+                    <td>Trabaja con los programadores: diseña esquemas, escribe procedimientos almacenados, optimiza consultas.</td>
+                </tr>
+                <tr>
+                    <td><strong>DBA de producción</strong></td>
+                    <td>Se encarga de los servidores en vivo: monitoreo 24/7, backups, recuperación ante desastres.</td>
+                </tr>
+                <tr>
+                    <td><strong>DBA de infraestructura</strong></td>
+                    <td>Enfocado en hardware, instalación, configuración del sistema operativo y networking.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box">
+            <h4>&#128161; ¿Es un buen camino profesional?</h4>
+            <p>Sí. El DBA es uno de los roles mejor pagados en tecnología porque la información es el activo más valioso de una empresa. Un error de un DBA puede significar millones en pérdidas (datos perdidos, horas sin servicio). Por eso requiere mucha responsabilidad y conocimiento profundo.</p>
+            <p><strong>Habilidades clave:</strong> SQL avanzado, conocimiento del RDBMS específico (Oracle, SQL Server, PostgreSQL), scripting (Bash, Python), redes, seguridad informática.</p>
+        </div>
+
+        <h3>Otros roles relacionados con BD</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rol</th>
+                    <th>Diferencia con el DBA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Desarrollador de BD</strong></td>
+                    <td>Escribe consultas, procedimientos y código. El DBA administra el entorno.</td>
+                </tr>
+                <tr>
+                    <td><strong>Arquitecto de datos</strong></td>
+                    <td>Diseña la estrategia global de datos de la empresa. El DBA la implementa.</td>
+                </tr>
+                <tr>
+                    <td><strong>Ingeniero de datos</strong></td>
+                    <td>Construye pipelines de datos (ETL). Más enfocado en flujo y transformación.</td>
+                </tr>
+                <tr>
+                    <td><strong>Analista de datos</strong></td>
+                    <td>Consulta y analiza datos para generar reportes e insights. No administra el sistema.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Navegación entre páginas -->
+        <div class="page-nav">
+            <a href="unidad4.html">&larr; Unidad 4: Álgebra Relacional</a>
+            <a href="unidad6.html">Unidad 6: Introducción a SQL &rarr;</a>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>Unidad 5 - RDBMS | <a href="index.html">Volver al índice</a></p>
+    </footer>
+</body>
+</html>

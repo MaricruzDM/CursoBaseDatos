@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 6 - Introducción al Lenguaje SQL | Curso de Bases de Datos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-brand">&#128218; Curso de Bases de Datos</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="unidad1.html">U1</a></li>
+                <li><a href="unidad2.html">U2</a></li>
+                <li><a href="unidad3.html">U3</a></li>
+                <li><a href="unidad4.html">U4</a></li>
+                <li><a href="unidad5.html">U5</a></li>
+                <li><a href="unidad6.html"><strong>U6</strong></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <h1>Unidad 6: Introducción al Lenguaje Estructurado de Consultas (SQL)</h1>
+
+        <div class="toc">
+            <h4>&#128203; Contenido de esta unidad</h4>
+            <ol>
+                <li><a href="#caracteristicas">Características generales</a></li>
+                <li><a href="#crear">Creación de base de datos y tablas</a></li>
+                <li><a href="#seleccion">Selección de la información</a></li>
+                <li><a href="#modificacion">Inserción, actualización y eliminación</a></li>
+            </ol>
+        </div>
+
+        <p>Esta es la unidad más práctica del curso. Aquí es donde todo lo que aprendiste en las unidades anteriores cobra vida. SQL es el lenguaje que usas para "hablar" con la base de datos: pedirle datos, crear tablas, modificar información.</p>
+
+        <div class="info-box">
+            <h4>&#128187; Practica mientras lees</h4>
+            <p>Te recomiendo abrir una de estas herramientas en otra pestaña y ejecutar los ejemplos:</p>
+            <ul>
+                <li><a href="https://www.db-fiddle.com/" target="_blank">DB Fiddle</a> (selecciona MySQL o PostgreSQL)</li>
+                <li><a href="https://sqliteonline.com/" target="_blank">SQLite Online</a></li>
+                <li><a href="https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_all" target="_blank">W3Schools SQL Try It</a></li>
+            </ul>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 6.1: CARACTERÍSTICAS GENERALES -->
+        <!-- ============================================ -->
+        <h2 id="caracteristicas">6.1 Características Generales</h2>
+
+        <div class="concept-box">
+            <h4>&#128196; Definición</h4>
+            <p><strong>SQL</strong> (Structured Query Language / Lenguaje Estructurado de Consultas) es un lenguaje estándar para definir, manipular y controlar bases de datos relacionales. Fue desarrollado por IBM en los años 70 y estandarizado por ANSI/ISO en 1986.</p>
+        </div>
+
+        <div class="analogy-box">
+            <h4>&#128300; Analogía</h4>
+            <p>SQL es como aprender <strong>un idioma para hablar con bases de datos</strong>. Así como usas español para pedir cosas a personas ("dame el reporte de ventas de enero"), usas SQL para pedir cosas al RDBMS (<code>SELECT * FROM Ventas WHERE mes = 'enero'</code>). La gramática es diferente, pero la lógica es la misma: dices QUÉ quieres.</p>
+        </div>
+
+        <h3>Características principales de SQL</h3>
+        <ul>
+            <li><strong>Declarativo:</strong> Describes QUÉ quieres obtener, no CÓMO obtenerlo (el optimizador decide el cómo)</li>
+            <li><strong>Estándar:</strong> Funciona (con pequeñas variaciones) en MySQL, PostgreSQL, SQL Server, Oracle, etc.</li>
+            <li><strong>Basado en conjuntos:</strong> Opera sobre conjuntos de filas, no fila por fila</li>
+            <li><strong>No sensible a mayúsculas:</strong> <code>SELECT</code>, <code>select</code> y <code>Select</code> son equivalentes (por convención se escribe en MAYÚSCULAS)</li>
+            <li><strong>Cada sentencia termina con punto y coma</strong> (<code>;</code>)</li>
+        </ul>
+
+        <h3>Sublenguajes de SQL</h3>
+        <p>SQL se divide en varios sublenguajes según el tipo de operación:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Sublenguaje</th>
+                    <th>Significado</th>
+                    <th>¿Para qué sirve?</th>
+                    <th>Comandos principales</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>DDL</strong></td>
+                    <td>Data Definition Language</td>
+                    <td>Crear y modificar la ESTRUCTURA de la BD</td>
+                    <td><code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>, <code>TRUNCATE</code></td>
+                </tr>
+                <tr>
+                    <td><strong>DML</strong></td>
+                    <td>Data Manipulation Language</td>
+                    <td>Consultar y modificar los DATOS</td>
+                    <td><code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></td>
+                </tr>
+                <tr>
+                    <td><strong>DCL</strong></td>
+                    <td>Data Control Language</td>
+                    <td>Controlar PERMISOS y acceso</td>
+                    <td><code>GRANT</code>, <code>REVOKE</code></td>
+                </tr>
+                <tr>
+                    <td><strong>TCL</strong></td>
+                    <td>Transaction Control Language</td>
+                    <td>Gestionar TRANSACCIONES</td>
+                    <td><code>COMMIT</code>, <code>ROLLBACK</code>, <code>SAVEPOINT</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box">
+            <h4>&#128161; En esta unidad nos enfocaremos en DDL y DML</h4>
+            <p>DDL para crear la estructura (CREATE TABLE) y DML para trabajar con datos (SELECT, INSERT, UPDATE, DELETE). Estos son los que más usarás en el curso.</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 6.2: CREAR BD Y TABLAS -->
+        <!-- ============================================ -->
+        <h2 id="crear">6.2 Creación de Base de Datos y Tablas</h2>
+
+        <h3>Crear una Base de Datos</h3>
+
+        <div class="example-box">
+            <h4>&#9989; Sintaxis y ejemplo</h4>
+<pre><code><span class="comment">-- Crear una base de datos nueva</span>
+<span class="keyword">CREATE DATABASE</span> Escuela;
+
+<span class="comment">-- Seleccionar la base de datos para trabajar con ella</span>
+<span class="keyword">USE</span> Escuela;</code></pre>
+            <p><code>CREATE DATABASE</code> crea la BD. <code>USE</code> le dice al RDBMS "desde ahora, trabajo en esta BD".</p>
+        </div>
+
+        <h3>Crear Tablas (CREATE TABLE)</h3>
+
+        <div class="concept-box">
+            <h4>&#128196; Sintaxis general</h4>
+<pre><code><span class="keyword">CREATE TABLE</span> NombreTabla (
+    columna1  tipo_dato  [restricciones],
+    columna2  tipo_dato  [restricciones],
+    ...
+    [restricciones de tabla]
+);</code></pre>
+        </div>
+
+        <h3>Tipos de datos comunes</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Descripción</th>
+                    <th>Ejemplo de valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>INT</code></td>
+                    <td>Número entero</td>
+                    <td>42, -7, 1000</td>
+                </tr>
+                <tr>
+                    <td><code>DECIMAL(p,s)</code></td>
+                    <td>Número con decimales (p dígitos totales, s decimales)</td>
+                    <td>DECIMAL(8,2) → 123456.78</td>
+                </tr>
+                <tr>
+                    <td><code>VARCHAR(n)</code></td>
+                    <td>Texto de longitud variable (máximo n caracteres)</td>
+                    <td>'Hola mundo'</td>
+                </tr>
+                <tr>
+                    <td><code>CHAR(n)</code></td>
+                    <td>Texto de longitud fija (siempre n caracteres)</td>
+                    <td>CHAR(2) → 'MX'</td>
+                </tr>
+                <tr>
+                    <td><code>DATE</code></td>
+                    <td>Fecha (AAAA-MM-DD)</td>
+                    <td>'2024-03-15'</td>
+                </tr>
+                <tr>
+                    <td><code>DATETIME</code></td>
+                    <td>Fecha y hora</td>
+                    <td>'2024-03-15 14:30:00'</td>
+                </tr>
+                <tr>
+                    <td><code>BOOLEAN</code></td>
+                    <td>Verdadero o falso</td>
+                    <td>TRUE, FALSE</td>
+                </tr>
+                <tr>
+                    <td><code>TEXT</code></td>
+                    <td>Texto largo (sin límite práctico)</td>
+                    <td>Descripciones, comentarios largos</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Ejemplo completo: Crear las tablas de una escuela</h3>
+
+        <div class="example-box">
+            <h4>&#9989; Creación paso a paso</h4>
+<pre><code><span class="comment">-- 1. Crear la base de datos</span>
+<span class="keyword">CREATE DATABASE</span> Escuela;
+<span class="keyword">USE</span> Escuela;
+
+<span class="comment">-- 2. Crear tabla CARRERAS (primero, porque ALUMNOS la referencia)</span>
+<span class="keyword">CREATE TABLE</span> Carreras (
+    CarreraID    <span class="keyword">INT</span>          <span class="keyword">PRIMARY KEY</span>,
+    Nombre       <span class="keyword">VARCHAR</span>(<span class="number">80</span>)  <span class="keyword">NOT NULL</span>,
+    Duracion     <span class="keyword">INT</span>          <span class="keyword">NOT NULL</span>,
+    Coordinador  <span class="keyword">VARCHAR</span>(<span class="number">100</span>)
+);
+
+<span class="comment">-- 3. Crear tabla ALUMNOS</span>
+<span class="keyword">CREATE TABLE</span> Alumnos (
+    Matricula    <span class="keyword">VARCHAR</span>(<span class="number">10</span>)  <span class="keyword">PRIMARY KEY</span>,
+    Nombre       <span class="keyword">VARCHAR</span>(<span class="number">50</span>)  <span class="keyword">NOT NULL</span>,
+    Apellido     <span class="keyword">VARCHAR</span>(<span class="number">50</span>)  <span class="keyword">NOT NULL</span>,
+    Email        <span class="keyword">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">UNIQUE</span>,
+    FechaNac     <span class="keyword">DATE</span>,
+    Semestre     <span class="keyword">INT</span>          <span class="keyword">CHECK</span> (Semestre >= <span class="number">1</span> <span class="keyword">AND</span> Semestre <= <span class="number">12</span>),
+    CarreraID    <span class="keyword">INT</span>          <span class="keyword">NOT NULL</span>,
+    <span class="keyword">FOREIGN KEY</span> (CarreraID) <span class="keyword">REFERENCES</span> Carreras(CarreraID)
+);
+
+<span class="comment">-- 4. Crear tabla MATERIAS</span>
+<span class="keyword">CREATE TABLE</span> Materias (
+    Clave        <span class="keyword">VARCHAR</span>(<span class="number">10</span>)  <span class="keyword">PRIMARY KEY</span>,
+    NombreMat    <span class="keyword">VARCHAR</span>(<span class="number">80</span>)  <span class="keyword">NOT NULL</span>,
+    Creditos     <span class="keyword">INT</span>          <span class="keyword">NOT NULL</span>,
+    Semestre     <span class="keyword">INT</span>
+);
+
+<span class="comment">-- 5. Crear tabla INSCRIPCIONES (relación M:N entre Alumnos y Materias)</span>
+<span class="keyword">CREATE TABLE</span> Inscripciones (
+    Matricula    <span class="keyword">VARCHAR</span>(<span class="number">10</span>),
+    Clave        <span class="keyword">VARCHAR</span>(<span class="number">10</span>),
+    Periodo      <span class="keyword">VARCHAR</span>(<span class="number">10</span>)  <span class="keyword">NOT NULL</span>,
+    Calificacion <span class="keyword">DECIMAL</span>(<span class="number">4</span>,<span class="number">1</span>),
+    <span class="keyword">PRIMARY KEY</span> (Matricula, Clave),
+    <span class="keyword">FOREIGN KEY</span> (Matricula) <span class="keyword">REFERENCES</span> Alumnos(Matricula),
+    <span class="keyword">FOREIGN KEY</span> (Clave) <span class="keyword">REFERENCES</span> Materias(Clave)
+);</code></pre>
+        </div>
+
+        <div class="warning-box">
+            <h4>&#9888;&#65039; Orden de creación</h4>
+            <p>Cuando usas FOREIGN KEY, la tabla referenciada <strong>debe existir primero</strong>. Por eso creamos CARRERAS antes que ALUMNOS (porque ALUMNOS referencia a CARRERAS).</p>
+        </div>
+
+        <h3>Modificar tablas (ALTER TABLE)</h3>
+        <div class="example-box">
+            <h4>&#9989; Operaciones comunes con ALTER</h4>
+<pre><code><span class="comment">-- Agregar una columna nueva</span>
+<span class="keyword">ALTER TABLE</span> Alumnos <span class="keyword">ADD</span> Telefono <span class="keyword">VARCHAR</span>(<span class="number">15</span>);
+
+<span class="comment">-- Eliminar una columna</span>
+<span class="keyword">ALTER TABLE</span> Alumnos <span class="keyword">DROP COLUMN</span> Telefono;
+
+<span class="comment">-- Modificar el tipo de dato de una columna (MySQL)</span>
+<span class="keyword">ALTER TABLE</span> Alumnos <span class="keyword">MODIFY</span> Email <span class="keyword">VARCHAR</span>(<span class="number">150</span>);
+
+<span class="comment">-- Agregar una restricción</span>
+<span class="keyword">ALTER TABLE</span> Alumnos <span class="keyword">ADD CONSTRAINT</span> chk_semestre 
+    <span class="keyword">CHECK</span> (Semestre >= <span class="number">1</span>);</code></pre>
+        </div>
+
+        <h3>Eliminar tablas y bases de datos (DROP)</h3>
+        <div class="example-box">
+            <h4>&#9989; Sintaxis</h4>
+<pre><code><span class="comment">-- Eliminar una tabla (¡CUIDADO! Borra toda la estructura y datos)</span>
+<span class="keyword">DROP TABLE</span> Inscripciones;
+
+<span class="comment">-- Eliminar solo si existe (evita error si no existe)</span>
+<span class="keyword">DROP TABLE IF EXISTS</span> Inscripciones;
+
+<span class="comment">-- Eliminar toda la base de datos</span>
+<span class="keyword">DROP DATABASE</span> Escuela;</code></pre>
+        </div>
+
+        <div class="warning-box">
+            <h4>&#9888;&#65039; DROP es irreversible</h4>
+            <p><code>DROP TABLE</code> elimina la tabla, sus datos y su estructura permanentemente. No hay "Ctrl+Z". En producción, siempre haz un respaldo antes de ejecutar DROP.</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 6.3: SELECT -->
+        <!-- ============================================ -->
+        <h2 id="seleccion">6.3 Selección de la Información (SELECT)</h2>
+
+        <p>El <code>SELECT</code> es el comando más usado en SQL. Sirve para consultar (leer) datos de una o más tablas. No modifica nada, solo muestra resultados.</p>
+
+        <div class="concept-box">
+            <h4>&#128196; Sintaxis básica</h4>
+<pre><code><span class="keyword">SELECT</span> columnas
+<span class="keyword">FROM</span> tabla
+[<span class="keyword">WHERE</span> condición]
+[<span class="keyword">ORDER BY</span> columna [ASC|DESC]]
+[<span class="keyword">LIMIT</span> n];</code></pre>
+        </div>
+
+        <p>Primero, insertemos datos de ejemplo para poder practicar las consultas:</p>
+
+        <div class="example-box">
+            <h4>&#128190; Datos de ejemplo (ejecuta esto primero)</h4>
+<pre><code><span class="keyword">INSERT INTO</span> Carreras <span class="keyword">VALUES</span>
+(<span class="number">1</span>, <span class="string">'Ing. en Sistemas'</span>, <span class="number">9</span>, <span class="string">'Dr. Ramírez'</span>),
+(<span class="number">2</span>, <span class="string">'Ing. Industrial'</span>, <span class="number">9</span>, <span class="string">'Dra. Flores'</span>),
+(<span class="number">3</span>, <span class="string">'Ing. Civil'</span>, <span class="number">10</span>, <span class="string">'Dr. Mendoza'</span>);
+
+<span class="keyword">INSERT INTO</span> Alumnos <span class="keyword">VALUES</span>
+(<span class="string">'A001'</span>, <span class="string">'Pedro'</span>, <span class="string">'García'</span>, <span class="string">'pedro@escuela.edu'</span>, <span class="string">'2002-05-15'</span>, <span class="number">4</span>, <span class="number">1</span>),
+(<span class="string">'A002'</span>, <span class="string">'María'</span>, <span class="string">'López'</span>, <span class="string">'maria@escuela.edu'</span>, <span class="string">'2001-08-22'</span>, <span class="number">6</span>, <span class="number">2</span>),
+(<span class="string">'A003'</span>, <span class="string">'Juan'</span>, <span class="string">'Martínez'</span>, <span class="string">'juan@escuela.edu'</span>, <span class="string">'2003-01-10'</span>, <span class="number">4</span>, <span class="number">1</span>),
+(<span class="string">'A004'</span>, <span class="string">'Ana'</span>, <span class="string">'Rodríguez'</span>, <span class="string">'ana@escuela.edu'</span>, <span class="string">'2004-11-30'</span>, <span class="number">2</span>, <span class="number">3</span>),
+(<span class="string">'A005'</span>, <span class="string">'Luis'</span>, <span class="string">'Hernández'</span>, <span class="string">'luis@escuela.edu'</span>, <span class="string">'2000-03-08'</span>, <span class="number">8</span>, <span class="number">2</span>);
+
+<span class="keyword">INSERT INTO</span> Materias <span class="keyword">VALUES</span>
+(<span class="string">'MAT101'</span>, <span class="string">'Cálculo I'</span>, <span class="number">8</span>, <span class="number">1</span>),
+(<span class="string">'FIS201'</span>, <span class="string">'Física I'</span>, <span class="number">8</span>, <span class="number">2</span>),
+(<span class="string">'PRG301'</span>, <span class="string">'Programación'</span>, <span class="number">6</span>, <span class="number">3</span>),
+(<span class="string">'BD401'</span>, <span class="string">'Bases de Datos'</span>, <span class="number">6</span>, <span class="number">4</span>);
+
+<span class="keyword">INSERT INTO</span> Inscripciones <span class="keyword">VALUES</span>
+(<span class="string">'A001'</span>, <span class="string">'MAT101'</span>, <span class="string">'2024-1'</span>, <span class="number">85.0</span>),
+(<span class="string">'A001'</span>, <span class="string">'PRG301'</span>, <span class="string">'2024-1'</span>, <span class="number">92.5</span>),
+(<span class="string">'A002'</span>, <span class="string">'MAT101'</span>, <span class="string">'2024-1'</span>, <span class="number">78.0</span>),
+(<span class="string">'A002'</span>, <span class="string">'FIS201'</span>, <span class="string">'2024-1'</span>, <span class="number">88.5</span>),
+(<span class="string">'A003'</span>, <span class="string">'BD401'</span>, <span class="string">'2024-1'</span>, <span class="number">95.0</span>),
+(<span class="string">'A003'</span>, <span class="string">'MAT101'</span>, <span class="string">'2024-1'</span>, <span class="number">82.0</span>),
+(<span class="string">'A004'</span>, <span class="string">'MAT101'</span>, <span class="string">'2024-1'</span>, <span class="number">70.5</span>),
+(<span class="string">'A005'</span>, <span class="string">'FIS201'</span>, <span class="string">'2024-1'</span>, <span class="number">91.0</span>);</code></pre>
+        </div>
+
+        <!-- SELECT básico -->
+        <h3>SELECT básico</h3>
+        <div class="example-box">
+            <h4>&#9989; Consultas fundamentales</h4>
+<pre><code><span class="comment">-- Seleccionar TODAS las columnas de una tabla</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos;
+
+<span class="comment">-- Seleccionar columnas específicas</span>
+<span class="keyword">SELECT</span> Nombre, Apellido, Semestre <span class="keyword">FROM</span> Alumnos;
+
+<span class="comment">-- Valores únicos (sin repetidos)</span>
+<span class="keyword">SELECT DISTINCT</span> CarreraID <span class="keyword">FROM</span> Alumnos;</code></pre>
+        </div>
+
+        <!-- WHERE -->
+        <h3>Filtrar con WHERE</h3>
+        <div class="example-box">
+            <h4>&#9989; Condiciones de filtrado</h4>
+<pre><code><span class="comment">-- Igualdad</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos <span class="keyword">WHERE</span> CarreraID = <span class="number">1</span>;
+
+<span class="comment">-- Comparación numérica</span>
+<span class="keyword">SELECT</span> Nombre, Semestre <span class="keyword">FROM</span> Alumnos <span class="keyword">WHERE</span> Semestre > <span class="number">4</span>;
+
+<span class="comment">-- Texto (usar comillas simples)</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos <span class="keyword">WHERE</span> Nombre = <span class="string">'Pedro'</span>;
+
+<span class="comment">-- AND: ambas condiciones deben cumplirse</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos 
+<span class="keyword">WHERE</span> CarreraID = <span class="number">1</span> <span class="keyword">AND</span> Semestre = <span class="number">4</span>;
+
+<span class="comment">-- OR: al menos una condición se cumple</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos 
+<span class="keyword">WHERE</span> CarreraID = <span class="number">1</span> <span class="keyword">OR</span> CarreraID = <span class="number">2</span>;
+
+<span class="comment">-- IN: equivalente a múltiples OR</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos 
+<span class="keyword">WHERE</span> CarreraID <span class="keyword">IN</span> (<span class="number">1</span>, <span class="number">2</span>);
+
+<span class="comment">-- BETWEEN: rango de valores</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Inscripciones 
+<span class="keyword">WHERE</span> Calificacion <span class="keyword">BETWEEN</span> <span class="number">80</span> <span class="keyword">AND</span> <span class="number">90</span>;
+
+<span class="comment">-- LIKE: búsqueda de patrones en texto</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos <span class="keyword">WHERE</span> Nombre <span class="keyword">LIKE</span> <span class="string">'M%'</span>;    <span class="comment">-- Empieza con M</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos <span class="keyword">WHERE</span> Apellido <span class="keyword">LIKE</span> <span class="string">'%ez'</span>;  <span class="comment">-- Termina en 'ez'</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos <span class="keyword">WHERE</span> Nombre <span class="keyword">LIKE</span> <span class="string">'_u%'</span>;   <span class="comment">-- Segunda letra es 'u'</span>
+
+<span class="comment">-- IS NULL: buscar valores vacíos</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos <span class="keyword">WHERE</span> Email <span class="keyword">IS NULL</span>;
+
+<span class="comment">-- NOT: negar una condición</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos <span class="keyword">WHERE</span> CarreraID <span class="keyword">NOT IN</span> (<span class="number">1</span>, <span class="number">2</span>);</code></pre>
+        </div>
+
+        <div class="info-box">
+            <h4>&#128161; Comodines de LIKE</h4>
+            <ul>
+                <li><code>%</code> = cualquier cantidad de caracteres (incluyendo cero)</li>
+                <li><code>_</code> = exactamente un carácter</li>
+            </ul>
+        </div>
+
+        <!-- ORDER BY -->
+        <h3>Ordenar resultados (ORDER BY)</h3>
+        <div class="example-box">
+            <h4>&#9989; Ejemplos</h4>
+<pre><code><span class="comment">-- Ordenar por nombre (A-Z, ascendente por defecto)</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos <span class="keyword">ORDER BY</span> Nombre;
+
+<span class="comment">-- Ordenar por semestre de mayor a menor</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos <span class="keyword">ORDER BY</span> Semestre <span class="keyword">DESC</span>;
+
+<span class="comment">-- Ordenar por múltiples columnas</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos <span class="keyword">ORDER BY</span> CarreraID <span class="keyword">ASC</span>, Semestre <span class="keyword">DESC</span>;</code></pre>
+        </div>
+
+        <!-- Funciones de agregación -->
+        <h3>Funciones de Agregación</h3>
+        <p>Realizan cálculos sobre un conjunto de filas y devuelven un solo valor.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Función</th>
+                    <th>¿Qué hace?</th>
+                    <th>Ejemplo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>COUNT()</code></td>
+                    <td>Cuenta filas</td>
+                    <td><code>COUNT(*)</code> = total de filas</td>
+                </tr>
+                <tr>
+                    <td><code>SUM()</code></td>
+                    <td>Suma valores</td>
+                    <td><code>SUM(Creditos)</code></td>
+                </tr>
+                <tr>
+                    <td><code>AVG()</code></td>
+                    <td>Promedio</td>
+                    <td><code>AVG(Calificacion)</code></td>
+                </tr>
+                <tr>
+                    <td><code>MAX()</code></td>
+                    <td>Valor máximo</td>
+                    <td><code>MAX(Calificacion)</code></td>
+                </tr>
+                <tr>
+                    <td><code>MIN()</code></td>
+                    <td>Valor mínimo</td>
+                    <td><code>MIN(Calificacion)</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplos de funciones de agregación</h4>
+<pre><code><span class="comment">-- ¿Cuántos alumnos hay?</span>
+<span class="keyword">SELECT COUNT</span>(*) <span class="keyword">AS</span> TotalAlumnos <span class="keyword">FROM</span> Alumnos;
+
+<span class="comment">-- Promedio de calificaciones</span>
+<span class="keyword">SELECT AVG</span>(Calificacion) <span class="keyword">AS</span> Promedio <span class="keyword">FROM</span> Inscripciones;
+
+<span class="comment">-- Calificación más alta y más baja</span>
+<span class="keyword">SELECT MAX</span>(Calificacion) <span class="keyword">AS</span> Maxima, 
+       <span class="keyword">MIN</span>(Calificacion) <span class="keyword">AS</span> Minima 
+<span class="keyword">FROM</span> Inscripciones;
+
+<span class="comment">-- Total de créditos disponibles</span>
+<span class="keyword">SELECT SUM</span>(Creditos) <span class="keyword">AS</span> TotalCreditos <span class="keyword">FROM</span> Materias;</code></pre>
+        </div>
+
+        <!-- GROUP BY -->
+        <h3>Agrupar resultados (GROUP BY)</h3>
+        <div class="concept-box">
+            <h4>&#128196; Concepto</h4>
+            <p><code>GROUP BY</code> agrupa filas que tienen el mismo valor en una columna y permite aplicar funciones de agregación a cada grupo.</p>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplos con GROUP BY</h4>
+<pre><code><span class="comment">-- ¿Cuántos alumnos hay por carrera?</span>
+<span class="keyword">SELECT</span> CarreraID, <span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> NumAlumnos
+<span class="keyword">FROM</span> Alumnos
+<span class="keyword">GROUP BY</span> CarreraID;
+
+<span class="comment">-- Promedio de calificación por alumno</span>
+<span class="keyword">SELECT</span> Matricula, <span class="keyword">AVG</span>(Calificacion) <span class="keyword">AS</span> Promedio
+<span class="keyword">FROM</span> Inscripciones
+<span class="keyword">GROUP BY</span> Matricula;
+
+<span class="comment">-- Promedio por materia, solo materias con promedio > 80</span>
+<span class="keyword">SELECT</span> Clave, <span class="keyword">AVG</span>(Calificacion) <span class="keyword">AS</span> Promedio
+<span class="keyword">FROM</span> Inscripciones
+<span class="keyword">GROUP BY</span> Clave
+<span class="keyword">HAVING AVG</span>(Calificacion) > <span class="number">80</span>;</code></pre>
+        </div>
+
+        <div class="info-box">
+            <h4>&#128161; WHERE vs HAVING</h4>
+            <ul>
+                <li><code>WHERE</code> filtra <strong>filas individuales</strong> ANTES de agrupar</li>
+                <li><code>HAVING</code> filtra <strong>grupos</strong> DESPUÉS de agrupar</li>
+            </ul>
+        </div>
+
+        <!-- JOIN en SELECT -->
+        <h3>Consultas con JOIN</h3>
+        <div class="example-box">
+            <h4>&#9989; Combinar información de varias tablas</h4>
+<pre><code><span class="comment">-- Mostrar nombre del alumno con nombre de su carrera</span>
+<span class="keyword">SELECT</span> A.Nombre, A.Apellido, C.Nombre <span class="keyword">AS</span> Carrera
+<span class="keyword">FROM</span> Alumnos A
+<span class="keyword">INNER JOIN</span> Carreras C <span class="keyword">ON</span> A.CarreraID = C.CarreraID;
+
+<span class="comment">-- Mostrar inscripciones con nombre del alumno y nombre de la materia</span>
+<span class="keyword">SELECT</span> A.Nombre, A.Apellido, M.NombreMat, I.Calificacion
+<span class="keyword">FROM</span> Inscripciones I
+<span class="keyword">INNER JOIN</span> Alumnos A <span class="keyword">ON</span> I.Matricula = A.Matricula
+<span class="keyword">INNER JOIN</span> Materias M <span class="keyword">ON</span> I.Clave = M.Clave
+<span class="keyword">ORDER BY</span> A.Apellido, M.NombreMat;
+
+<span class="comment">-- Alumnos que NO tienen inscripciones (LEFT JOIN + IS NULL)</span>
+<span class="keyword">SELECT</span> A.Nombre, A.Apellido
+<span class="keyword">FROM</span> Alumnos A
+<span class="keyword">LEFT JOIN</span> Inscripciones I <span class="keyword">ON</span> A.Matricula = I.Matricula
+<span class="keyword">WHERE</span> I.Matricula <span class="keyword">IS NULL</span>;</code></pre>
+        </div>
+
+        <!-- Orden de ejecución -->
+        <h3>Orden de ejecución de un SELECT completo</h3>
+        <div class="info-box">
+            <h4>&#128161; El RDBMS ejecuta en este orden (no es el orden en que lo escribes)</h4>
+            <ol>
+                <li><code>FROM</code> y <code>JOIN</code> - Determina las tablas fuente</li>
+                <li><code>WHERE</code> - Filtra filas</li>
+                <li><code>GROUP BY</code> - Agrupa filas</li>
+                <li><code>HAVING</code> - Filtra grupos</li>
+                <li><code>SELECT</code> - Elige columnas</li>
+                <li><code>DISTINCT</code> - Elimina duplicados</li>
+                <li><code>ORDER BY</code> - Ordena resultados</li>
+                <li><code>LIMIT</code> - Limita cantidad de filas</li>
+            </ol>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN 6.4: INSERT, UPDATE, DELETE -->
+        <!-- ============================================ -->
+        <h2 id="modificacion">6.4 Inserción, Actualización y Eliminación de Información</h2>
+
+        <!-- INSERT -->
+        <h3>INSERT - Insertar datos</h3>
+        <div class="concept-box">
+            <h4>&#128196; Sintaxis</h4>
+<pre><code><span class="comment">-- Forma 1: Especificando columnas (recomendado)</span>
+<span class="keyword">INSERT INTO</span> tabla (col1, col2, col3)
+<span class="keyword">VALUES</span> (valor1, valor2, valor3);
+
+<span class="comment">-- Forma 2: Sin especificar columnas (debes dar TODOS los valores en orden)</span>
+<span class="keyword">INSERT INTO</span> tabla
+<span class="keyword">VALUES</span> (valor1, valor2, valor3, ...);
+
+<span class="comment">-- Forma 3: Múltiples filas a la vez</span>
+<span class="keyword">INSERT INTO</span> tabla (col1, col2)
+<span class="keyword">VALUES</span> (val1, val2), (val3, val4), (val5, val6);</code></pre>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplos de INSERT</h4>
+<pre><code><span class="comment">-- Insertar un nuevo alumno (especificando columnas)</span>
+<span class="keyword">INSERT INTO</span> Alumnos (Matricula, Nombre, Apellido, Email, FechaNac, Semestre, CarreraID)
+<span class="keyword">VALUES</span> (<span class="string">'A006'</span>, <span class="string">'Carlos'</span>, <span class="string">'Sánchez'</span>, <span class="string">'carlos@escuela.edu'</span>, <span class="string">'2003-07-20'</span>, <span class="number">3</span>, <span class="number">1</span>);
+
+<span class="comment">-- Insertar una nueva materia</span>
+<span class="keyword">INSERT INTO</span> Materias (Clave, NombreMat, Creditos, Semestre)
+<span class="keyword">VALUES</span> (<span class="string">'QUI501'</span>, <span class="string">'Química'</span>, <span class="number">6</span>, <span class="number">1</span>);
+
+<span class="comment">-- Insertar varias inscripciones a la vez</span>
+<span class="keyword">INSERT INTO</span> Inscripciones (Matricula, Clave, Periodo, Calificacion)
+<span class="keyword">VALUES</span> 
+    (<span class="string">'A006'</span>, <span class="string">'MAT101'</span>, <span class="string">'2024-2'</span>, <span class="keyword">NULL</span>),
+    (<span class="string">'A006'</span>, <span class="string">'PRG301'</span>, <span class="string">'2024-2'</span>, <span class="keyword">NULL</span>);</code></pre>
+        </div>
+
+        <div class="info-box">
+            <h4>&#128161; Notas sobre INSERT</h4>
+            <ul>
+                <li>Los textos van entre comillas simples: <code>'texto'</code></li>
+                <li>Los números van sin comillas: <code>42</code></li>
+                <li>Las fechas van entre comillas: <code>'2024-03-15'</code></li>
+                <li>Para valores vacíos usa <code>NULL</code> (sin comillas)</li>
+                <li>Si una columna tiene DEFAULT, puedes omitirla en el INSERT</li>
+            </ul>
+        </div>
+
+        <!-- UPDATE -->
+        <h3>UPDATE - Actualizar datos existentes</h3>
+        <div class="concept-box">
+            <h4>&#128196; Sintaxis</h4>
+<pre><code><span class="keyword">UPDATE</span> tabla
+<span class="keyword">SET</span> columna1 = nuevo_valor1,
+    columna2 = nuevo_valor2
+<span class="keyword">WHERE</span> condición;</code></pre>
+        </div>
+
+        <div class="warning-box">
+            <h4>&#9888;&#65039; ¡SIEMPRE usa WHERE con UPDATE!</h4>
+            <p>Si olvidas el WHERE, el UPDATE modificará <strong>TODAS las filas</strong> de la tabla. Este es uno de los errores más comunes y peligrosos en SQL.</p>
+<pre><code><span class="comment">-- ¡PELIGRO! Esto cambia TODOS los semestres a 5</span>
+<span class="keyword">UPDATE</span> Alumnos <span class="keyword">SET</span> Semestre = <span class="number">5</span>;  <span class="comment">-- ¡SIN WHERE! Error grave.</span>
+
+<span class="comment">-- Correcto: solo actualiza un alumno específico</span>
+<span class="keyword">UPDATE</span> Alumnos <span class="keyword">SET</span> Semestre = <span class="number">5</span> <span class="keyword">WHERE</span> Matricula = <span class="string">'A001'</span>;</code></pre>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplos de UPDATE</h4>
+<pre><code><span class="comment">-- Actualizar la calificación de un alumno en una materia</span>
+<span class="keyword">UPDATE</span> Inscripciones 
+<span class="keyword">SET</span> Calificacion = <span class="number">88.5</span> 
+<span class="keyword">WHERE</span> Matricula = <span class="string">'A001'</span> <span class="keyword">AND</span> Clave = <span class="string">'MAT101'</span>;
+
+<span class="comment">-- Cambiar el email de un alumno</span>
+<span class="keyword">UPDATE</span> Alumnos 
+<span class="keyword">SET</span> Email = <span class="string">'pedro.garcia@escuela.edu'</span> 
+<span class="keyword">WHERE</span> Matricula = <span class="string">'A001'</span>;
+
+<span class="comment">-- Avanzar de semestre a todos los alumnos de Sistemas</span>
+<span class="keyword">UPDATE</span> Alumnos 
+<span class="keyword">SET</span> Semestre = Semestre + <span class="number">1</span> 
+<span class="keyword">WHERE</span> CarreraID = <span class="number">1</span>;
+
+<span class="comment">-- Actualizar múltiples columnas a la vez</span>
+<span class="keyword">UPDATE</span> Carreras 
+<span class="keyword">SET</span> Coordinador = <span class="string">'Dr. Nuevo'</span>, Duracion = <span class="number">10</span> 
+<span class="keyword">WHERE</span> CarreraID = <span class="number">3</span>;</code></pre>
+        </div>
+
+        <!-- DELETE -->
+        <h3>DELETE - Eliminar datos</h3>
+        <div class="concept-box">
+            <h4>&#128196; Sintaxis</h4>
+<pre><code><span class="keyword">DELETE FROM</span> tabla
+<span class="keyword">WHERE</span> condición;</code></pre>
+        </div>
+
+        <div class="warning-box">
+            <h4>&#9888;&#65039; ¡SIEMPRE usa WHERE con DELETE!</h4>
+            <p>Sin WHERE, DELETE borra <strong>TODAS las filas</strong> de la tabla (pero conserva la estructura, a diferencia de DROP).</p>
+<pre><code><span class="comment">-- ¡PELIGRO! Borra TODOS los alumnos</span>
+<span class="keyword">DELETE FROM</span> Alumnos;  <span class="comment">-- ¡SIN WHERE! Tabla vacía.</span>
+
+<span class="comment">-- Correcto: borra solo un alumno específico</span>
+<span class="keyword">DELETE FROM</span> Alumnos <span class="keyword">WHERE</span> Matricula = <span class="string">'A006'</span>;</code></pre>
+        </div>
+
+        <div class="example-box">
+            <h4>&#9989; Ejemplos de DELETE</h4>
+<pre><code><span class="comment">-- Eliminar una inscripción específica</span>
+<span class="keyword">DELETE FROM</span> Inscripciones 
+<span class="keyword">WHERE</span> Matricula = <span class="string">'A006'</span> <span class="keyword">AND</span> Clave = <span class="string">'MAT101'</span>;
+
+<span class="comment">-- Eliminar todas las inscripciones de un periodo</span>
+<span class="keyword">DELETE FROM</span> Inscripciones 
+<span class="keyword">WHERE</span> Periodo = <span class="string">'2024-2'</span>;
+
+<span class="comment">-- Eliminar alumnos que reprobaron (calificación < 70) en una materia</span>
+<span class="keyword">DELETE FROM</span> Inscripciones 
+<span class="keyword">WHERE</span> Calificacion < <span class="number">70</span>;</code></pre>
+        </div>
+
+        <div class="info-box">
+            <h4>&#128161; DELETE vs TRUNCATE vs DROP</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Comando</th>
+                        <th>¿Qué hace?</th>
+                        <th>¿Se puede deshacer?</th>
+                        <th>¿Conserva la estructura?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>DELETE</code></td>
+                        <td>Borra filas (con WHERE, selectivo)</td>
+                        <td>Sí (con ROLLBACK)</td>
+                        <td>Sí</td>
+                    </tr>
+                    <tr>
+                        <td><code>TRUNCATE</code></td>
+                        <td>Borra TODAS las filas (más rápido que DELETE sin WHERE)</td>
+                        <td>No</td>
+                        <td>Sí</td>
+                    </tr>
+                    <tr>
+                        <td><code>DROP</code></td>
+                        <td>Elimina la tabla completa</td>
+                        <td>No</td>
+                        <td>No</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Buenas prácticas -->
+        <h3>Buenas prácticas en SQL</h3>
+        <div class="info-box">
+            <h4>&#127775; Tips para escribir buen SQL</h4>
+            <ol>
+                <li><strong>Siempre prueba con SELECT antes de UPDATE/DELETE.</strong> Si vas a borrar registros, primero ejecuta un SELECT con la misma condición para ver qué se va a afectar.</li>
+                <li><strong>Usa nombres descriptivos</strong> para tablas y columnas (no "t1", "col_a").</li>
+                <li><strong>Escribe las palabras clave en MAYÚSCULAS</strong> y los nombres de tablas/columnas en el formato que elijas (consistente).</li>
+                <li><strong>Usa aliases (AS)</strong> para hacer las consultas más legibles.</li>
+                <li><strong>Comenta tu código</strong> con <code>--</code> para explicar consultas complejas.</li>
+                <li><strong>Usa indentación</strong> para que las consultas largas sean legibles.</li>
+                <li><strong>Especifica columnas en INSERT</strong> en lugar de confiar en el orden.</li>
+                <li><strong>Nunca hagas UPDATE o DELETE sin WHERE</strong> en producción.</li>
+            </ol>
+        </div>
+
+        <!-- Ejemplo final integrador -->
+        <h3>Ejercicio integrador</h3>
+        <div class="example-box">
+            <h4>&#127919; Consulta que integra todo lo aprendido</h4>
+            <p>"Mostrar el nombre completo de cada alumno, su carrera, cuántas materias cursa y su promedio de calificaciones, solo para quienes tienen promedio mayor a 80, ordenados del mejor promedio al peor."</p>
+<pre><code><span class="keyword">SELECT</span> 
+    A.Nombre,
+    A.Apellido,
+    C.Nombre <span class="keyword">AS</span> Carrera,
+    <span class="keyword">COUNT</span>(I.Clave) <span class="keyword">AS</span> MateriasInscritas,
+    <span class="keyword">ROUND</span>(<span class="keyword">AVG</span>(I.Calificacion), <span class="number">1</span>) <span class="keyword">AS</span> Promedio
+<span class="keyword">FROM</span> Alumnos A
+<span class="keyword">INNER JOIN</span> Carreras C <span class="keyword">ON</span> A.CarreraID = C.CarreraID
+<span class="keyword">INNER JOIN</span> Inscripciones I <span class="keyword">ON</span> A.Matricula = I.Matricula
+<span class="keyword">GROUP BY</span> A.Matricula, A.Nombre, A.Apellido, C.Nombre
+<span class="keyword">HAVING AVG</span>(I.Calificacion) > <span class="number">80</span>
+<span class="keyword">ORDER BY</span> Promedio <span class="keyword">DESC</span>;</code></pre>
+            <p>Esta consulta usa: SELECT con columnas específicas, JOIN (dos tablas), alias (AS), funciones de agregación (COUNT, AVG, ROUND), GROUP BY, HAVING, y ORDER BY. ¡Todo lo de esta unidad en una sola consulta!</p>
+        </div>
+
+        <!-- Navegación entre páginas -->
+        <div class="page-nav">
+            <a href="unidad5.html">&larr; Unidad 5: RDBMS</a>
+            <a href="index.html">Volver al inicio &rarr;</a>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>Unidad 6 - Introducción a SQL | <a href="index.html">Volver al índice</a></p>
+    </footer>
+</body>
+</html>
