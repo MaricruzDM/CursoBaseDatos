@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación Final | Curso de Bases de Datos</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .question {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: border-color 0.3s;
+        }
+        .question.correct {
+            border-color: transparent;
+        }
+        .question.incorrect {
+            border-color: transparent;
+        }
+        .question h4 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: var(--text);
+            font-size: 1rem;
+        }
+        .question h4 .q-number {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+        }
+        .question label {
+            display: block;
+            padding: 0.6rem 1rem;
+            margin: 0.4rem 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 0.95rem;
+        }
+        .question label:hover {
+            background: var(--primary-light);
+        }
+        .question input[type="radio"] {
+            margin-right: 0.5rem;
+        }
+        .question .feedback {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .question .feedback.show {
+            display: block;
+        }
+        .question .feedback.correct-feedback {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .question .feedback.incorrect-feedback {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .quiz-results {
+            display: none;
+            text-align: center;
+            background: var(--white);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+        .quiz-results.show {
+            display: block;
+        }
+        .quiz-results .score {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+        .quiz-results .score-label {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+        .quiz-results .grade {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            display: inline-block;
+        }
+        .quiz-results .grade.excellent {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .quiz-results .grade.good {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .quiz-results .grade.regular {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .quiz-results .grade.needs-work {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .quiz-results .message {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-top: 1rem;
+        }
+        .quiz-btn {
+            display: inline-block;
+            padding: 0.85rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            margin: 0.5rem;
+        }
+        .quiz-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        .quiz-btn.secondary {
+            background: var(--text-light);
+        }
+        .quiz-btn.secondary:hover {
+            background: var(--text);
+        }
+        .section-divider {
+            text-align: center;
+            margin: 2rem 0 1.5rem;
+            padding: 0.75rem;
+            background: var(--primary-light);
+            border-radius: var(--radius);
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-brand">&#128218; Curso de Bases de Datos</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="unidad1.html">U1</a></li>
+                <li><a href="unidad2.html">U2</a></li>
+                <li><a href="unidad3.html">U3</a></li>
+                <li><a href="unidad4.html">U4</a></li>
+                <li><a href="unidad5.html">U5</a></li>
+                <li><a href="unidad6.html">U6</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <h1>&#127919; Evaluación Final</h1>
+        <p>Esta evaluación cubre los temas de las 6 unidades del curso (4 preguntas por unidad = 24 preguntas totales). Selecciona la respuesta correcta para cada pregunta y da clic en "Ver resultados". Verás tu puntaje y calificación, pero <strong>no se revelan las respuestas correctas</strong> (como en un examen real). Puedes reintentar las veces que quieras para mejorar tu calificación.</p>
+
+        <div class="quiz-container" id="quizContainer">
+
+            <!-- UNIDAD 1 -->
+            <div class="section-divider">&#128218; Unidad 1: Introducción y Conceptos</div>
+
+            <div class="question" data-correct="b">
+                <h4><span class="q-number">1</span>¿Qué es un dato?</h4>
+                <label><input type="radio" name="q1" value="a"> Un conjunto de registros organizados</label>
+                <label><input type="radio" name="q1" value="b"> La unidad mínima de información, un hecho aislado sin contexto</label>
+                <label><input type="radio" name="q1" value="c"> Una tabla con filas y columnas</label>
+                <label><input type="radio" name="q1" value="d"> Un programa que gestiona archivos</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="c">
+                <h4><span class="q-number">2</span>¿Cuál es el orden correcto de la jerarquía de conceptos (de menor a mayor)?</h4>
+                <label><input type="radio" name="q2" value="a"> Registro → Campo → Archivo → Dato → Base de Datos</label>
+                <label><input type="radio" name="q2" value="b"> Archivo → Registro → Campo → Dato → Base de Datos</label>
+                <label><input type="radio" name="q2" value="c"> Dato → Campo → Registro → Archivo → Base de Datos</label>
+                <label><input type="radio" name="q2" value="d"> Campo → Dato → Registro → Base de Datos → Archivo</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="d">
+                <h4><span class="q-number">3</span>¿Quién propuso el modelo relacional de bases de datos?</h4>
+                <label><input type="radio" name="q3" value="a"> Peter Chen</label>
+                <label><input type="radio" name="q3" value="b"> Bill Gates</label>
+                <label><input type="radio" name="q3" value="c"> Charles Bachman</label>
+                <label><input type="radio" name="q3" value="d"> Edgar F. Codd</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="a">
+                <h4><span class="q-number">4</span>Según la Regla 1 de Codd, ¿cómo debe representarse toda la información en un RDBMS?</h4>
+                <label><input type="radio" name="q4" value="a"> Como valores almacenados en tablas</label>
+                <label><input type="radio" name="q4" value="b"> En archivos planos de texto</label>
+                <label><input type="radio" name="q4" value="c"> En estructuras de árbol jerárquico</label>
+                <label><input type="radio" name="q4" value="d"> En documentos JSON</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <!-- UNIDAD 2 -->
+            <div class="section-divider">&#128218; Unidad 2: El Modelo Relacional</div>
+
+            <div class="question" data-correct="b">
+                <h4><span class="q-number">5</span>En el modelo relacional, ¿qué es la "cardinalidad" de una tabla?</h4>
+                <label><input type="radio" name="q5" value="a"> El número de columnas</label>
+                <label><input type="radio" name="q5" value="b"> El número de filas (tuplas)</label>
+                <label><input type="radio" name="q5" value="c"> El tipo de dato de la llave primaria</label>
+                <label><input type="radio" name="q5" value="d"> La relación con otras tablas</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="c">
+                <h4><span class="q-number">6</span>¿Qué característica NO corresponde a una llave primaria?</h4>
+                <label><input type="radio" name="q6" value="a"> Debe ser única</label>
+                <label><input type="radio" name="q6" value="b"> No puede ser NULL</label>
+                <label><input type="radio" name="q6" value="c"> Puede tener valores duplicados en diferentes filas</label>
+                <label><input type="radio" name="q6" value="d"> Identifica de forma única cada registro</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="a">
+                <h4><span class="q-number">7</span>Una llave foránea (FK) sirve para:</h4>
+                <label><input type="radio" name="q7" value="a"> Conectar una tabla con la llave primaria de otra tabla</label>
+                <label><input type="radio" name="q7" value="b"> Encriptar datos sensibles</label>
+                <label><input type="radio" name="q7" value="c"> Ordenar los registros alfabéticamente</label>
+                <label><input type="radio" name="q7" value="d"> Eliminar duplicados automáticamente</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="d">
+                <h4><span class="q-number">8</span>¿Cuál es la principal desventaja de crear demasiados índices en una tabla?</h4>
+                <label><input type="radio" name="q8" value="a"> Las consultas SELECT se vuelven más lentas</label>
+                <label><input type="radio" name="q8" value="b"> Se pierde la integridad referencial</label>
+                <label><input type="radio" name="q8" value="c"> La tabla no puede tener llave primaria</label>
+                <label><input type="radio" name="q8" value="d"> Las operaciones de escritura (INSERT, UPDATE, DELETE) se vuelven más lentas</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <!-- UNIDAD 3 -->
+            <div class="section-divider">&#128218; Unidad 3: Modelado Lógico</div>
+
+            <div class="question" data-correct="b">
+                <h4><span class="q-number">9</span>En un diagrama ER, ¿qué símbolo representa una entidad?</h4>
+                <label><input type="radio" name="q9" value="a"> Rombo</label>
+                <label><input type="radio" name="q9" value="b"> Rectángulo</label>
+                <label><input type="radio" name="q9" value="c"> Óvalo</label>
+                <label><input type="radio" name="q9" value="d"> Triángulo</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="c">
+                <h4><span class="q-number">10</span>¿Cómo se resuelve una relación Muchos a Muchos (M:N) en una base de datos relacional?</h4>
+                <label><input type="radio" name="q10" value="a"> Se duplican los datos en ambas tablas</label>
+                <label><input type="radio" name="q10" value="b"> Se elimina una de las dos tablas</label>
+                <label><input type="radio" name="q10" value="c"> Se crea una tabla intermedia con las llaves foráneas de ambas tablas</label>
+                <label><input type="radio" name="q10" value="d"> Se usa un solo campo con valores separados por comas</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="a">
+                <h4><span class="q-number">11</span>Una tabla viola la Primera Forma Normal (1FN) cuando:</h4>
+                <label><input type="radio" name="q11" value="a"> Una celda contiene múltiples valores (no es atómica)</label>
+                <label><input type="radio" name="q11" value="b"> Tiene demasiadas filas</label>
+                <label><input type="radio" name="q11" value="c"> No tiene índices</label>
+                <label><input type="radio" name="q11" value="d"> Usa tipos de dato VARCHAR</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="d">
+                <h4><span class="q-number">12</span>La Tercera Forma Normal (3FN) elimina:</h4>
+                <label><input type="radio" name="q12" value="a"> Valores nulos</label>
+                <label><input type="radio" name="q12" value="b"> Grupos repetitivos</label>
+                <label><input type="radio" name="q12" value="c"> Dependencias parciales</label>
+                <label><input type="radio" name="q12" value="d"> Dependencias transitivas</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <!-- UNIDAD 4 -->
+            <div class="section-divider">&#128218; Unidad 4: Álgebra Relacional</div>
+
+            <div class="question" data-correct="b">
+                <h4><span class="q-number">13</span>La operación de SELECCIÓN (σ) en álgebra relacional sirve para:</h4>
+                <label><input type="radio" name="q13" value="a"> Elegir columnas específicas</label>
+                <label><input type="radio" name="q13" value="b"> Filtrar filas que cumplan una condición</label>
+                <label><input type="radio" name="q13" value="c"> Combinar dos tablas</label>
+                <label><input type="radio" name="q13" value="d"> Eliminar duplicados</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="a">
+                <h4><span class="q-number">14</span>La operación de PROYECCIÓN (π) es equivalente en SQL a:</h4>
+                <label><input type="radio" name="q14" value="a"> SELECT columna1, columna2 FROM tabla</label>
+                <label><input type="radio" name="q14" value="b"> SELECT * FROM tabla WHERE condición</label>
+                <label><input type="radio" name="q14" value="c"> DELETE FROM tabla</label>
+                <label><input type="radio" name="q14" value="d"> INSERT INTO tabla</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="c">
+                <h4><span class="q-number">15</span>¿Qué operador devuelve las filas que están en la tabla A pero NO en la tabla B?</h4>
+                <label><input type="radio" name="q15" value="a"> Unión</label>
+                <label><input type="radio" name="q15" value="b"> Intersección</label>
+                <label><input type="radio" name="q15" value="c"> Diferencia</label>
+                <label><input type="radio" name="q15" value="d"> Producto Cartesiano</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="d">
+                <h4><span class="q-number">16</span>Si la tabla A tiene 10 filas y la tabla B tiene 5 filas, ¿cuántas filas produce el Producto Cartesiano (A × B)?</h4>
+                <label><input type="radio" name="q16" value="a"> 15</label>
+                <label><input type="radio" name="q16" value="b"> 5</label>
+                <label><input type="radio" name="q16" value="c"> 10</label>
+                <label><input type="radio" name="q16" value="d"> 50</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <!-- UNIDAD 5 -->
+            <div class="section-divider">&#128218; Unidad 5: RDBMS</div>
+
+            <div class="question" data-correct="b">
+                <h4><span class="q-number">17</span>¿Qué significan las siglas ACID en el contexto de transacciones?</h4>
+                <label><input type="radio" name="q17" value="a"> Access, Control, Integration, Data</label>
+                <label><input type="radio" name="q17" value="b"> Atomicidad, Consistencia, Aislamiento, Durabilidad</label>
+                <label><input type="radio" name="q17" value="c"> Almacenamiento, Consulta, Indexación, Diseño</label>
+                <label><input type="radio" name="q17" value="d"> Análisis, Creación, Implementación, Documentación</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="a">
+                <h4><span class="q-number">18</span>¿Cuál de estos es un RDBMS de software libre?</h4>
+                <label><input type="radio" name="q18" value="a"> PostgreSQL</label>
+                <label><input type="radio" name="q18" value="b"> Oracle Database</label>
+                <label><input type="radio" name="q18" value="c"> SQL Server Enterprise</label>
+                <label><input type="radio" name="q18" value="d"> IBM Db2</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="c">
+                <h4><span class="q-number">19</span>En la arquitectura de 3 capas, ¿qué capa se encarga de las reglas de negocio?</h4>
+                <label><input type="radio" name="q19" value="a"> Capa de presentación</label>
+                <label><input type="radio" name="q19" value="b"> Capa de datos</label>
+                <label><input type="radio" name="q19" value="c"> Capa de lógica/aplicación</label>
+                <label><input type="radio" name="q19" value="d"> Capa de red</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="d">
+                <h4><span class="q-number">20</span>¿Cuál NO es una función del DBA?</h4>
+                <label><input type="radio" name="q20" value="a"> Realizar respaldos de la base de datos</label>
+                <label><input type="radio" name="q20" value="b"> Gestionar usuarios y permisos</label>
+                <label><input type="radio" name="q20" value="c"> Monitorear el rendimiento del sistema</label>
+                <label><input type="radio" name="q20" value="d"> Diseñar la interfaz gráfica de la aplicación</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <!-- UNIDAD 6 -->
+            <div class="section-divider">&#128218; Unidad 6: SQL</div>
+
+            <div class="question" data-correct="b">
+                <h4><span class="q-number">21</span>¿A qué sublenguaje de SQL pertenece el comando CREATE TABLE?</h4>
+                <label><input type="radio" name="q21" value="a"> DML (Data Manipulation Language)</label>
+                <label><input type="radio" name="q21" value="b"> DDL (Data Definition Language)</label>
+                <label><input type="radio" name="q21" value="c"> DCL (Data Control Language)</label>
+                <label><input type="radio" name="q21" value="d"> TCL (Transaction Control Language)</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="c">
+                <h4><span class="q-number">22</span>¿Cuál es la diferencia entre WHERE y HAVING?</h4>
+                <label><input type="radio" name="q22" value="a"> WHERE es para texto y HAVING para números</label>
+                <label><input type="radio" name="q22" value="b"> No hay diferencia, son sinónimos</label>
+                <label><input type="radio" name="q22" value="c"> WHERE filtra filas individuales y HAVING filtra grupos (después de GROUP BY)</label>
+                <label><input type="radio" name="q22" value="d"> WHERE se usa en INSERT y HAVING en SELECT</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="a">
+                <h4><span class="q-number">23</span>¿Qué pasa si ejecutas UPDATE sin WHERE?</h4>
+                <label><input type="radio" name="q23" value="a"> Se modifican TODAS las filas de la tabla</label>
+                <label><input type="radio" name="q23" value="b"> El sistema da un error y no se ejecuta</label>
+                <label><input type="radio" name="q23" value="c"> Solo se modifica la primera fila</label>
+                <label><input type="radio" name="q23" value="d"> Se elimina la tabla completa</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <div class="question" data-correct="d">
+                <h4><span class="q-number">24</span>¿Cuál es la diferencia entre DELETE y DROP?</h4>
+                <label><input type="radio" name="q24" value="a"> No hay diferencia</label>
+                <label><input type="radio" name="q24" value="b"> DELETE borra la estructura y DROP borra los datos</label>
+                <label><input type="radio" name="q24" value="c"> DROP es más lento que DELETE</label>
+                <label><input type="radio" name="q24" value="d"> DELETE borra filas (conserva la tabla) y DROP elimina la tabla completa</label>
+                <div class="feedback" style="display:none;"></div>
+            </div>
+
+            <!-- Botones -->
+            <div style="text-align: center; margin: 2rem 0;">
+                <button class="quiz-btn" onclick="checkQuiz()">&#128203; Ver Resultados</button>
+                <button class="quiz-btn secondary" onclick="resetQuiz()">&#128260; Reintentar</button>
+            </div>
+
+            <!-- Resultados -->
+            <div class="quiz-results" id="quizResults">
+                <p class="score-label">Tu resultado:</p>
+                <p class="score" id="scoreText">0 de 24</p>
+                <p class="grade" id="gradeText"></p>
+                <p class="message" id="messageText"></p>
+                <div style="margin-top: 1.5rem;">
+                    <button class="quiz-btn secondary" onclick="resetQuiz()">&#128260; Reintentar Evaluación</button>
+                    <button class="quiz-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">&#11014;&#65039; Ir arriba</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Navegación -->
+        <div class="page-nav">
+            <a href="unidad6.html">&larr; Unidad 6: SQL</a>
+            <a href="index.html">Volver al inicio &rarr;</a>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>Evaluación Final | <a href="index.html">Volver al índice</a></p>
+    </footer>
+
+    <script>
+        const answers = {
+            q1: 'b', q2: 'c', q3: 'd', q4: 'a',
+            q5: 'b', q6: 'c', q7: 'a', q8: 'd',
+            q9: 'b', q10: 'c', q11: 'a', q12: 'd',
+            q13: 'b', q14: 'a', q15: 'c', q16: 'd',
+            q17: 'b', q18: 'a', q19: 'c', q20: 'd',
+            q21: 'b', q22: 'c', q23: 'a', q24: 'd'
+        };
+
+        function checkQuiz() {
+            let correct = 0;
+            const total = Object.keys(answers).length;
+            const questions = document.querySelectorAll('.question');
+
+            questions.forEach((q, index) => {
+                const qName = 'q' + (index + 1);
+                const selected = document.querySelector(`input[name="${qName}"]:checked`);
+                const correctAnswer = answers[qName];
+
+                // Reset classes
+                q.classList.remove('correct', 'incorrect');
+
+                if (selected && selected.value === correctAnswer) {
+                    correct++;
+                }
+            });
+
+            // Show results
+            const percentage = Math.round((correct / total) * 100);
+            const grade = (correct / total) * 10;
+
+            document.getElementById('scoreText').textContent = `${correct} de ${total}`;
+            
+            const gradeEl = document.getElementById('gradeText');
+            const messageEl = document.getElementById('messageText');
+
+            gradeEl.textContent = `Calificación: ${grade.toFixed(1)} / 10`;
+            gradeEl.className = 'grade';
+
+            if (percentage >= 90) {
+                gradeEl.classList.add('excellent');
+                messageEl.textContent = '¡Excelente! Dominas los conceptos del curso. Estás listo para la materia.';
+            } else if (percentage >= 70) {
+                gradeEl.classList.add('good');
+                messageEl.textContent = '¡Buen trabajo! Tienes buena base. Revisa las preguntas que fallaste para reforzar.';
+            } else if (percentage >= 50) {
+                gradeEl.classList.add('regular');
+                messageEl.textContent = 'Vas por buen camino. Te recomiendo repasar las unidades donde tuviste más errores.';
+            } else {
+                gradeEl.classList.add('needs-work');
+                messageEl.textContent = 'Necesitas repasar el material. Relee las unidades y vuelve a intentar. ¡No te desanimes!';
+            }
+
+            const resultsEl = document.getElementById('quizResults');
+            resultsEl.classList.add('show');
+            resultsEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function resetQuiz() {
+            // Clear all radio buttons
+            document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+            
+            // Reset question styles
+            document.querySelectorAll('.question').forEach(q => {
+                q.classList.remove('correct', 'incorrect');
+            });
+
+            // Hide results
+            document.getElementById('quizResults').classList.remove('show');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

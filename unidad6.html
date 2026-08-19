@@ -739,15 +739,117 @@
             <p>Esta consulta usa: SELECT con columnas específicas, JOIN (dos tablas), alias (AS), funciones de agregación (COUNT, AVG, ROUND), GROUP BY, HAVING, y ORDER BY. ¡Todo lo de esta unidad en una sola consulta!</p>
         </div>
 
+        <!-- ============================================ -->
+        <!-- MINI QUIZ UNIDAD 6 -->
+        <!-- ============================================ -->
+        <h2>&#128221; Mini Quiz - Unidad 6</h2>
+        <p>Comprueba tu comprensión de SQL.</p>
+
+        <div id="quiz6" class="quiz-mini">
+            <div class="question" data-correct="b">
+                <h4><span class="q-number">1</span>¿Qué sublenguaje de SQL incluye SELECT, INSERT, UPDATE y DELETE?</h4>
+                <label><input type="radio" name="u6q1" value="a"> DDL (Data Definition Language)</label>
+                <label><input type="radio" name="u6q1" value="b"> DML (Data Manipulation Language)</label>
+                <label><input type="radio" name="u6q1" value="c"> DCL (Data Control Language)</label>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-correct="c">
+                <h4><span class="q-number">2</span>¿Qué cláusula usas para filtrar GRUPOS después de un GROUP BY?</h4>
+                <label><input type="radio" name="u6q2" value="a"> WHERE</label>
+                <label><input type="radio" name="u6q2" value="b"> ORDER BY</label>
+                <label><input type="radio" name="u6q2" value="c"> HAVING</label>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-correct="a">
+                <h4><span class="q-number">3</span>Si haces DELETE FROM Alumnos; (sin WHERE), ¿qué pasa?</h4>
+                <label><input type="radio" name="u6q3" value="a"> Se borran TODAS las filas de la tabla pero la tabla sigue existiendo</label>
+                <label><input type="radio" name="u6q3" value="b"> Se borra la tabla completa (estructura incluida)</label>
+                <label><input type="radio" name="u6q3" value="c"> Da un error porque falta el WHERE</label>
+                <div class="feedback"></div>
+            </div>
+
+            <div style="text-align: center; margin: 1.5rem 0;">
+                <button onclick="checkMiniQuiz('quiz6')" style="padding: 0.7rem 1.5rem; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;">&#128203; Ver Resultados</button>
+                <button onclick="resetMiniQuiz('quiz6')" style="padding: 0.7rem 1.5rem; background: #64748b; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-left: 0.5rem;">&#128260; Reintentar</button>
+            </div>
+            <div class="mini-quiz-result" id="quiz6-result" style="display:none; text-align:center; padding:1rem; background:#dbeafe; border-radius:8px; font-weight:600; margin-bottom:1rem;"></div>
+        </div>
+
         <!-- Navegación entre páginas -->
         <div class="page-nav">
             <a href="unidad5.html">&larr; Unidad 5: RDBMS</a>
-            <a href="index.html">Volver al inicio &rarr;</a>
+            <a href="evaluacion.html">&#127919; Evaluación Final &rarr;</a>
         </div>
     </main>
 
     <footer class="site-footer">
         <p>Unidad 6 - Introducción a SQL | <a href="index.html">Volver al índice</a></p>
     </footer>
+
+    <script>
+    function checkMiniQuiz(quizId) {
+        const container = document.getElementById(quizId);
+        const questions = container.querySelectorAll('.question');
+        let correct = 0;
+        const total = questions.length;
+
+        questions.forEach((q, i) => {
+            const correctAnswer = q.dataset.correct;
+            const name = q.querySelector('input[type="radio"]').name;
+            const selected = document.querySelector(`input[name="${name}"]:checked`);
+            const feedback = q.querySelector('.feedback');
+
+            q.style.borderLeft = '';
+            feedback.style.display = 'none';
+
+            if (selected && selected.value === correctAnswer) {
+                correct++;
+                q.style.borderLeft = '4px solid #059669';
+                feedback.textContent = '✓ ¡Correcto!';
+                feedback.style.display = 'block';
+                feedback.style.color = '#065f46';
+                feedback.style.background = '#d1fae5';
+                feedback.style.padding = '0.5rem 1rem';
+                feedback.style.borderRadius = '6px';
+                feedback.style.marginTop = '0.5rem';
+            } else {
+                q.style.borderLeft = '4px solid #dc2626';
+                feedback.textContent = '✗ Incorrecto. Revisa el tema arriba.';
+                feedback.style.display = 'block';
+                feedback.style.color = '#991b1b';
+                feedback.style.background = '#fee2e2';
+                feedback.style.padding = '0.5rem 1rem';
+                feedback.style.borderRadius = '6px';
+                feedback.style.marginTop = '0.5rem';
+            }
+        });
+
+        const resultEl = document.getElementById(quizId + '-result');
+        resultEl.style.display = 'block';
+        resultEl.textContent = `Resultado: ${correct} de ${total} correctas`;
+        if (correct === total) {
+            resultEl.style.background = '#d1fae5';
+            resultEl.textContent += ' 🎉 ¡Perfecto!';
+        } else if (correct >= total / 2) {
+            resultEl.style.background = '#dbeafe';
+            resultEl.textContent += ' 👍 ¡Buen intento!';
+        } else {
+            resultEl.style.background = '#fef3c7';
+            resultEl.textContent += ' 📖 Repasa el material e intenta de nuevo.';
+        }
+    }
+
+    function resetMiniQuiz(quizId) {
+        const container = document.getElementById(quizId);
+        container.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+        container.querySelectorAll('.question').forEach(q => {
+            q.style.borderLeft = '';
+            q.querySelector('.feedback').style.display = 'none';
+        });
+        document.getElementById(quizId + '-result').style.display = 'none';
+    }
+    </script>
 </body>
 </html>

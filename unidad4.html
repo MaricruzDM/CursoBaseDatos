@@ -634,6 +634,44 @@
             <p>No necesitas memorizar las notaciones matemáticas para el curso. Lo importante es entender <strong>qué hace cada operación</strong>, porque cuando escribas SQL en la Unidad 6, estarás usando exactamente estos conceptos: WHERE es selección, SELECT columnas es proyección, JOIN es reunión, etc.</p>
         </div>
 
+        <!-- ============================================ -->
+        <!-- MINI QUIZ UNIDAD 4 -->
+        <!-- ============================================ -->
+        <h2>&#128221; Mini Quiz - Unidad 4</h2>
+        <p>Comprueba tu comprensión antes de avanzar a la siguiente unidad.</p>
+
+        <div id="quiz4" class="quiz-mini">
+            <div class="question" data-correct="a">
+                <h4><span class="q-number">1</span>¿Cuál es el equivalente en SQL de la operación de Selección (σ) del álgebra relacional?</h4>
+                <label><input type="radio" name="u4q1" value="a"> WHERE (filtra filas)</label>
+                <label><input type="radio" name="u4q1" value="b"> SELECT columnas (elige columnas)</label>
+                <label><input type="radio" name="u4q1" value="c"> JOIN (combina tablas)</label>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-correct="b">
+                <h4><span class="q-number">2</span>La operación UNIÓN requiere que las dos tablas sean:</h4>
+                <label><input type="radio" name="u4q2" value="a"> Del mismo tamaño en filas</label>
+                <label><input type="radio" name="u4q2" value="b"> Unión-compatibles (mismo número y tipo de columnas)</label>
+                <label><input type="radio" name="u4q2" value="c"> De la misma base de datos</label>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-correct="c">
+                <h4><span class="q-number">3</span>¿Qué hace un INNER JOIN?</h4>
+                <label><input type="radio" name="u4q3" value="a"> Devuelve todas las filas de ambas tablas sin condición</label>
+                <label><input type="radio" name="u4q3" value="b"> Elimina filas duplicadas de una tabla</label>
+                <label><input type="radio" name="u4q3" value="c"> Combina filas de dos tablas donde hay coincidencia en la condición</label>
+                <div class="feedback"></div>
+            </div>
+
+            <div style="text-align: center; margin: 1.5rem 0;">
+                <button onclick="checkMiniQuiz('quiz4')" style="padding: 0.7rem 1.5rem; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;">&#128203; Ver Resultados</button>
+                <button onclick="resetMiniQuiz('quiz4')" style="padding: 0.7rem 1.5rem; background: #64748b; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-left: 0.5rem;">&#128260; Reintentar</button>
+            </div>
+            <div class="mini-quiz-result" id="quiz4-result" style="display:none; text-align:center; padding:1rem; background:#dbeafe; border-radius:8px; font-weight:600; margin-bottom:1rem;"></div>
+        </div>
+
         <!-- Navegación entre páginas -->
         <div class="page-nav">
             <a href="unidad3.html">&larr; Unidad 3: Modelado Lógico</a>
@@ -644,5 +682,69 @@
     <footer class="site-footer">
         <p>Unidad 4 - Álgebra Relacional | <a href="index.html">Volver al índice</a></p>
     </footer>
+
+    <script>
+    function checkMiniQuiz(quizId) {
+        const container = document.getElementById(quizId);
+        const questions = container.querySelectorAll('.question');
+        let correct = 0;
+        const total = questions.length;
+
+        questions.forEach((q, i) => {
+            const correctAnswer = q.dataset.correct;
+            const name = q.querySelector('input[type="radio"]').name;
+            const selected = document.querySelector(`input[name="${name}"]:checked`);
+            const feedback = q.querySelector('.feedback');
+
+            q.style.borderLeft = '';
+            feedback.style.display = 'none';
+
+            if (selected && selected.value === correctAnswer) {
+                correct++;
+                q.style.borderLeft = '4px solid #059669';
+                feedback.textContent = '✓ ¡Correcto!';
+                feedback.style.display = 'block';
+                feedback.style.color = '#065f46';
+                feedback.style.background = '#d1fae5';
+                feedback.style.padding = '0.5rem 1rem';
+                feedback.style.borderRadius = '6px';
+                feedback.style.marginTop = '0.5rem';
+            } else {
+                q.style.borderLeft = '4px solid #dc2626';
+                feedback.textContent = '✗ Incorrecto. Revisa el tema arriba.';
+                feedback.style.display = 'block';
+                feedback.style.color = '#991b1b';
+                feedback.style.background = '#fee2e2';
+                feedback.style.padding = '0.5rem 1rem';
+                feedback.style.borderRadius = '6px';
+                feedback.style.marginTop = '0.5rem';
+            }
+        });
+
+        const resultEl = document.getElementById(quizId + '-result');
+        resultEl.style.display = 'block';
+        resultEl.textContent = `Resultado: ${correct} de ${total} correctas`;
+        if (correct === total) {
+            resultEl.style.background = '#d1fae5';
+            resultEl.textContent += ' 🎉 ¡Perfecto!';
+        } else if (correct >= total / 2) {
+            resultEl.style.background = '#dbeafe';
+            resultEl.textContent += ' 👍 ¡Buen intento!';
+        } else {
+            resultEl.style.background = '#fef3c7';
+            resultEl.textContent += ' 📖 Repasa el material e intenta de nuevo.';
+        }
+    }
+
+    function resetMiniQuiz(quizId) {
+        const container = document.getElementById(quizId);
+        container.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+        container.querySelectorAll('.question').forEach(q => {
+            q.style.borderLeft = '';
+            q.querySelector('.feedback').style.display = 'none';
+        });
+        document.getElementById(quizId + '-result').style.display = 'none';
+    }
+    </script>
 </body>
 </html>

@@ -376,6 +376,44 @@
             </ol>
         </div>
 
+        <!-- ============================================ -->
+        <!-- MINI QUIZ UNIDAD 1 -->
+        <!-- ============================================ -->
+        <h2>&#128221; Mini Quiz - Unidad 1</h2>
+        <p>Comprueba tu comprensión antes de avanzar a la siguiente unidad.</p>
+
+        <div id="quiz1" class="quiz-mini">
+            <div class="question" data-correct="b">
+                <h4><span class="q-number">1</span>¿Cuál es la diferencia entre un dato y la información?</h4>
+                <label><input type="radio" name="u1q1" value="a"> Son lo mismo, solo cambian de nombre</label>
+                <label><input type="radio" name="u1q1" value="b"> El dato es un hecho aislado; la información es el dato con contexto y significado</label>
+                <label><input type="radio" name="u1q1" value="c"> La información es más pequeña que el dato</label>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-correct="c">
+                <h4><span class="q-number">2</span>¿Qué representa un "registro" en una base de datos?</h4>
+                <label><input type="radio" name="u1q2" value="a"> Una sola columna de una tabla</label>
+                <label><input type="radio" name="u1q2" value="b"> El nombre de la tabla</label>
+                <label><input type="radio" name="u1q2" value="c"> Una fila completa que describe una entidad (conjunto de campos relacionados)</label>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-correct="a">
+                <h4><span class="q-number">3</span>¿En qué década se propuso el modelo relacional?</h4>
+                <label><input type="radio" name="u1q3" value="a"> 1970</label>
+                <label><input type="radio" name="u1q3" value="b"> 1990</label>
+                <label><input type="radio" name="u1q3" value="c"> 1950</label>
+                <div class="feedback"></div>
+            </div>
+
+            <div style="text-align: center; margin: 1.5rem 0;">
+                <button onclick="checkMiniQuiz('quiz1')" style="padding: 0.7rem 1.5rem; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;">&#128203; Ver Resultados</button>
+                <button onclick="resetMiniQuiz('quiz1')" style="padding: 0.7rem 1.5rem; background: #64748b; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-left: 0.5rem;">&#128260; Reintentar</button>
+            </div>
+            <div class="mini-quiz-result" id="quiz1-result" style="display:none; text-align:center; padding:1rem; background:#dbeafe; border-radius:8px; font-weight:600; margin-bottom:1rem;"></div>
+        </div>
+
         <!-- Navegación entre páginas -->
         <div class="page-nav">
             <a href="index.html">&larr; Inicio</a>
@@ -386,5 +424,69 @@
     <footer class="site-footer">
         <p>Unidad 1 - Introducción y Conceptos | <a href="index.html">Volver al índice</a></p>
     </footer>
+
+    <script>
+    function checkMiniQuiz(quizId) {
+        const container = document.getElementById(quizId);
+        const questions = container.querySelectorAll('.question');
+        let correct = 0;
+        const total = questions.length;
+
+        questions.forEach((q, i) => {
+            const correctAnswer = q.dataset.correct;
+            const name = q.querySelector('input[type="radio"]').name;
+            const selected = document.querySelector(`input[name="${name}"]:checked`);
+            const feedback = q.querySelector('.feedback');
+
+            q.style.borderLeft = '';
+            feedback.style.display = 'none';
+
+            if (selected && selected.value === correctAnswer) {
+                correct++;
+                q.style.borderLeft = '4px solid #059669';
+                feedback.textContent = '✓ ¡Correcto!';
+                feedback.style.display = 'block';
+                feedback.style.color = '#065f46';
+                feedback.style.background = '#d1fae5';
+                feedback.style.padding = '0.5rem 1rem';
+                feedback.style.borderRadius = '6px';
+                feedback.style.marginTop = '0.5rem';
+            } else {
+                q.style.borderLeft = '4px solid #dc2626';
+                feedback.textContent = '✗ Incorrecto. Revisa el tema arriba.';
+                feedback.style.display = 'block';
+                feedback.style.color = '#991b1b';
+                feedback.style.background = '#fee2e2';
+                feedback.style.padding = '0.5rem 1rem';
+                feedback.style.borderRadius = '6px';
+                feedback.style.marginTop = '0.5rem';
+            }
+        });
+
+        const resultEl = document.getElementById(quizId + '-result');
+        resultEl.style.display = 'block';
+        resultEl.textContent = `Resultado: ${correct} de ${total} correctas`;
+        if (correct === total) {
+            resultEl.style.background = '#d1fae5';
+            resultEl.textContent += ' 🎉 ¡Perfecto!';
+        } else if (correct >= total / 2) {
+            resultEl.style.background = '#dbeafe';
+            resultEl.textContent += ' 👍 ¡Buen intento!';
+        } else {
+            resultEl.style.background = '#fef3c7';
+            resultEl.textContent += ' 📖 Repasa el material e intenta de nuevo.';
+        }
+    }
+
+    function resetMiniQuiz(quizId) {
+        const container = document.getElementById(quizId);
+        container.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+        container.querySelectorAll('.question').forEach(q => {
+            q.style.borderLeft = '';
+            q.querySelector('.feedback').style.display = 'none';
+        });
+        document.getElementById(quizId + '-result').style.display = 'none';
+    }
+    </script>
 </body>
 </html>
