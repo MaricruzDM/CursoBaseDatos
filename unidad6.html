@@ -18,6 +18,7 @@
                 <li><a href="unidad4.html">U4</a></li>
                 <li><a href="unidad5.html">U5</a></li>
                 <li><a href="unidad6.html"><strong>U6</strong></a></li>
+                <li><a href="evaluacion.html">Evaluaci&oacute;n</a></li>
             </ul>
         </nav>
     </header>
@@ -48,7 +49,7 @@
         </div>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 6.1: CARACTERÍSTICAS GENERALES -->
+        <!-- SECCIÁ“N 6.1: CARACTERÁSTICAS GENERALES -->
         <!-- ============================================ -->
         <h2 id="caracteristicas">6.1 Características Generales</h2>
 
@@ -59,15 +60,15 @@
 
         <div class="analogy-box">
             <h4>&#128300; Analogía</h4>
-            <p>SQL es como aprender <strong>un idioma para hablar con bases de datos</strong>. Así como usas español para pedir cosas a personas ("dame el reporte de ventas de enero"), usas SQL para pedir cosas al RDBMS (<code>SELECT * FROM Ventas WHERE mes = 'enero'</code>). La gramática es diferente, pero la lógica es la misma: dices QUÉ quieres.</p>
+            <p>SQL es como aprender <strong>un idioma para hablar con bases de datos</strong>. Así como usas español para pedir cosas a personas ("dame el reporte de ventas de enero"), usas SQL para pedir cosas al RDBMS (<code>SELECT * FROM Ventas WHERE mes = 'enero'</code>). La gramática es diferente, pero la lógica es la misma: dices QUÁ‰ quieres.</p>
         </div>
 
         <h3>Características principales de SQL</h3>
         <ul>
-            <li><strong>Declarativo:</strong> Describes QUÉ quieres obtener, no CÓMO obtenerlo (el optimizador decide el cómo)</li>
+            <li><strong>Declarativo:</strong> Describes QUÁ‰ quieres obtener, no CÁ“MO obtenerlo (el optimizador decide el cómo)</li>
             <li><strong>Estándar:</strong> Funciona (con pequeñas variaciones) en MySQL, PostgreSQL, SQL Server, Oracle, etc.</li>
             <li><strong>Basado en conjuntos:</strong> Opera sobre conjuntos de filas, no fila por fila</li>
-            <li><strong>No sensible a mayúsculas:</strong> <code>SELECT</code>, <code>select</code> y <code>Select</code> son equivalentes (por convención se escribe en MAYÚSCULAS)</li>
+            <li><strong>No sensible a mayúsculas:</strong> <code>SELECT</code>, <code>select</code> y <code>Select</code> son equivalentes (por convención se escribe en MAYÁšSCULAS)</li>
             <li><strong>Cada sentencia termina con punto y coma</strong> (<code>;</code>)</li>
         </ul>
 
@@ -79,7 +80,7 @@
                 <tr>
                     <th>Sublenguaje</th>
                     <th>Significado</th>
-                    <th>¿Para qué sirve?</th>
+                    <th>Â¿Para qué sirve?</th>
                     <th>Comandos principales</th>
                 </tr>
             </thead>
@@ -117,7 +118,7 @@
         </div>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 6.2: CREAR BD Y TABLAS -->
+        <!-- SECCIÁ“N 6.2: CREAR BD Y TABLAS -->
         <!-- ============================================ -->
         <h2 id="crear">6.2 Creación de Base de Datos y Tablas</h2>
 
@@ -163,7 +164,7 @@
                 <tr>
                     <td><code>DECIMAL(p,s)</code></td>
                     <td>Número con decimales (p dígitos totales, s decimales)</td>
-                    <td>DECIMAL(8,2) → 123456.78</td>
+                    <td>DECIMAL(8,2) â†’ 123456.78</td>
                 </tr>
                 <tr>
                     <td><code>VARCHAR(n)</code></td>
@@ -173,7 +174,7 @@
                 <tr>
                     <td><code>CHAR(n)</code></td>
                     <td>Texto de longitud fija (siempre n caracteres)</td>
-                    <td>CHAR(2) → 'MX'</td>
+                    <td>CHAR(2) â†’ 'MX'</td>
                 </tr>
                 <tr>
                     <td><code>DATE</code></td>
@@ -271,7 +272,7 @@
         <h3>Eliminar tablas y bases de datos (DROP)</h3>
         <div class="example-box">
             <h4>&#9989; Sintaxis</h4>
-<pre><code><span class="comment">-- Eliminar una tabla (¡CUIDADO! Borra toda la estructura y datos)</span>
+<pre><code><span class="comment">-- Eliminar una tabla (Â¡CUIDADO! Borra toda la estructura y datos)</span>
 <span class="keyword">DROP TABLE</span> Inscripciones;
 
 <span class="comment">-- Eliminar solo si existe (evita error si no existe)</span>
@@ -287,7 +288,7 @@
         </div>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 6.3: SELECT -->
+        <!-- SECCIÁ“N 6.3: SELECT -->
         <!-- ============================================ -->
         <h2 id="seleccion">6.3 Selección de la Información (SELECT)</h2>
 
@@ -312,10 +313,10 @@
 (<span class="number">3</span>, <span class="string">'Ing. Civil'</span>, <span class="number">10</span>, <span class="string">'Dr. Mendoza'</span>);
 
 <span class="keyword">INSERT INTO</span> Alumnos <span class="keyword">VALUES</span>
-(<span class="string">'A001'</span>, <span class="string">'Pedro'</span>, <span class="string">'García'</span>, <span class="string">'pedro@escuela.edu'</span>, <span class="string">'2002-05-15'</span>, <span class="number">4</span>, <span class="number">1</span>),
+(<span class="string">'A001'</span>, <span class="string">'Daniel'</span>, <span class="string">'García'</span>, <span class="string">'daniel@escuela.edu'</span>, <span class="string">'2002-05-15'</span>, <span class="number">4</span>, <span class="number">1</span>),
 (<span class="string">'A002'</span>, <span class="string">'María'</span>, <span class="string">'López'</span>, <span class="string">'maria@escuela.edu'</span>, <span class="string">'2001-08-22'</span>, <span class="number">6</span>, <span class="number">2</span>),
 (<span class="string">'A003'</span>, <span class="string">'Juan'</span>, <span class="string">'Martínez'</span>, <span class="string">'juan@escuela.edu'</span>, <span class="string">'2003-01-10'</span>, <span class="number">4</span>, <span class="number">1</span>),
-(<span class="string">'A004'</span>, <span class="string">'Ana'</span>, <span class="string">'Rodríguez'</span>, <span class="string">'ana@escuela.edu'</span>, <span class="string">'2004-11-30'</span>, <span class="number">2</span>, <span class="number">3</span>),
+(<span class="string">'A004'</span>, <span class="string">'Sofía'</span>, <span class="string">'Rodríguez'</span>, <span class="string">'sofia@escuela.edu'</span>, <span class="string">'2004-11-30'</span>, <span class="number">2</span>, <span class="number">3</span>),
 (<span class="string">'A005'</span>, <span class="string">'Luis'</span>, <span class="string">'Hernández'</span>, <span class="string">'luis@escuela.edu'</span>, <span class="string">'2000-03-08'</span>, <span class="number">8</span>, <span class="number">2</span>);
 
 <span class="keyword">INSERT INTO</span> Materias <span class="keyword">VALUES</span>
@@ -360,7 +361,7 @@
 <span class="keyword">SELECT</span> Nombre, Semestre <span class="keyword">FROM</span> Alumnos <span class="keyword">WHERE</span> Semestre > <span class="number">4</span>;
 
 <span class="comment">-- Texto (usar comillas simples)</span>
-<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos <span class="keyword">WHERE</span> Nombre = <span class="string">'Pedro'</span>;
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos <span class="keyword">WHERE</span> Nombre = <span class="string">'Daniel'</span>;
 
 <span class="comment">-- AND: ambas condiciones deben cumplirse</span>
 <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Alumnos 
@@ -420,7 +421,7 @@
             <thead>
                 <tr>
                     <th>Función</th>
-                    <th>¿Qué hace?</th>
+                    <th>Â¿Qué hace?</th>
                     <th>Ejemplo</th>
                 </tr>
             </thead>
@@ -455,7 +456,7 @@
 
         <div class="example-box">
             <h4>&#9989; Ejemplos de funciones de agregación</h4>
-<pre><code><span class="comment">-- ¿Cuántos alumnos hay?</span>
+<pre><code><span class="comment">-- Â¿Cuántos alumnos hay?</span>
 <span class="keyword">SELECT COUNT</span>(*) <span class="keyword">AS</span> TotalAlumnos <span class="keyword">FROM</span> Alumnos;
 
 <span class="comment">-- Promedio de calificaciones</span>
@@ -479,7 +480,7 @@
 
         <div class="example-box">
             <h4>&#9989; Ejemplos con GROUP BY</h4>
-<pre><code><span class="comment">-- ¿Cuántos alumnos hay por carrera?</span>
+<pre><code><span class="comment">-- Â¿Cuántos alumnos hay por carrera?</span>
 <span class="keyword">SELECT</span> CarreraID, <span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> NumAlumnos
 <span class="keyword">FROM</span> Alumnos
 <span class="keyword">GROUP BY</span> CarreraID;
@@ -500,7 +501,7 @@
             <h4>&#128161; WHERE vs HAVING</h4>
             <ul>
                 <li><code>WHERE</code> filtra <strong>filas individuales</strong> ANTES de agrupar</li>
-                <li><code>HAVING</code> filtra <strong>grupos</strong> DESPUÉS de agrupar</li>
+                <li><code>HAVING</code> filtra <strong>grupos</strong> DESPUÁ‰S de agrupar</li>
             </ul>
         </div>
 
@@ -544,7 +545,7 @@
         </div>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 6.4: INSERT, UPDATE, DELETE -->
+        <!-- SECCIÁ“N 6.4: INSERT, UPDATE, DELETE -->
         <!-- ============================================ -->
         <h2 id="modificacion">6.4 Inserción, Actualización y Eliminación de Información</h2>
 
@@ -604,10 +605,10 @@
         </div>
 
         <div class="warning-box">
-            <h4>&#9888;&#65039; ¡SIEMPRE usa WHERE con UPDATE!</h4>
+            <h4>&#9888;&#65039; Â¡SIEMPRE usa WHERE con UPDATE!</h4>
             <p>Si olvidas el WHERE, el UPDATE modificará <strong>TODAS las filas</strong> de la tabla. Este es uno de los errores más comunes y peligrosos en SQL.</p>
-<pre><code><span class="comment">-- ¡PELIGRO! Esto cambia TODOS los semestres a 5</span>
-<span class="keyword">UPDATE</span> Alumnos <span class="keyword">SET</span> Semestre = <span class="number">5</span>;  <span class="comment">-- ¡SIN WHERE! Error grave.</span>
+<pre><code><span class="comment">-- Â¡PELIGRO! Esto cambia TODOS los semestres a 5</span>
+<span class="keyword">UPDATE</span> Alumnos <span class="keyword">SET</span> Semestre = <span class="number">5</span>;  <span class="comment">-- Â¡SIN WHERE! Error grave.</span>
 
 <span class="comment">-- Correcto: solo actualiza un alumno específico</span>
 <span class="keyword">UPDATE</span> Alumnos <span class="keyword">SET</span> Semestre = <span class="number">5</span> <span class="keyword">WHERE</span> Matricula = <span class="string">'A001'</span>;</code></pre>
@@ -622,7 +623,7 @@
 
 <span class="comment">-- Cambiar el email de un alumno</span>
 <span class="keyword">UPDATE</span> Alumnos 
-<span class="keyword">SET</span> Email = <span class="string">'pedro.garcia@escuela.edu'</span> 
+<span class="keyword">SET</span> Email = <span class="string">'daniel.garcia@escuela.edu'</span> 
 <span class="keyword">WHERE</span> Matricula = <span class="string">'A001'</span>;
 
 <span class="comment">-- Avanzar de semestre a todos los alumnos de Sistemas</span>
@@ -645,10 +646,10 @@
         </div>
 
         <div class="warning-box">
-            <h4>&#9888;&#65039; ¡SIEMPRE usa WHERE con DELETE!</h4>
+            <h4>&#9888;&#65039; Â¡SIEMPRE usa WHERE con DELETE!</h4>
             <p>Sin WHERE, DELETE borra <strong>TODAS las filas</strong> de la tabla (pero conserva la estructura, a diferencia de DROP).</p>
-<pre><code><span class="comment">-- ¡PELIGRO! Borra TODOS los alumnos</span>
-<span class="keyword">DELETE FROM</span> Alumnos;  <span class="comment">-- ¡SIN WHERE! Tabla vacía.</span>
+<pre><code><span class="comment">-- Â¡PELIGRO! Borra TODOS los alumnos</span>
+<span class="keyword">DELETE FROM</span> Alumnos;  <span class="comment">-- Â¡SIN WHERE! Tabla vacía.</span>
 
 <span class="comment">-- Correcto: borra solo un alumno específico</span>
 <span class="keyword">DELETE FROM</span> Alumnos <span class="keyword">WHERE</span> Matricula = <span class="string">'A006'</span>;</code></pre>
@@ -675,9 +676,9 @@
                 <thead>
                     <tr>
                         <th>Comando</th>
-                        <th>¿Qué hace?</th>
-                        <th>¿Se puede deshacer?</th>
-                        <th>¿Conserva la estructura?</th>
+                        <th>Â¿Qué hace?</th>
+                        <th>Â¿Se puede deshacer?</th>
+                        <th>Â¿Conserva la estructura?</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -710,7 +711,7 @@
             <ol>
                 <li><strong>Siempre prueba con SELECT antes de UPDATE/DELETE.</strong> Si vas a borrar registros, primero ejecuta un SELECT con la misma condición para ver qué se va a afectar.</li>
                 <li><strong>Usa nombres descriptivos</strong> para tablas y columnas (no "t1", "col_a").</li>
-                <li><strong>Escribe las palabras clave en MAYÚSCULAS</strong> y los nombres de tablas/columnas en el formato que elijas (consistente).</li>
+                <li><strong>Escribe las palabras clave en MAYÁšSCULAS</strong> y los nombres de tablas/columnas en el formato que elijas (consistente).</li>
                 <li><strong>Usa aliases (AS)</strong> para hacer las consultas más legibles.</li>
                 <li><strong>Comenta tu código</strong> con <code>--</code> para explicar consultas complejas.</li>
                 <li><strong>Usa indentación</strong> para que las consultas largas sean legibles.</li>
@@ -736,7 +737,7 @@
 <span class="keyword">GROUP BY</span> A.Matricula, A.Nombre, A.Apellido, C.Nombre
 <span class="keyword">HAVING AVG</span>(I.Calificacion) > <span class="number">80</span>
 <span class="keyword">ORDER BY</span> Promedio <span class="keyword">DESC</span>;</code></pre>
-            <p>Esta consulta usa: SELECT con columnas específicas, JOIN (dos tablas), alias (AS), funciones de agregación (COUNT, AVG, ROUND), GROUP BY, HAVING, y ORDER BY. ¡Todo lo de esta unidad en una sola consulta!</p>
+            <p>Esta consulta usa: SELECT con columnas específicas, JOIN (dos tablas), alias (AS), funciones de agregación (COUNT, AVG, ROUND), GROUP BY, HAVING, y ORDER BY. Â¡Todo lo de esta unidad en una sola consulta!</p>
         </div>
 
         <!-- ============================================ -->
@@ -747,7 +748,7 @@
 
         <div id="quiz6" class="quiz-mini">
             <div class="question" data-correct="b">
-                <h4><span class="q-number">1</span>¿Qué sublenguaje de SQL incluye SELECT, INSERT, UPDATE y DELETE?</h4>
+                <h4><span class="q-number">1</span>Â¿Qué sublenguaje de SQL incluye SELECT, INSERT, UPDATE y DELETE?</h4>
                 <label><input type="radio" name="u6q1" value="a"> DDL (Data Definition Language)</label>
                 <label><input type="radio" name="u6q1" value="b"> DML (Data Manipulation Language)</label>
                 <label><input type="radio" name="u6q1" value="c"> DCL (Data Control Language)</label>
@@ -755,7 +756,7 @@
             </div>
 
             <div class="question" data-correct="c">
-                <h4><span class="q-number">2</span>¿Qué cláusula usas para filtrar GRUPOS después de un GROUP BY?</h4>
+                <h4><span class="q-number">2</span>Â¿Qué cláusula usas para filtrar GRUPOS después de un GROUP BY?</h4>
                 <label><input type="radio" name="u6q2" value="a"> WHERE</label>
                 <label><input type="radio" name="u6q2" value="b"> ORDER BY</label>
                 <label><input type="radio" name="u6q2" value="c"> HAVING</label>
@@ -763,7 +764,7 @@
             </div>
 
             <div class="question" data-correct="a">
-                <h4><span class="q-number">3</span>Si haces DELETE FROM Alumnos; (sin WHERE), ¿qué pasa?</h4>
+                <h4><span class="q-number">3</span>Si haces DELETE FROM Alumnos; (sin WHERE), Â¿qué pasa?</h4>
                 <label><input type="radio" name="u6q3" value="a"> Se borran TODAS las filas de la tabla pero la tabla sigue existiendo</label>
                 <label><input type="radio" name="u6q3" value="b"> Se borra la tabla completa (estructura incluida)</label>
                 <label><input type="radio" name="u6q3" value="c"> Da un error porque falta el WHERE</label>
@@ -807,7 +808,7 @@
             if (selected && selected.value === correctAnswer) {
                 correct++;
                 q.style.borderLeft = '4px solid #059669';
-                feedback.textContent = '✓ ¡Correcto!';
+                feedback.textContent = 'âœ“ Â¡Correcto!';
                 feedback.style.display = 'block';
                 feedback.style.color = '#065f46';
                 feedback.style.background = '#d1fae5';
@@ -816,7 +817,7 @@
                 feedback.style.marginTop = '0.5rem';
             } else {
                 q.style.borderLeft = '4px solid #dc2626';
-                feedback.textContent = '✗ Incorrecto. Revisa el tema arriba.';
+                feedback.textContent = 'âœ— Incorrecto. Revisa el tema arriba.';
                 feedback.style.display = 'block';
                 feedback.style.color = '#991b1b';
                 feedback.style.background = '#fee2e2';
@@ -831,13 +832,13 @@
         resultEl.textContent = `Resultado: ${correct} de ${total} correctas`;
         if (correct === total) {
             resultEl.style.background = '#d1fae5';
-            resultEl.textContent += ' 🎉 ¡Perfecto!';
+            resultEl.textContent += ' ðŸŽ‰ Â¡Perfecto!';
         } else if (correct >= total / 2) {
             resultEl.style.background = '#dbeafe';
-            resultEl.textContent += ' 👍 ¡Buen intento!';
+            resultEl.textContent += ' ðŸ‘ Â¡Buen intento!';
         } else {
             resultEl.style.background = '#fef3c7';
-            resultEl.textContent += ' 📖 Repasa el material e intenta de nuevo.';
+            resultEl.textContent += ' ðŸ“– Repasa el material e intenta de nuevo.';
         }
     }
 

@@ -659,3 +659,68 @@ li strong {
         padding: 0 1rem;
     }
 }
+
+
+/* ============================================
+   ESTILOS PARA QUIZZES (mini quizzes por unidad)
+   ============================================ */
+.quiz-mini .question {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.quiz-mini .question h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: var(--text);
+}
+
+.quiz-mini .question h4 .q-number {
+    display: inline-block;
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-size: 0.85rem;
+    margin-right: 0.5rem;
+    font-weight: 700;
+}
+
+.quiz-mini .question label {
+    display: block;
+    padding: 0.65rem 1rem;
+    margin: 0.4rem 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.quiz-mini .question label:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+}
+
+.quiz-mini .question input[type="radio"] {
+    margin-right: 0.6rem;
+    accent-color: var(--primary);
+}
+
+.quiz-mini .question .feedback {
+    display: none;
+    margin-top: 0.75rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}

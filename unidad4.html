@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unidad 4 - Álgebra Relacional | Curso de Bases de Datos</title>
+    <title>Unidad 4 - Álgebra Relacional | Curso de Bases de Datos</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -18,12 +18,13 @@
                 <li><a href="unidad4.html"><strong>U4</strong></a></li>
                 <li><a href="unidad5.html">U5</a></li>
                 <li><a href="unidad6.html">U6</a></li>
+                <li><a href="evaluacion.html">Evaluaci&oacute;n</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="main-content">
-        <h1>Unidad 4: Álgebra Relacional</h1>
+        <h1>Unidad 4: Álgebra Relacional</h1>
 
         <div class="toc">
             <h4>&#128203; Contenido de esta unidad</h4>
@@ -37,7 +38,7 @@
         <p>El álgebra relacional es el <strong>fundamento teórico</strong> detrás del lenguaje SQL. Antes de escribir consultas SQL, es importante entender las operaciones matemáticas que las respaldan. No te preocupes, no necesitas ser experto en matemáticas; los conceptos son bastante intuitivos.</p>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 4.1: DEFINICIÓN -->
+        <!-- SECCIÁ“N 4.1: DEFINICIÁ“N -->
         <!-- ============================================ -->
         <h2 id="definicion">4.1 Definición</h2>
 
@@ -54,7 +55,7 @@
         <div class="info-box">
             <h4>&#128161; Características clave</h4>
             <ul>
-                <li><strong>Procedimental:</strong> Describes CÓMO obtener el resultado (paso a paso)</li>
+                <li><strong>Procedimental:</strong> Describes CÁ“MO obtener el resultado (paso a paso)</li>
                 <li><strong>Cerrado:</strong> El resultado de toda operación es siempre otra relación (tabla)</li>
                 <li><strong>Composición:</strong> Puedes encadenar operaciones (el resultado de una es la entrada de otra)</li>
                 <li><strong>Base de SQL:</strong> Cada operación de álgebra tiene su equivalente en SQL</li>
@@ -76,10 +77,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td>A001</td><td>Pedro</td><td>Sistemas</td><td>4</td></tr>
+                    <tr><td>A001</td><td>Daniel</td><td>Sistemas</td><td>4</td></tr>
                     <tr><td>A002</td><td>María</td><td>Industrial</td><td>6</td></tr>
                     <tr><td>A003</td><td>Juan</td><td>Sistemas</td><td>4</td></tr>
-                    <tr><td>A004</td><td>Ana</td><td>Civil</td><td>2</td></tr>
+                    <tr><td>A004</td><td>Sofía</td><td>Civil</td><td>2</td></tr>
                     <tr><td>A005</td><td>Luis</td><td>Industrial</td><td>8</td></tr>
                 </tbody>
             </table>
@@ -122,7 +123,7 @@
         </div>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 4.2: OPERADORES DE CONJUNTOS -->
+        <!-- SECCIÁ“N 4.2: OPERADORES DE CONJUNTOS -->
         <!-- ============================================ -->
         <h2 id="conjuntos">4.2 Operadores de Conjuntos</h2>
 
@@ -138,7 +139,7 @@
             <p>No necesitan tener los mismos nombres de columna, pero sí la misma estructura.</p>
         </div>
 
-        <!-- UNIÓN -->
+        <!-- UNIÁ“N -->
         <h3>Unión (&#8746;)</h3>
         <div class="concept-box">
             <h4>&#128196; Definición</h4>
@@ -154,7 +155,7 @@
             <table>
                 <thead><tr><th>Matricula</th><th>Nombre</th></tr></thead>
                 <tbody>
-                    <tr><td>A001</td><td>Pedro</td></tr>
+                    <tr><td>A001</td><td>Daniel</td></tr>
                     <tr><td>A003</td><td>Juan</td></tr>
                 </tbody>
             </table>
@@ -170,7 +171,7 @@
             <table>
                 <thead><tr><th>Matricula</th><th>Nombre</th></tr></thead>
                 <tbody>
-                    <tr><td>A001</td><td>Pedro</td></tr>
+                    <tr><td>A001</td><td>Daniel</td></tr>
                     <tr><td>A002</td><td>María</td></tr>
                     <tr><td>A003</td><td>Juan</td></tr>
                 </tbody>
@@ -182,7 +183,7 @@
 <span class="keyword">SELECT</span> Matricula, Nombre <span class="keyword">FROM</span> Beca_Deportiva;</code></pre>
         </div>
 
-        <!-- INTERSECCIÓN -->
+        <!-- INTERSECCIÁ“N -->
         <h3>Intersección (&#8745;)</h3>
         <div class="concept-box">
             <h4>&#128196; Definición</h4>
@@ -211,7 +212,7 @@
         <h3>Diferencia ( &minus; )</h3>
         <div class="concept-box">
             <h4>&#128196; Definición</h4>
-            <p>La <strong>diferencia</strong> devuelve las tuplas que están en la primera relación pero <strong>NO</strong> están en la segunda. El orden importa: A &minus; B ≠ B &minus; A.</p>
+            <p>La <strong>diferencia</strong> devuelve las tuplas que están en la primera relación pero <strong>NO</strong> están en la segunda. El orden importa: A &minus; B â‰  B &minus; A.</p>
             <p><strong>Notación:</strong> A &minus; B</p>
             <p><strong>En SQL:</strong> <code>SELECT ... EXCEPT SELECT ...</code></p>
         </div>
@@ -222,10 +223,10 @@
             <table>
                 <thead><tr><th>Matricula</th><th>Nombre</th></tr></thead>
                 <tbody>
-                    <tr><td>A001</td><td>Pedro</td></tr>
+                    <tr><td>A001</td><td>Daniel</td></tr>
                 </tbody>
             </table>
-            <p>Pedro tiene beca académica pero no deportiva.</p>
+            <p>Daniel tiene beca académica pero no deportiva.</p>
             <p><strong>BECA_DEPORTIVA &minus; BECA_ACADEMICA =</strong> "Alumnos con beca deportiva que NO tienen beca académica"</p>
             <table>
                 <thead><tr><th>Matricula</th><th>Nombre</th></tr></thead>
@@ -331,13 +332,13 @@
         </table>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 4.3: OPERADORES RELACIONALES -->
+        <!-- SECCIÁ“N 4.3: OPERADORES RELACIONALES -->
         <!-- ============================================ -->
         <h2 id="relacionales">4.3 Operadores Relacionales</h2>
 
         <p>Estos operadores son exclusivos del modelo relacional y son los más usados en la práctica. Cada uno tiene un equivalente directo en SQL.</p>
 
-        <!-- SELECCIÓN -->
+        <!-- SELECCIÁ“N -->
         <h3>Selección (&sigma;)</h3>
         <div class="concept-box">
             <h4>&#128196; Definición</h4>
@@ -359,7 +360,7 @@
                     <tr><th>Matricula</th><th>Nombre</th><th>Carrera</th><th>Semestre</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>A001</td><td>Pedro</td><td>Sistemas</td><td>4</td></tr>
+                    <tr><td>A001</td><td>Daniel</td><td>Sistemas</td><td>4</td></tr>
                     <tr><td>A003</td><td>Juan</td><td>Sistemas</td><td>4</td></tr>
                 </tbody>
             </table>
@@ -378,7 +379,7 @@
 <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Estudiantes <span class="keyword">WHERE</span> Semestre > <span class="number">4</span>;</code></pre>
         </div>
 
-        <!-- PROYECCIÓN -->
+        <!-- PROYECCIÁ“N -->
         <h3>Proyección (&pi;)</h3>
         <div class="concept-box">
             <h4>&#128196; Definición</h4>
@@ -400,14 +401,14 @@
                     <tr><th>Nombre</th><th>Carrera</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>Pedro</td><td>Sistemas</td></tr>
+                    <tr><td>Daniel</td><td>Sistemas</td></tr>
                     <tr><td>María</td><td>Industrial</td></tr>
                     <tr><td>Juan</td><td>Sistemas</td></tr>
-                    <tr><td>Ana</td><td>Civil</td></tr>
+                    <tr><td>Sofía</td><td>Civil</td></tr>
                     <tr><td>Luis</td><td>Industrial</td></tr>
                 </tbody>
             </table>
-            <p><strong>&pi;<sub>Carrera</sub>(ESTUDIANTES)</strong> = "¿Qué carreras hay?" (elimina duplicados)</p>
+            <p><strong>&pi;<sub>Carrera</sub>(ESTUDIANTES)</strong> = "Â¿Qué carreras hay?" (elimina duplicados)</p>
             <table>
                 <thead>
                     <tr><th>Carrera</th></tr>
@@ -423,7 +424,7 @@
 <span class="keyword">SELECT DISTINCT</span> Carrera <span class="keyword">FROM</span> Estudiantes;</code></pre>
         </div>
 
-        <!-- COMBINACIÓN DE SELECCIÓN Y PROYECCIÓN -->
+        <!-- COMBINACIÁ“N DE SELECCIÁ“N Y PROYECCIÁ“N -->
         <h3>Combinación de operadores</h3>
         <div class="example-box">
             <h4>&#9989; Ejemplo: Selección + Proyección</h4>
@@ -433,7 +434,7 @@
             <table>
                 <thead><tr><th>Nombre</th></tr></thead>
                 <tbody>
-                    <tr><td>Pedro</td></tr>
+                    <tr><td>Daniel</td></tr>
                     <tr><td>Juan</td></tr>
                 </tbody>
             </table>
@@ -441,7 +442,7 @@
 <span class="keyword">SELECT</span> Nombre <span class="keyword">FROM</span> Estudiantes <span class="keyword">WHERE</span> Carrera = <span class="string">'Sistemas'</span>;</code></pre>
         </div>
 
-        <!-- JOIN / REUNIÓN -->
+        <!-- JOIN / REUNIÁ“N -->
         <h3>Reunión / Join (&#10781;)</h3>
         <div class="concept-box">
             <h4>&#128196; Definición</h4>
@@ -464,12 +465,12 @@
                     <tr><th>Matricula</th><th>Nombre</th><th>Carrera</th><th>Clave</th><th>Calificacion</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>A001</td><td>Pedro</td><td>Sistemas</td><td>MAT101</td><td>85</td></tr>
-                    <tr><td>A001</td><td>Pedro</td><td>Sistemas</td><td>PRG301</td><td>92</td></tr>
+                    <tr><td>A001</td><td>Daniel</td><td>Sistemas</td><td>MAT101</td><td>85</td></tr>
+                    <tr><td>A001</td><td>Daniel</td><td>Sistemas</td><td>PRG301</td><td>92</td></tr>
                     <tr><td>A002</td><td>María</td><td>Industrial</td><td>MAT101</td><td>78</td></tr>
                     <tr><td>A002</td><td>María</td><td>Industrial</td><td>FIS201</td><td>88</td></tr>
                     <tr><td>A003</td><td>Juan</td><td>Sistemas</td><td>BD401</td><td>95</td></tr>
-                    <tr><td>A004</td><td>Ana</td><td>Civil</td><td>MAT101</td><td>70</td></tr>
+                    <tr><td>A004</td><td>Sofía</td><td>Civil</td><td>MAT101</td><td>70</td></tr>
                 </tbody>
             </table>
             <p>Nota: Luis (A005) no aparece porque no tiene inscripciones.</p>
@@ -527,19 +528,19 @@
             <table>
                 <thead><tr><th>Nombre</th><th>Clave</th><th>Calificacion</th></tr></thead>
                 <tbody>
-                    <tr><td>Pedro</td><td>MAT101</td><td>85</td></tr>
-                    <tr><td>Pedro</td><td>PRG301</td><td>92</td></tr>
+                    <tr><td>Daniel</td><td>MAT101</td><td>85</td></tr>
+                    <tr><td>Daniel</td><td>PRG301</td><td>92</td></tr>
                     <tr><td>María</td><td>MAT101</td><td>78</td></tr>
                     <tr><td>María</td><td>FIS201</td><td>88</td></tr>
                     <tr><td>Juan</td><td>BD401</td><td>95</td></tr>
-                    <tr><td>Ana</td><td>MAT101</td><td>70</td></tr>
+                    <tr><td>Sofía</td><td>MAT101</td><td>70</td></tr>
                     <tr><td>Luis</td><td>NULL</td><td>NULL</td></tr>
                 </tbody>
             </table>
             <p>Luis aparece con NULL porque no tiene inscripciones, pero el LEFT JOIN lo incluye de todas formas.</p>
         </div>
 
-        <!-- DIVISIÓN -->
+        <!-- DIVISIÁ“N -->
         <h3>División (&divide;)</h3>
         <div class="concept-box">
             <h4>&#128196; Definición</h4>
@@ -550,12 +551,12 @@
 
         <div class="analogy-box">
             <h4>&#128300; Analogía</h4>
-            <p>Imagina que preguntas: "¿Qué alumnos han cursado TODAS las materias de la lista?" No basta con cursar una o dos, tienen que haber cursado absolutamente todas. Esa es la división.</p>
+            <p>Imagina que preguntas: "Â¿Qué alumnos han cursado TODAS las materias de la lista?" No basta con cursar una o dos, tienen que haber cursado absolutamente todas. Esa es la división.</p>
         </div>
 
         <div class="example-box">
             <h4>&#9989; Ejemplo</h4>
-            <p>Pregunta: "¿Qué alumnos están inscritos en MAT101 Y en PRG301?"</p>
+            <p>Pregunta: "Â¿Qué alumnos están inscritos en MAT101 Y en PRG301?"</p>
             <p>Si definimos B = {MAT101, PRG301}, la división INSCRIPCIONES[Matricula, Clave] &divide; B da:</p>
             <table>
                 <thead><tr><th>Matricula</th></tr></thead>
@@ -563,7 +564,7 @@
                     <tr><td>A001</td></tr>
                 </tbody>
             </table>
-            <p>Solo Pedro (A001) está inscrito en ambas materias.</p>
+            <p>Solo Daniel (A001) está inscrito en ambas materias.</p>
         </div>
 
         <!-- Resumen general -->
@@ -642,7 +643,7 @@
 
         <div id="quiz4" class="quiz-mini">
             <div class="question" data-correct="a">
-                <h4><span class="q-number">1</span>¿Cuál es el equivalente en SQL de la operación de Selección (σ) del álgebra relacional?</h4>
+                <h4><span class="q-number">1</span>Â¿Cuál es el equivalente en SQL de la operación de Selección (Ïƒ) del álgebra relacional?</h4>
                 <label><input type="radio" name="u4q1" value="a"> WHERE (filtra filas)</label>
                 <label><input type="radio" name="u4q1" value="b"> SELECT columnas (elige columnas)</label>
                 <label><input type="radio" name="u4q1" value="c"> JOIN (combina tablas)</label>
@@ -650,7 +651,7 @@
             </div>
 
             <div class="question" data-correct="b">
-                <h4><span class="q-number">2</span>La operación UNIÓN requiere que las dos tablas sean:</h4>
+                <h4><span class="q-number">2</span>La operación UNIÁ“N requiere que las dos tablas sean:</h4>
                 <label><input type="radio" name="u4q2" value="a"> Del mismo tamaño en filas</label>
                 <label><input type="radio" name="u4q2" value="b"> Unión-compatibles (mismo número y tipo de columnas)</label>
                 <label><input type="radio" name="u4q2" value="c"> De la misma base de datos</label>
@@ -658,7 +659,7 @@
             </div>
 
             <div class="question" data-correct="c">
-                <h4><span class="q-number">3</span>¿Qué hace un INNER JOIN?</h4>
+                <h4><span class="q-number">3</span>Â¿Qué hace un INNER JOIN?</h4>
                 <label><input type="radio" name="u4q3" value="a"> Devuelve todas las filas de ambas tablas sin condición</label>
                 <label><input type="radio" name="u4q3" value="b"> Elimina filas duplicadas de una tabla</label>
                 <label><input type="radio" name="u4q3" value="c"> Combina filas de dos tablas donde hay coincidencia en la condición</label>
@@ -680,7 +681,7 @@
     </main>
 
     <footer class="site-footer">
-        <p>Unidad 4 - Álgebra Relacional | <a href="index.html">Volver al índice</a></p>
+        <p>Unidad 4 - Álgebra Relacional | <a href="index.html">Volver al índice</a></p>
     </footer>
 
     <script>
@@ -702,7 +703,7 @@
             if (selected && selected.value === correctAnswer) {
                 correct++;
                 q.style.borderLeft = '4px solid #059669';
-                feedback.textContent = '✓ ¡Correcto!';
+                feedback.textContent = 'âœ“ Â¡Correcto!';
                 feedback.style.display = 'block';
                 feedback.style.color = '#065f46';
                 feedback.style.background = '#d1fae5';
@@ -711,7 +712,7 @@
                 feedback.style.marginTop = '0.5rem';
             } else {
                 q.style.borderLeft = '4px solid #dc2626';
-                feedback.textContent = '✗ Incorrecto. Revisa el tema arriba.';
+                feedback.textContent = 'âœ— Incorrecto. Revisa el tema arriba.';
                 feedback.style.display = 'block';
                 feedback.style.color = '#991b1b';
                 feedback.style.background = '#fee2e2';
@@ -726,13 +727,13 @@
         resultEl.textContent = `Resultado: ${correct} de ${total} correctas`;
         if (correct === total) {
             resultEl.style.background = '#d1fae5';
-            resultEl.textContent += ' 🎉 ¡Perfecto!';
+            resultEl.textContent += ' ðŸŽ‰ Â¡Perfecto!';
         } else if (correct >= total / 2) {
             resultEl.style.background = '#dbeafe';
-            resultEl.textContent += ' 👍 ¡Buen intento!';
+            resultEl.textContent += ' ðŸ‘ Â¡Buen intento!';
         } else {
             resultEl.style.background = '#fef3c7';
-            resultEl.textContent += ' 📖 Repasa el material e intenta de nuevo.';
+            resultEl.textContent += ' ðŸ“– Repasa el material e intenta de nuevo.';
         }
     }
 

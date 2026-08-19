@@ -18,6 +18,7 @@
                 <li><a href="unidad4.html">U4</a></li>
                 <li><a href="unidad5.html">U5</a></li>
                 <li><a href="unidad6.html">U6</a></li>
+                <li><a href="evaluacion.html">Evaluaci&oacute;n</a></li>
             </ul>
         </nav>
     </header>
@@ -31,7 +32,7 @@
                 <li><a href="#elementos">Elementos del modelo relacional</a></li>
                 <li><a href="#llaves">Tipos de llaves</a></li>
                 <li><a href="#integridad">Integridad de la información (Constraints)</a></li>
-                <li><a href="#indices">Índices</a></li>
+                <li><a href="#indices">Ándices</a></li>
             </ol>
         </div>
 
@@ -43,13 +44,13 @@
         </div>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 2.1: ELEMENTOS DEL MODELO -->
+        <!-- SECCIÁ“N 2.1: ELEMENTOS DEL MODELO -->
         <!-- ============================================ -->
         <h2 id="elementos">2.1 Elementos del Modelo Relacional</h2>
 
         <p>El modelo relacional tiene su propia terminología formal (matemática) y su equivalente práctico. Aquí aprenderás ambos:</p>
 
-        <!-- RELACIÓN / TABLA -->
+        <!-- RELACIÁ“N / TABLA -->
         <h3>Relación / Tabla</h3>
         <div class="concept-box">
             <h4>&#128196; Definición</h4>
@@ -67,7 +68,7 @@
             </ul>
         </div>
 
-        <!-- TUPLA / RENGLÓN -->
+        <!-- TUPLA / RENGLÁ“N -->
         <h3>Tupla / Renglón / Fila</h3>
         <div class="concept-box">
             <h4>&#128196; Definición</h4>
@@ -133,7 +134,7 @@
                 <tbody>
                     <tr>
                         <td>A001</td>
-                        <td>Pedro</td>
+                        <td>Daniel</td>
                         <td>García</td>
                         <td>Sistemas</td>
                         <td>4</td>
@@ -154,7 +155,7 @@
                     </tr>
                     <tr>
                         <td>A004</td>
-                        <td>Ana</td>
+                        <td>Sofía</td>
                         <td>Rodríguez</td>
                         <td>Civil</td>
                         <td>2</td>
@@ -164,7 +165,7 @@
             <p>Analicemos esta tabla:</p>
             <ul>
                 <li><strong>Relación/Tabla:</strong> ALUMNOS</li>
-                <li><strong>Tuplas/Filas:</strong> 4 registros (Pedro, María, Juan, Ana)</li>
+                <li><strong>Tuplas/Filas:</strong> 4 registros (Daniel, María, Juan, Sofía)</li>
                 <li><strong>Atributos/Columnas:</strong> Matricula, Nombre, Apellido, Carrera, Semestre</li>
                 <li><strong>Grado:</strong> 5 (tiene 5 columnas)</li>
                 <li><strong>Cardinalidad:</strong> 4 (tiene 4 filas)</li>
@@ -218,7 +219,7 @@
         </table>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 2.2: TIPOS DE LLAVES -->
+        <!-- SECCIÁ“N 2.2: TIPOS DE LLAVES -->
         <!-- ============================================ -->
         <h2 id="llaves">2.2 Tipos de Llaves (Keys)</h2>
 
@@ -226,7 +227,7 @@
 
         <div class="analogy-box">
             <h4>&#128300; Analogía</h4>
-            <p>Las llaves son como el <strong>número de credencial de elector (INE)</strong>. No importa cuántos "Juan García" existan en México, cada uno tiene un número de INE único que lo identifica sin ambigüedad. Ese número es su "llave primaria" como ciudadano.</p>
+            <p>Las llaves son como el <strong>número de credencial de elector (INE)</strong>. No importa cuántos "Juan García" existan en México, cada uno tiene un número de INE único que lo identifica sin ambigÁ¼edad. Ese número es su "llave primaria" como ciudadano.</p>
         </div>
 
         <!-- Llave Primaria -->
@@ -305,7 +306,7 @@
                 <tbody>
                     <tr>
                         <td>A001</td>
-                        <td>Pedro García</td>
+                        <td>Daniel García</td>
                         <td>1</td>
                     </tr>
                     <tr>
@@ -389,9 +390,9 @@
             <thead>
                 <tr>
                     <th>Tipo</th>
-                    <th>¿Qué hace?</th>
-                    <th>¿Puede repetirse?</th>
-                    <th>¿Puede ser NULL?</th>
+                    <th>Â¿Qué hace?</th>
+                    <th>Â¿Puede repetirse?</th>
+                    <th>Â¿Puede ser NULL?</th>
                 </tr>
             </thead>
             <tbody>
@@ -429,7 +430,7 @@
         </table>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 2.3: INTEGRIDAD (CONSTRAINTS) -->
+        <!-- SECCIÁ“N 2.3: INTEGRIDAD (CONSTRAINTS) -->
         <!-- ============================================ -->
         <h2 id="integridad">2.3 Integridad de la Información (Constraints)</h2>
 
@@ -467,7 +468,7 @@
             <thead>
                 <tr>
                     <th>Constraint</th>
-                    <th>¿Qué hace?</th>
+                    <th>Â¿Qué hace?</th>
                     <th>Ejemplo</th>
                 </tr>
             </thead>
@@ -520,9 +521,9 @@
         </div>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 2.4: ÍNDICES -->
+        <!-- SECCIÁ“N 2.4: ÁNDICES -->
         <!-- ============================================ -->
-        <h2 id="indices">2.4 Índices</h2>
+        <h2 id="indices">2.4 Ándices</h2>
 
         <div class="concept-box">
             <h4>&#128196; Definición</h4>
@@ -539,7 +540,7 @@
             <p>Los índices en BD funcionan igual: crean una referencia ordenada que apunta directamente a la ubicación de los datos.</p>
         </div>
 
-        <h3>¿Cuándo usar índices?</h3>
+        <h3>Â¿Cuándo usar índices?</h3>
         <div class="info-box">
             <h4>&#128161; Regla general</h4>
             <ul>
@@ -559,23 +560,23 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Índice Clustered</strong></td>
+                    <td><strong>Ándice Clustered</strong></td>
                     <td>Ordena físicamente los datos en disco. Solo puede haber UNO por tabla.</td>
                     <td>Se crea automáticamente con la PK</td>
                 </tr>
                 <tr>
-                    <td><strong>Índice Non-Clustered</strong></td>
+                    <td><strong>Ándice Non-Clustered</strong></td>
                     <td>Crea una estructura separada con punteros a los datos. Puede haber varios por tabla.</td>
                     <td>Columnas que se buscan frecuentemente</td>
                 </tr>
                 <tr>
-                    <td><strong>Índice Único</strong></td>
+                    <td><strong>Ándice Ášnico</strong></td>
                     <td>Como el non-clustered pero además garantiza que no haya duplicados.</td>
                     <td>Email, RFC, CURP</td>
                 </tr>
                 <tr>
-                    <td><strong>Índice Compuesto</strong></td>
-                    <td>Índice sobre 2 o más columnas combinadas.</td>
+                    <td><strong>Ándice Compuesto</strong></td>
+                    <td>Ándice sobre 2 o más columnas combinadas.</td>
                     <td>Búsquedas por Apellido + Nombre</td>
                 </tr>
             </tbody>
@@ -583,13 +584,13 @@
 
         <div class="example-box">
             <h4>&#9989; Ejemplo de creación de índices en SQL</h4>
-<pre><code><span class="comment">-- Índice simple en la columna Apellido</span>
+<pre><code><span class="comment">-- Ándice simple en la columna Apellido</span>
 <span class="keyword">CREATE INDEX</span> idx_apellido <span class="keyword">ON</span> Alumnos(Apellido);
 
-<span class="comment">-- Índice único en Email (no permite duplicados)</span>
+<span class="comment">-- Ándice único en Email (no permite duplicados)</span>
 <span class="keyword">CREATE UNIQUE INDEX</span> idx_email <span class="keyword">ON</span> Alumnos(Email);
 
-<span class="comment">-- Índice compuesto (buscar por apellido Y nombre)</span>
+<span class="comment">-- Ándice compuesto (buscar por apellido Y nombre)</span>
 <span class="keyword">CREATE INDEX</span> idx_nombre_completo <span class="keyword">ON</span> Alumnos(Apellido, Nombre);</code></pre>
         </div>
 
@@ -630,7 +631,7 @@
 
         <div id="quiz2" class="quiz-mini">
             <div class="question" data-correct="c">
-                <h4><span class="q-number">1</span>¿Qué es el "grado" de una relación?</h4>
+                <h4><span class="q-number">1</span>Â¿Qué es el "grado" de una relación?</h4>
                 <label><input type="radio" name="u2q1" value="a"> El número de filas que tiene la tabla</label>
                 <label><input type="radio" name="u2q1" value="b"> El tipo de dato de la llave primaria</label>
                 <label><input type="radio" name="u2q1" value="c"> El número de columnas (atributos) de la tabla</label>
@@ -638,7 +639,7 @@
             </div>
 
             <div class="question" data-correct="a">
-                <h4><span class="q-number">2</span>¿Qué constraint usarías para asegurar que un campo de email no se repita entre registros?</h4>
+                <h4><span class="q-number">2</span>Â¿Qué constraint usarías para asegurar que un campo de email no se repita entre registros?</h4>
                 <label><input type="radio" name="u2q2" value="a"> UNIQUE</label>
                 <label><input type="radio" name="u2q2" value="b"> NOT NULL</label>
                 <label><input type="radio" name="u2q2" value="c"> CHECK</label>
@@ -690,7 +691,7 @@
             if (selected && selected.value === correctAnswer) {
                 correct++;
                 q.style.borderLeft = '4px solid #059669';
-                feedback.textContent = '✓ ¡Correcto!';
+                feedback.textContent = 'âœ“ Â¡Correcto!';
                 feedback.style.display = 'block';
                 feedback.style.color = '#065f46';
                 feedback.style.background = '#d1fae5';
@@ -699,7 +700,7 @@
                 feedback.style.marginTop = '0.5rem';
             } else {
                 q.style.borderLeft = '4px solid #dc2626';
-                feedback.textContent = '✗ Incorrecto. Revisa el tema arriba.';
+                feedback.textContent = 'âœ— Incorrecto. Revisa el tema arriba.';
                 feedback.style.display = 'block';
                 feedback.style.color = '#991b1b';
                 feedback.style.background = '#fee2e2';
@@ -714,13 +715,13 @@
         resultEl.textContent = `Resultado: ${correct} de ${total} correctas`;
         if (correct === total) {
             resultEl.style.background = '#d1fae5';
-            resultEl.textContent += ' 🎉 ¡Perfecto!';
+            resultEl.textContent += ' ðŸŽ‰ Â¡Perfecto!';
         } else if (correct >= total / 2) {
             resultEl.style.background = '#dbeafe';
-            resultEl.textContent += ' 👍 ¡Buen intento!';
+            resultEl.textContent += ' ðŸ‘ Â¡Buen intento!';
         } else {
             resultEl.style.background = '#fef3c7';
-            resultEl.textContent += ' 📖 Repasa el material e intenta de nuevo.';
+            resultEl.textContent += ' ðŸ“– Repasa el material e intenta de nuevo.';
         }
     }
 

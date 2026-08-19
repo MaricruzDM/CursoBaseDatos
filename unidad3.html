@@ -18,6 +18,7 @@
                 <li><a href="unidad4.html">U4</a></li>
                 <li><a href="unidad5.html">U5</a></li>
                 <li><a href="unidad6.html">U6</a></li>
+                <li><a href="evaluacion.html">Evaluaci&oacute;n</a></li>
             </ul>
         </nav>
     </header>
@@ -45,7 +46,7 @@
         </div>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 3.1: DIAGRAMA ENTIDAD-RELACIÓN -->
+        <!-- SECCIÁ“N 3.1: DIAGRAMA ENTIDAD-RELACIÁ“N -->
         <!-- ============================================ -->
         <h2 id="er">3.1 Diagrama Entidad-Relación (ER)</h2>
 
@@ -74,7 +75,7 @@
                 </tr>
                 <tr>
                     <td><strong>Atributo</strong></td>
-                    <td>Óvalo/Elipse</td>
+                    <td>Á“valo/Elipse</td>
                     <td>Característica de una entidad</td>
                     <td>Nombre, Edad, Matrícula</td>
                 </tr>
@@ -102,10 +103,10 @@
         <div class="example-box">
             <h4>&#9989; Ejemplo: Diagrama ER de una escuela (representación textual)</h4>
 <pre><code>
-    ┌──────────┐          ┌──────────┐          ┌──────────┐
-    │  ALUMNO  │──────────│  cursa   │──────────│ MATERIA  │
-    └──────────┘          └──────────┘          └──────────┘
-         │                                           │
+    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”          â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”          â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+    â”‚  ALUMNO  â”‚â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”‚  cursa   â”‚â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”‚ MATERIA  â”‚
+    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜          â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜          â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+         â”‚                                           â”‚
     Atributos:                                  Atributos:
     - Matricula (PK)                            - ClaveMateria (PK)
     - Nombre                                    - NombreMateria
@@ -113,10 +114,10 @@
     - FechaNac                                  - Semestre
     - CarreraID (FK)
 
-    ┌──────────┐          ┌──────────┐          ┌──────────┐
-    │ PROFESOR │──────────│ imparte  │──────────│ MATERIA  │
-    └──────────┘          └──────────┘          └──────────┘
-         │
+    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”          â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”          â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+    â”‚ PROFESOR â”‚â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”‚ imparte  â”‚â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”‚ MATERIA  â”‚
+    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜          â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜          â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+         â”‚
     Atributos:
     - NumEmpleado (PK)
     - Nombre
@@ -125,7 +126,7 @@
         </div>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 3.2: ENTIDADES Y RELACIONES -->
+        <!-- SECCIÁ“N 3.2: ENTIDADES Y RELACIONES -->
         <!-- ============================================ -->
         <h2 id="entidades">3.2 Las Entidades y el Manejo de Relaciones</h2>
 
@@ -161,19 +162,19 @@
                     <td><strong>Uno a Uno (1:1)</strong></td>
                     <td>1 &mdash; 1</td>
                     <td>Cada registro de A se asocia con máximo uno de B, y viceversa</td>
-                    <td>PERSONA ↔ PASAPORTE (una persona tiene un pasaporte)</td>
+                    <td>PERSONA â†” PASAPORTE (una persona tiene un pasaporte)</td>
                 </tr>
                 <tr>
                     <td><strong>Uno a Muchos (1:N)</strong></td>
                     <td>1 &mdash; *</td>
                     <td>Un registro de A se asocia con muchos de B, pero cada B solo con uno de A</td>
-                    <td>DEPARTAMENTO → EMPLEADOS (un depto. tiene muchos empleados)</td>
+                    <td>DEPARTAMENTO â†’ EMPLEADOS (un depto. tiene muchos empleados)</td>
                 </tr>
                 <tr>
                     <td><strong>Muchos a Muchos (M:N)</strong></td>
                     <td>* &mdash; *</td>
                     <td>Múltiples registros de A se asocian con múltiples de B</td>
-                    <td>ALUMNO ↔ MATERIA (un alumno cursa muchas materias, una materia tiene muchos alumnos)</td>
+                    <td>ALUMNO â†” MATERIA (un alumno cursa muchas materias, una materia tiene muchos alumnos)</td>
                 </tr>
             </tbody>
         </table>
@@ -198,9 +199,9 @@
             <p><strong>Solución:</strong> Crear tabla intermedia INSCRIPCION</p>
 <pre><code>
   ALUMNO              INSCRIPCION              MATERIA
-  ──────              ───────────              ───────
-  Matricula (PK) ←── Matricula (FK, PK)       ClaveMateria (PK)
-  Nombre              ClaveMateria (FK, PK) ──→ NombreMateria
+  â”€â”€â”€â”€â”€â”€              â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€              â”€â”€â”€â”€â”€â”€â”€
+  Matricula (PK) â†â”€â”€ Matricula (FK, PK)       ClaveMateria (PK)
+  Nombre              ClaveMateria (FK, PK) â”€â”€â†’ NombreMateria
   Apellido            Calificacion             Creditos
                       Periodo
 </code></pre>
@@ -208,7 +209,7 @@
         </div>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 3.3: MODELO LÓGICO Y FÍSICO -->
+        <!-- SECCIÁ“N 3.3: MODELO LÁ“GICO Y FÁSICO -->
         <!-- ============================================ -->
         <h2 id="logico-fisico">3.3 Modelo Lógico y Físico</h2>
 
@@ -218,27 +219,27 @@
             <thead>
                 <tr>
                     <th>Nivel</th>
-                    <th>¿Qué describe?</th>
-                    <th>¿Quién lo hace?</th>
+                    <th>Â¿Qué describe?</th>
+                    <th>Â¿Quién lo hace?</th>
                     <th>Herramienta</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><strong>Modelo Conceptual</strong></td>
-                    <td>QUÉ datos necesitamos (entidades, relaciones, sin detalles técnicos)</td>
+                    <td>QUÁ‰ datos necesitamos (entidades, relaciones, sin detalles técnicos)</td>
                     <td>Analista + cliente</td>
                     <td>Diagrama ER básico</td>
                 </tr>
                 <tr>
                     <td><strong>Modelo Lógico</strong></td>
-                    <td>CÓMO se organizan los datos (tablas, columnas, tipos de dato, llaves, relaciones)</td>
+                    <td>CÁ“MO se organizan los datos (tablas, columnas, tipos de dato, llaves, relaciones)</td>
                     <td>Diseñador de BD</td>
                     <td>Diagrama ER detallado / Modelo relacional</td>
                 </tr>
                 <tr>
                     <td><strong>Modelo Físico</strong></td>
-                    <td>DÓNDE y cómo se almacenan (índices, particiones, espacios en disco, motor de BD específico)</td>
+                    <td>DÁ“NDE y cómo se almacenan (índices, particiones, espacios en disco, motor de BD específico)</td>
                     <td>DBA</td>
                     <td>Scripts SQL, configuración del DBMS</td>
                 </tr>
@@ -253,7 +254,7 @@
   - Matricula: VARCHAR(10), PK
   - Nombre: VARCHAR(50), NOT NULL
   - Apellido: VARCHAR(50), NOT NULL
-  - CarreraID: INT, FK → CARRERAS.CarreraID
+  - CarreraID: INT, FK â†’ CARRERAS.CarreraID
 </code></pre>
             <p><strong>Físico:</strong></p>
 <pre><code><span class="keyword">CREATE TABLE</span> Alumnos (
@@ -280,7 +281,7 @@
         </div>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 3.4: DICCIONARIO DE DATOS -->
+        <!-- SECCIÁ“N 3.4: DICCIONARIO DE DATOS -->
         <!-- ============================================ -->
         <h2 id="diccionario">3.4 El Diccionario de Datos como Herramienta de Documentación</h2>
 
@@ -294,7 +295,7 @@
             <p>Es como el <strong>manual de usuario de un equipo electrónico</strong>. Así como el manual te dice qué hace cada botón, el voltaje que necesita y las especificaciones, el diccionario de datos te dice qué significa cada campo, qué valores acepta y cómo se relaciona con otros.</p>
         </div>
 
-        <h3>¿Qué contiene un diccionario de datos?</h3>
+        <h3>Â¿Qué contiene un diccionario de datos?</h3>
 
         <div class="example-box">
             <h4>&#9989; Ejemplo: Diccionario de datos para tabla ALUMNOS</h4>
@@ -363,7 +364,7 @@
         </div>
 
         <div class="info-box">
-            <h4>&#128161; ¿Por qué es importante?</h4>
+            <h4>&#128161; Â¿Por qué es importante?</h4>
             <ul>
                 <li>Facilita la comunicación entre desarrolladores y analistas</li>
                 <li>Sirve como referencia cuando alguien nuevo se integra al proyecto</li>
@@ -373,7 +374,7 @@
         </div>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 3.5: NORMALIZACIÓN -->
+        <!-- SECCIÁ“N 3.5: NORMALIZACIÁ“N -->
         <!-- ============================================ -->
         <h2 id="normalizacion">3.5 Normalización (1FN, 2FN y 3FN)</h2>
 
@@ -387,7 +388,7 @@
             <p>Es como <strong>organizar un clóset desordenado</strong>. Primero sacas todo y lo pones en orden (1FN). Luego separas la ropa por tipo: camisas en un cajón, pantalones en otro (2FN). Finalmente, dentro de cada cajón organizas por color o uso (3FN). Cada paso reduce el desorden y hace más fácil encontrar las cosas.</p>
         </div>
 
-        <h3>¿Por qué normalizar?</h3>
+        <h3>Â¿Por qué normalizar?</h3>
         <p>Sin normalización, puedes tener estos problemas (anomalías):</p>
         <ul>
             <li><strong>Anomalía de inserción:</strong> No puedes agregar un dato sin agregar información innecesaria</li>
@@ -422,7 +423,7 @@
                 <tbody>
                     <tr>
                         <td>A001</td>
-                        <td>Pedro García</td>
+                        <td>Daniel García</td>
                         <td>555-1234, 555-5678</td>
                         <td>Matemáticas, Física, Programación</td>
                     </tr>
@@ -430,7 +431,7 @@
             </table>
             <p>Problemas: "Telefonos" y "Materias" tienen múltiples valores en una celda.</p>
 
-            <p><strong>&#10004; DESPUÉS (en 1FN):</strong> Se separa en tablas independientes.</p>
+            <p><strong>&#10004; DESPUÁ‰S (en 1FN):</strong> Se separa en tablas independientes.</p>
             <p>Tabla ALUMNOS:</p>
             <table>
                 <thead>
@@ -442,7 +443,7 @@
                 <tbody>
                     <tr>
                         <td>A001</td>
-                        <td>Pedro García</td>
+                        <td>Daniel García</td>
                     </tr>
                 </tbody>
             </table>
@@ -519,14 +520,14 @@
                     <tr>
                         <td>A001</td>
                         <td>MAT101</td>
-                        <td>Pedro García</td>
+                        <td>Daniel García</td>
                         <td>Matemáticas I</td>
                         <td>85</td>
                     </tr>
                     <tr>
                         <td>A001</td>
                         <td>FIS201</td>
-                        <td>Pedro García</td>
+                        <td>Daniel García</td>
                         <td>Física I</td>
                         <td>90</td>
                     </tr>
@@ -541,12 +542,12 @@
             </table>
             <p><strong>Problema:</strong></p>
             <ul>
-                <li>"NombreAlumno" depende SOLO de Matricula (no de MateriaID) → dependencia parcial</li>
-                <li>"NombreMateria" depende SOLO de MateriaID (no de Matricula) → dependencia parcial</li>
-                <li>"Calificacion" depende de AMBAS (Matricula + MateriaID) → correcto</li>
+                <li>"NombreAlumno" depende SOLO de Matricula (no de MateriaID) â†’ dependencia parcial</li>
+                <li>"NombreMateria" depende SOLO de MateriaID (no de Matricula) â†’ dependencia parcial</li>
+                <li>"Calificacion" depende de AMBAS (Matricula + MateriaID) â†’ correcto</li>
             </ul>
 
-            <p><strong>&#10004; DESPUÉS (en 2FN):</strong> Separar en 3 tablas</p>
+            <p><strong>&#10004; DESPUÁ‰S (en 2FN):</strong> Separar en 3 tablas</p>
             <p>Tabla ALUMNOS: Matricula (PK), NombreAlumno</p>
             <p>Tabla MATERIAS: MateriaID (PK), NombreMateria</p>
             <p>Tabla INSCRIPCIONES: Matricula (PK,FK), MateriaID (PK,FK), Calificacion</p>
@@ -585,7 +586,7 @@
                 <tbody>
                     <tr>
                         <td>A001</td>
-                        <td>Pedro</td>
+                        <td>Daniel</td>
                         <td>1</td>
                         <td>Sistemas</td>
                         <td>Dr. Ramírez</td>
@@ -607,9 +608,9 @@
                 </tbody>
             </table>
             <p><strong>Problema:</strong> "NombreCarrera" y "Coordinador" no dependen de Matricula directamente. Dependen de CarreraID (que no es la PK). Esto es una <strong>dependencia transitiva</strong>:</p>
-            <p><code>Matricula → CarreraID → NombreCarrera, Coordinador</code></p>
+            <p><code>Matricula â†’ CarreraID â†’ NombreCarrera, Coordinador</code></p>
 
-            <p><strong>&#10004; DESPUÉS (en 3FN):</strong></p>
+            <p><strong>&#10004; DESPUÁ‰S (en 3FN):</strong></p>
             <p>Tabla ALUMNOS:</p>
             <table>
                 <thead>
@@ -620,7 +621,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td>A001</td><td>Pedro</td><td>1</td></tr>
+                    <tr><td>A001</td><td>Daniel</td><td>1</td></tr>
                     <tr><td>A002</td><td>María</td><td>1</td></tr>
                     <tr><td>A003</td><td>Juan</td><td>2</td></tr>
                 </tbody>
@@ -678,7 +679,7 @@
         </div>
 
         <!-- ============================================ -->
-        <!-- SECCIÓN 3.6: HERRAMIENTAS CASE -->
+        <!-- SECCIÁ“N 3.6: HERRAMIENTAS CASE -->
         <!-- ============================================ -->
         <h2 id="case">3.6 Herramientas CASE</h2>
 
@@ -687,7 +688,7 @@
             <p><strong>CASE</strong> (Computer-Aided Software Engineering) son herramientas de software que asisten en el diseño, modelado y generación de código para bases de datos. Permiten crear diagramas ER de forma visual y generar automáticamente los scripts SQL.</p>
         </div>
 
-        <h3>¿Qué hacen las herramientas CASE para BD?</h3>
+        <h3>Â¿Qué hacen las herramientas CASE para BD?</h3>
         <ul>
             <li>Crear <strong>diagramas ER</strong> de forma visual (arrastrando entidades y conectando relaciones)</li>
             <li><strong>Generar SQL</strong> automáticamente a partir del diagrama (forward engineering)</li>
@@ -770,7 +771,7 @@
             </div>
 
             <div class="question" data-correct="c">
-                <h4><span class="q-number">2</span>¿Qué forma normal elimina las dependencias parciales?</h4>
+                <h4><span class="q-number">2</span>Â¿Qué forma normal elimina las dependencias parciales?</h4>
                 <label><input type="radio" name="u3q2" value="a"> Primera Forma Normal (1FN)</label>
                 <label><input type="radio" name="u3q2" value="b"> Tercera Forma Normal (3FN)</label>
                 <label><input type="radio" name="u3q2" value="c"> Segunda Forma Normal (2FN)</label>
@@ -778,7 +779,7 @@
             </div>
 
             <div class="question" data-correct="a">
-                <h4><span class="q-number">3</span>¿Cuál es la diferencia entre el modelo lógico y el modelo físico?</h4>
+                <h4><span class="q-number">3</span>Â¿Cuál es la diferencia entre el modelo lógico y el modelo físico?</h4>
                 <label><input type="radio" name="u3q3" value="a"> El lógico define la estructura (tablas, columnas, relaciones) y el físico define la implementación real (SQL, índices, motor de BD)</label>
                 <label><input type="radio" name="u3q3" value="b"> Son lo mismo, solo cambian de nombre</label>
                 <label><input type="radio" name="u3q3" value="c"> El físico se hace primero y el lógico después</label>
@@ -795,7 +796,7 @@
         <!-- Navegación entre páginas -->
         <div class="page-nav">
             <a href="unidad2.html">&larr; Unidad 2: Modelo Relacional</a>
-            <a href="unidad4.html">Unidad 4: Álgebra Relacional &rarr;</a>
+            <a href="unidad4.html">Unidad 4: Álgebra Relacional &rarr;</a>
         </div>
     </main>
 
@@ -822,7 +823,7 @@
             if (selected && selected.value === correctAnswer) {
                 correct++;
                 q.style.borderLeft = '4px solid #059669';
-                feedback.textContent = '✓ ¡Correcto!';
+                feedback.textContent = 'âœ“ Â¡Correcto!';
                 feedback.style.display = 'block';
                 feedback.style.color = '#065f46';
                 feedback.style.background = '#d1fae5';
@@ -831,7 +832,7 @@
                 feedback.style.marginTop = '0.5rem';
             } else {
                 q.style.borderLeft = '4px solid #dc2626';
-                feedback.textContent = '✗ Incorrecto. Revisa el tema arriba.';
+                feedback.textContent = 'âœ— Incorrecto. Revisa el tema arriba.';
                 feedback.style.display = 'block';
                 feedback.style.color = '#991b1b';
                 feedback.style.background = '#fee2e2';
@@ -846,13 +847,13 @@
         resultEl.textContent = `Resultado: ${correct} de ${total} correctas`;
         if (correct === total) {
             resultEl.style.background = '#d1fae5';
-            resultEl.textContent += ' 🎉 ¡Perfecto!';
+            resultEl.textContent += ' ðŸŽ‰ Â¡Perfecto!';
         } else if (correct >= total / 2) {
             resultEl.style.background = '#dbeafe';
-            resultEl.textContent += ' 👍 ¡Buen intento!';
+            resultEl.textContent += ' ðŸ‘ Â¡Buen intento!';
         } else {
             resultEl.style.background = '#fef3c7';
-            resultEl.textContent += ' 📖 Repasa el material e intenta de nuevo.';
+            resultEl.textContent += ' ðŸ“– Repasa el material e intenta de nuevo.';
         }
     }
 
